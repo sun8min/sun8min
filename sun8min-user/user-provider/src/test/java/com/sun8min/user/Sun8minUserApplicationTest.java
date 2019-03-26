@@ -1,11 +1,43 @@
 package com.sun8min.user;
 
+import com.sun8min.user.api.UserService;
+import com.sun8min.user.entity.User;
+import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class Sun8minUserApplicationTest {
+
+    @Autowired
+    UserService userService;
+
+    @Test
+    @Transactional
+    public void crud(){
+        userService.insert(new User("AAA"));
+        userService.insert(new User("BBB"));
+        userService.insert(new User("CCC"));
+        userService.insert(new User("DDD"));
+        userService.insert(new User("EEE"));
+
+        User user = userService.selectByPrimaryKey(6L);
+        user.setUserNickName("gay");
+        userService.updateByPrimaryKey(user);
+        Assert.assertEquals(userService.selectByPrimaryKey(6L).getUserNickName(), "gay");
+
+        userService.deleteByPrimaryKey(6L);
+    }
+
 
     @Test
     public void testVersion(){

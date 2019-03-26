@@ -57,5 +57,9 @@ public class User implements Serializable {
      */
     private Integer isDeleted;
 
+    public User(String userNickName) {
+        this.userNickName = userNickName;
+    }
+
     private static final long serialVersionUID = 1L;
 }
