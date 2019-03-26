@@ -16,8 +16,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>com.sun8min.base</groupId>
+            <artifactId>base-entity</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>
