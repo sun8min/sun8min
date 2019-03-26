@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<settings   xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <!--本地仓库。该值表示构建系统本地仓库的路径。其默认值为${user.home}/.m2/repository。  -->
+    <localRepository>/Volumes/mac_data/maven/repository</localRepository>
+    
+    <mirrors>
+        <mirror>
+            <id>aliyun-maven</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <mirrorOf>central</mirrorOf>
+        </mirror>
+    </mirrors>
+
+    <profiles>
+      <profile>
+          <id>downloadSourcesAndJavadocs</id>
+          <properties>
+              <downloadSources>true</downloadSources>
+              <downloadJavadocs>true</downloadJavadocs>
+          </properties>
+      </profile>
+    </profiles>
+
+    <activeProfiles>
+<!--      <activeProfile>downloadSourcesAndJavadocs</activeProfile>-->
+    </activeProfiles>
+
+</settings>
