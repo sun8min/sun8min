@@ -1,0 +1,8 @@
+**/target/
+
+### IntelliJ IDEA ###
+**/.idea
+**/*.iml
+
+### mvn versions bak ###
+**/pom.xml.versionBackup
