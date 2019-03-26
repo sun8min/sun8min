@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun8min.redpacket.dao.RedpacketDao">
+  <resultMap id="BaseResultMap" type="com.sun8min.redpacket.entity.Redpacket">
+    <id column="redpacket_id" property="redpacketId" />
+    <result column="user_id" property="userId" />
+    <result column="redpacket_amount" property="redpacketAmount" />
+    <result column="gmt_create" property="gmtCreate" />
+    <result column="gmt_modified" property="gmtModified" />
+    <result column="is_deleted" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Select_Column">
+    redpacket_id, user_id, redpacket_amount, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from redpacket
+    where redpacket_id = #{redpacketId}
+  </delete>
+  <insert id="insert" parameterType="com.sun8min.redpacket.entity.Redpacket">
+    insert into redpacket (
+      <trim suffixOverrides=",">
+        <if test="redpacketId != null">redpacket_id,</if>
+        <if test="userId != null">user_id,</if>
+        <if test="redpacketAmount != null">redpacket_amount,</if>
+        <if test="gmtCreate != null">gmt_create,</if>
+        <if test="gmtModified != null">gmt_modified,</if>
+        <if test="isDeleted != null">is_deleted,</if>
+      </trim>
+      )
+    values (
+      <trim suffixOverrides=",">
+        <if test="redpacketId != null">#{redpacketId},</if>
+        <if test="userId != null">#{userId},</if>
+        <if test="redpacketAmount != null">#{redpacketAmount},</if>
+        <if test="gmtCreate != null">#{gmtCreate},</if>
+        <if test="gmtModified != null">#{gmtModified},</if>
+        <if test="isDeleted != null">#{isDeleted},</if>
+      </trim>
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sun8min.redpacket.entity.Redpacket">
+    update redpacket set 
+    <trim suffixOverrides=",">
+      <if test="redpacketId != null">redpacket_id = #{redpacketId},</if>
+      <if test="userId != null">user_id = #{userId},</if>
+      <if test="redpacketAmount != null">redpacket_amount = #{redpacketAmount},</if>
+      <if test="gmtCreate != null">gmt_create = #{gmtCreate},</if>
+      <if test="gmtModified != null">gmt_modified = #{gmtModified},</if>
+      <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+    </trim>
+    where redpacket_id = #{redpacketId}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Select_Column" />
+    from redpacket
+    where redpacket_id = #{redpacketId}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Select_Column" />
+    from redpacket
+  </select>
+</mapper>

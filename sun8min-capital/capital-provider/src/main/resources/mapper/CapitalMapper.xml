@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun8min.capital.dao.CapitalDao">
+  <resultMap id="BaseResultMap" type="com.sun8min.capital.entity.Capital">
+    <id column="capital_id" property="capitalId" />
+    <result column="user_id" property="userId" />
+    <result column="capital_amount" property="capitalAmount" />
+    <result column="gmt_create" property="gmtCreate" />
+    <result column="gmt_modified" property="gmtModified" />
+    <result column="is_deleted" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Select_Column">
+    capital_id, user_id, capital_amount, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from capital
+    where capital_id = #{capitalId}
+  </delete>
+  <insert id="insert" parameterType="com.sun8min.capital.entity.Capital">
+    insert into capital (
+      <trim suffixOverrides=",">
+        <if test="capitalId != null">capital_id,</if>
+        <if test="userId != null">user_id,</if>
+        <if test="capitalAmount != null">capital_amount,</if>
+        <if test="gmtCreate != null">gmt_create,</if>
+        <if test="gmtModified != null">gmt_modified,</if>
+        <if test="isDeleted != null">is_deleted,</if>
+      </trim>
+      )
+    values (
+      <trim suffixOverrides=",">
+        <if test="capitalId != null">#{capitalId},</if>
+        <if test="userId != null">#{userId},</if>
+        <if test="capitalAmount != null">#{capitalAmount},</if>
+        <if test="gmtCreate != null">#{gmtCreate},</if>
+        <if test="gmtModified != null">#{gmtModified},</if>
+        <if test="isDeleted != null">#{isDeleted},</if>
+      </trim>
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sun8min.capital.entity.Capital">
+    update capital set 
+    <trim suffixOverrides=",">
+      <if test="capitalId != null">capital_id = #{capitalId},</if>
+      <if test="userId != null">user_id = #{userId},</if>
+      <if test="capitalAmount != null">capital_amount = #{capitalAmount},</if>
+      <if test="gmtCreate != null">gmt_create = #{gmtCreate},</if>
+      <if test="gmtModified != null">gmt_modified = #{gmtModified},</if>
+      <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+    </trim>
+    where capital_id = #{capitalId}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Select_Column" />
+    from capital
+    where capital_id = #{capitalId}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Select_Column" />
+    from capital
+  </select>
+</mapper>

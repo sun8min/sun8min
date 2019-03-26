@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sun8min</groupId>
+    <artifactId>sun8min</artifactId>
+    <version>1.0.0</version>
+
+    <packaging>pom</packaging>
+
+    <name>sun8min</name>
+    <description>This is sun8min's personal project.</description>
+
+    <developers>
+        <developer>
+            <id>sun8min</id>
+            <name>sun8min</name>
+            <email>sun8min@gmail.com</email>
+            <url>http://www.sun8min.com</url>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>sun8min-base</module>
+        <module>sun8min-eureka</module>
+        <module>sun8min-seckill</module>
+        <module>sun8min-user</module>
+        <module>sun8min-shop</module>
+        <module>sun8min-capital</module>
+        <module>sun8min-redpacket</module>
+        <module>sun8min-order</module>
+    </modules>
+
+    <properties>
+        <!-- java版本 -->
+        <java.version>1.8</java.version>
+        <java.source.version>${java.version}</java.source.version>
+        <java.target.version>${java.version}</java.target.version>
+        <!-- maven编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- springboot -->
+        <spring-boot.version>2.1.3.RELEASE</spring-boot.version>
+        <!-- dubbo -->
+        <dubbo.version>2.7.0</dubbo.version>
+        <!-- springcloud -->
+        <spring-cloud-build.version>2.1.3.RELEASE</spring-cloud-build.version>
+        <spring-boot-eureka.version>2.1.1.RELEASE</spring-boot-eureka.version>
+        <!-- springboot-mybayis -->
+        <spring-boot-mybatis.version>2.0.0</spring-boot-mybatis.version>
+        <!-- mybatis-generator -->
+        <mybatis-generator.version>1.3.7</mybatis-generator.version>
+        <!-- mysql -->
+        <mysql.version>8.0.15</mysql.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot(pom) -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Aapche Dubbo(pom)  -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- springboot dubbo -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <!-- dubbo -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.servlet</groupId>
+                        <artifactId>servlet-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- springboot-mybatis -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${spring-boot-mybatis.version}</version>
+            </dependency>
+
+            <!-- SpringCloud Eureka Client -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+                <version>${spring-boot-eureka.version}</version>
+            </dependency>
+
+            <!-- SpringCloud Eureka Server -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+                <version>${spring-boot-eureka.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <!-- 使application.properties用通配符与pom.xml同步 -->
+        <!-- Example：application.version=@project.version@ -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <!-- 多模块版本号修改
+                1。参数-DallowSnapshots=true,表示允许release版修改为snapshot版。
+                2。参数-DprocessAllModules=true表示该模块下的子模块及依赖其的版本号都改成1.0.1-SNAPSHOT
+                3。执行命令 mvn versions:set -DoldVersion=* -DnewVersion=1.0.0 -DprocessAllModules=true -DallowSnapshots=true
+                4。回滚 mvn versions:revert
+                5。提交 mvn versions:commit
+                -->
+
+                <!-- mybatis逆向工程 -->
+                <plugin>
+                    <groupId>org.mybatis.generator</groupId>
+                    <artifactId>mybatis-generator-maven-plugin</artifactId>
+                    <version>${mybatis-generator.version}</version>
+                    <configuration>
+                        <!--配置文件的位置，默认src/main/resources/generatorConfig.xml -->
+                        <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
+                        <!-- 覆盖同名文件，默认false -->
+                        <overwrite>true</overwrite>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>${mysql.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

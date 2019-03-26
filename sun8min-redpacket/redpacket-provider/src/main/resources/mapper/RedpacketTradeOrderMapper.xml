@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun8min.redpacket.dao.RedpacketTradeOrderDao">
+  <resultMap id="BaseResultMap" type="com.sun8min.redpacket.entity.RedpacketTradeOrder">
+    <id column="redpacket_trade_order_id" property="redpacketTradeOrderId" />
+    <result column="from_user_id" property="fromUserId" />
+    <result column="to_user_id" property="toUserId" />
+    <result column="redpacket_trade_amount" property="redpacketTradeAmount" />
+    <result column="trade_order_no" property="tradeOrderNo" />
+    <result column="gmt_create" property="gmtCreate" />
+    <result column="gmt_modified" property="gmtModified" />
+    <result column="is_deleted" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Select_Column">
+    redpacket_trade_order_id, from_user_id, to_user_id, redpacket_trade_amount, trade_order_no, 
+    gmt_create, gmt_modified, is_deleted
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from redpacket_trade_order
+    where redpacket_trade_order_id = #{redpacketTradeOrderId}
+  </delete>
+  <insert id="insert" parameterType="com.sun8min.redpacket.entity.RedpacketTradeOrder">
+    insert into redpacket_trade_order (
+      <trim suffixOverrides=",">
+        <if test="redpacketTradeOrderId != null">redpacket_trade_order_id,</if>
+        <if test="fromUserId != null">from_user_id,</if>
+        <if test="toUserId != null">to_user_id,</if>
+        <if test="redpacketTradeAmount != null">redpacket_trade_amount,</if>
+        <if test="tradeOrderNo != null">trade_order_no,</if>
+        <if test="gmtCreate != null">gmt_create,</if>
+        <if test="gmtModified != null">gmt_modified,</if>
+        <if test="isDeleted != null">is_deleted,</if>
+      </trim>
+      )
+    values (
+      <trim suffixOverrides=",">
+        <if test="redpacketTradeOrderId != null">#{redpacketTradeOrderId},</if>
+        <if test="fromUserId != null">#{fromUserId},</if>
+        <if test="toUserId != null">#{toUserId},</if>
+        <if test="redpacketTradeAmount != null">#{redpacketTradeAmount},</if>
+        <if test="tradeOrderNo != null">#{tradeOrderNo},</if>
+        <if test="gmtCreate != null">#{gmtCreate},</if>
+        <if test="gmtModified != null">#{gmtModified},</if>
+        <if test="isDeleted != null">#{isDeleted},</if>
+      </trim>
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sun8min.redpacket.entity.RedpacketTradeOrder">
+    update redpacket_trade_order set 
+    <trim suffixOverrides=",">
+      <if test="redpacketTradeOrderId != null">redpacket_trade_order_id = #{redpacketTradeOrderId},</if>
+      <if test="fromUserId != null">from_user_id = #{fromUserId},</if>
+      <if test="toUserId != null">to_user_id = #{toUserId},</if>
+      <if test="redpacketTradeAmount != null">redpacket_trade_amount = #{redpacketTradeAmount},</if>
+      <if test="tradeOrderNo != null">trade_order_no = #{tradeOrderNo},</if>
+      <if test="gmtCreate != null">gmt_create = #{gmtCreate},</if>
+      <if test="gmtModified != null">gmt_modified = #{gmtModified},</if>
+      <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+    </trim>
+    where redpacket_trade_order_id = #{redpacketTradeOrderId}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Select_Column" />
+    from redpacket_trade_order
+    where redpacket_trade_order_id = #{redpacketTradeOrderId}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Select_Column" />
+    from redpacket_trade_order
+  </select>
+</mapper>

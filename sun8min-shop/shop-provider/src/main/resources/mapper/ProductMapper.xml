@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun8min.shop.dao.ProductDao">
+  <resultMap id="BaseResultMap" type="com.sun8min.shop.entity.Product">
+    <id column="product_id" property="productId" />
+    <result column="product_name" property="productName" />
+    <result column="product_image" property="productImage" />
+    <result column="product_price" property="productPrice" />
+    <result column="product_discount_type" property="productDiscountType" />
+    <result column="product_discount_price" property="productDiscountPrice" />
+    <result column="product_discount_percent" property="productDiscountPercent" />
+    <result column="product_shop_id" property="productShopId" />
+    <result column="gmt_create" property="gmtCreate" />
+    <result column="gmt_modified" property="gmtModified" />
+    <result column="is_deleted" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Select_Column">
+    product_id, product_name, product_image, product_price, product_discount_type, product_discount_price, 
+    product_discount_percent, product_shop_id, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from product
+    where product_id = #{productId}
+  </delete>
+  <insert id="insert" parameterType="com.sun8min.shop.entity.Product">
+    insert into product (
+      <trim suffixOverrides=",">
+        <if test="productId != null">product_id,</if>
+        <if test="productName != null">product_name,</if>
+        <if test="productImage != null">product_image,</if>
+        <if test="productPrice != null">product_price,</if>
+        <if test="productDiscountType != null">product_discount_type,</if>
+        <if test="productDiscountPrice != null">product_discount_price,</if>
+        <if test="productDiscountPercent != null">product_discount_percent,</if>
+        <if test="productShopId != null">product_shop_id,</if>
+        <if test="gmtCreate != null">gmt_create,</if>
+        <if test="gmtModified != null">gmt_modified,</if>
+        <if test="isDeleted != null">is_deleted,</if>
+      </trim>
+      )
+    values (
+      <trim suffixOverrides=",">
+        <if test="productId != null">#{productId},</if>
+        <if test="productName != null">#{productName},</if>
+        <if test="productImage != null">#{productImage},</if>
+        <if test="productPrice != null">#{productPrice},</if>
+        <if test="productDiscountType != null">#{productDiscountType},</if>
+        <if test="productDiscountPrice != null">#{productDiscountPrice},</if>
+        <if test="productDiscountPercent != null">#{productDiscountPercent},</if>
+        <if test="productShopId != null">#{productShopId},</if>
+        <if test="gmtCreate != null">#{gmtCreate},</if>
+        <if test="gmtModified != null">#{gmtModified},</if>
+        <if test="isDeleted != null">#{isDeleted},</if>
+      </trim>
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sun8min.shop.entity.Product">
+    update product set 
+    <trim suffixOverrides=",">
+      <if test="productId != null">product_id = #{productId},</if>
+      <if test="productName != null">product_name = #{productName},</if>
+      <if test="productImage != null">product_image = #{productImage},</if>
+      <if test="productPrice != null">product_price = #{productPrice},</if>
+      <if test="productDiscountType != null">product_discount_type = #{productDiscountType},</if>
+      <if test="productDiscountPrice != null">product_discount_price = #{productDiscountPrice},</if>
+      <if test="productDiscountPercent != null">product_discount_percent = #{productDiscountPercent},</if>
+      <if test="productShopId != null">product_shop_id = #{productShopId},</if>
+      <if test="gmtCreate != null">gmt_create = #{gmtCreate},</if>
+      <if test="gmtModified != null">gmt_modified = #{gmtModified},</if>
+      <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+    </trim>
+    where product_id = #{productId}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Select_Column" />
+    from product
+    where product_id = #{productId}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Select_Column" />
+    from product
+  </select>
+</mapper>
