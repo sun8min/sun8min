@@ -180,3 +180,29 @@ create table product
   default charset = utf8mb4
   collate = utf8mb4_unicode_ci
   auto_increment = 1 comment '商品表';
+
+-- ###################################
+-- 基础数据插入
+
+-- 用户库
+use sun8min_user;
+-- -- 用户表
+insert into `user`(user_nick_name) values ('AAA'),('BBB');
+
+-- 账户库
+use sun8min_capital;
+-- -- 账户表
+insert into `capital`(user_id, capital_amount) values (1, 100000), (2, 100000);
+
+-- 红包库
+use sun8min_redpacket;
+-- -- 红包表
+insert into `redpacket`(user_id, redpacket_amount) values (1, 50000), (2, 50000);
+
+-- 商店库
+use sun8min_shop;
+-- 商店表
+insert into `shop`(shop_name, user_id) values ('AAA的小店', 1), ('BBB的小店', 2);
+-- -- 商品表
+insert into `product`(product_name, product_price, product_shop_id) values ('A1', 1, 1), ('A2', 10, 1), ('A3', 100, 1), ('A4', 1000, 1), ('A5', 10000, 1);
+insert into `product`(product_name, product_price, product_shop_id) values ('B1', 1, 2), ('B2', 10, 2), ('B3', 100, 2), ('B4', 1000, 2), ('B5', 10000, 2);
