@@ -33,4 +33,8 @@ public class RedpacketServiceImpl implements RedpacketService {
     public int updateByPrimaryKey(Redpacket record) {
         return redpacketDao.updateByPrimaryKey(record);
     }
+
+    public Long findAmountByUserId(Long userId) {
+        return redpacketDao.findByUserId(userId).getRedpacketAmount();
+    }
 }

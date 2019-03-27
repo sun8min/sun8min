@@ -13,4 +13,6 @@ public interface RedpacketDao {
     List<Redpacket> selectAll();
 
     int updateByPrimaryKey(Redpacket record);
+
+    Redpacket findByUserId(Long userId);
 }

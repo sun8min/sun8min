@@ -61,4 +61,10 @@
     <include refid="Base_Select_Column" />
     from redpacket
   </select>
+  <select id="findByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Select_Column" />
+    from redpacket
+    where user_id = #{userId}
+  </select>
 </mapper>

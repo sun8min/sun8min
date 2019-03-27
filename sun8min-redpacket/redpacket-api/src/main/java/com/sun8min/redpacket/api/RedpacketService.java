@@ -14,4 +14,11 @@ public interface RedpacketService {
     List<Redpacket> selectAll();
 
     int updateByPrimaryKey(Redpacket record);
+
+    /**
+     * 根据用户id查找红包余额
+     * @param userId
+     * @return
+     */
+    Long findAmountByUserId(Long userId);
 }
