@@ -15,7 +15,7 @@ public class SeckillController {
 //    @Autowired
 //    TestFeign testFeign;
 
-    @Reference(version = "${user.service.version}")
+    @Reference(version = "${service.version}")
     UserService userService;
 
     @GetMapping("/index")
