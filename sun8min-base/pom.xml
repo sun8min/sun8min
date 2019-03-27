@@ -23,6 +23,7 @@
         <module>base-entity</module>
         <module>base-provider</module>
         <module>base-web</module>
+        <module>base-dubbo</module>
     </modules>
 
 </project>
