@@ -7,23 +7,23 @@
     <parent>
         <artifactId>redpacket-parent</artifactId>
         <groupId>com.sun8min.redpacket</groupId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
     </parent>
 
     <groupId>com.sun8min.redpacket</groupId>
     <artifactId>redpacket-provider</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
     <dependencies>
         <dependency>
             <groupId>com.sun8min.redpacket</groupId>
             <artifactId>redpacket-api</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.sun8min.base</groupId>
             <artifactId>base-provider</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </dependency>
     </dependencies>
 
