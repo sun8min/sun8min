@@ -72,7 +72,7 @@ public class IbatisDAOTemplate extends AbstractDAOTemplate {
     @Override
     protected void configureSuperClass() {
         setSuperClass(new FullyQualifiedJavaType(
-                "com.ibatis.dao.client.template.SqlMapDaoTemplate")); //$NON-NLS-1$
+                "com.ibatis.dao.client.templates.SqlMapDaoTemplate")); //$NON-NLS-1$
     }
 
     @Override

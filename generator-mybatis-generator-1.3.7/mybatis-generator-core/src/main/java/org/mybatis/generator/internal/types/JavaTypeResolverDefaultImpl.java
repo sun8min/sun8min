@@ -47,7 +47,6 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
 
     protected Map<Integer, JdbcTypeInformation> typeMap;
     
-    // TODO - remove when we get to JDK 8
     private static final int TIME_WITH_TIMEZONE = 2013;
     private static final int TIMESTAMP_WITH_TIMEZONE = 2014;
 

@@ -266,9 +266,9 @@ public abstract class AbstractDAOTemplate {
     }
 
     /**
-     * This method is called in the constructor to configure the DAO template.
+     * This method is called in the constructor to configure the DAO templates.
      * Subclasses should implement the individual configureXXX methods to setup
-     * the relevant parts of the DAO template (super class, extra methods, etc.)
+     * the relevant parts of the DAO templates (super class, extra methods, etc.)
      * that are relevant for this specific type of DAO.
      */
     private void configure() {
@@ -346,15 +346,15 @@ public abstract class AbstractDAOTemplate {
      * Override this method to configure a constructor for generated DAO
      * implementation classes. During code generation, we will build a new
      * constructor using the visibility, parameters, body lines, and exceptions
-     * set on the constructor template. When overriding this method, call
+     * set on the constructor templates. When overriding this method, call
      * <code>setConstructorTemplate(Method)</code> to set the constructor
-     * template.
+     * templates.
      */
     protected abstract void configureConstructorTemplate();
 
     /**
-     * Override this method to configure an insert method template. A method
-     * template is a string with three substitution markers that we will
+     * Override this method to configure an insert method templates. A method
+     * templates is a string with three substitution markers that we will
      * fill in when generating code. The substitution markers will be:
      * <ul>
      * <li>{0} - The SqlMap namespace</li>
@@ -363,19 +363,19 @@ public abstract class AbstractDAOTemplate {
      * </ul>
      * 
      * <p>For example, when calling methods in the SqlMapClient interface, the
-     * template would be:
+     * templates would be:
      * 
      * <p>sqlMapClient.insert(\"{0}.{1}\", {2});
      * 
      * <p>Overriding methods should call the
-     * <code>setInsertMethodTemplate(String)</code> method to set the template.
+     * <code>setInsertMethodTemplate(String)</code> method to set the templates.
      * 
      */
     protected abstract void configureInsertMethodTemplate();
 
     /**
-     * Override this method to configure a queryForList method template. A
-     * method template is a string with three substitution markers that we
+     * Override this method to configure a queryForList method templates. A
+     * method templates is a string with three substitution markers that we
      * will fill in when generating code. The substitution markers will be:
      * <ul>
      * <li>{0} - The SqlMap namespace</li>
@@ -384,19 +384,19 @@ public abstract class AbstractDAOTemplate {
      * </ul>
      * 
      * <p>For example, when calling methods in the SqlMapClient interface, the
-     * template would be:
+     * templates would be:
      * 
      * <p>sqlMapClient.queryForList(\"{0}.{1}\", {2});
      * 
      * <p>Overriding methods should call the
      * <code>setQueryForListMethodTemplate(String)</code> method to set the
-     * template.
+     * templates.
      */
     protected abstract void configureQueryForListMethodTemplate();
 
     /**
-     * Override this method to configure a queryForObject method template. A
-     * method template is a string with three substitution markers that we
+     * Override this method to configure a queryForObject method templates. A
+     * method templates is a string with three substitution markers that we
      * will fill in when generating code. The substitution markers will be:
      * <ul>
      * <li>{0} - The SqlMap namespace</li>
@@ -405,19 +405,19 @@ public abstract class AbstractDAOTemplate {
      * </ul>
      * 
      * <p>For example, when calling methods in the SqlMapClient interface, the
-     * template would be:
+     * templates would be:
      * 
      * <p>sqlMapClient.queryForObject(\"{0}.{1}\", {2});
      * 
      * <p>Overriding methods should call the
      * <code>setQueryForObjectMethodTemplate(String)</code> method to set the
-     * template.
+     * templates.
      */
     protected abstract void configureQueryForObjectMethodTemplate();
 
     /**
-     * Override this method to configure an update method template. A method
-     * template is a string with three substitution markers that we will
+     * Override this method to configure an update method templates. A method
+     * templates is a string with three substitution markers that we will
      * fill in when generating code. The substitution markers will be:
      * <ul>
      * <li>{0} - The SqlMap namespace</li>
@@ -426,18 +426,18 @@ public abstract class AbstractDAOTemplate {
      * </ul>
      * 
      * <p>For example, when calling methods in the SqlMapClient interface, the
-     * template would be:
+     * templates would be:
      * 
      * <p>sqlMapClient.update(\"{0}.{1}\", {2});
      * 
      * <p>Overriding methods should call the
-     * <code>setUpdateMethodTemplate(String)</code> method to set the template.
+     * <code>setUpdateMethodTemplate(String)</code> method to set the templates.
      */
     protected abstract void configureUpdateMethodTemplate();
 
     /**
-     * Override this method to configure a delete method template. A method
-     * template is a string with three substitution markers that we will
+     * Override this method to configure a delete method templates. A method
+     * templates is a string with three substitution markers that we will
      * fill in when generating code. The substitution markers will be:
      * <ul>
      * <li>{0} - The SqlMap namespace</li>
@@ -446,12 +446,12 @@ public abstract class AbstractDAOTemplate {
      * </ul>
      * 
      * <p>For example, when calling methods in the SqlMapClient interface, the
-     * template would be:
+     * templates would be:
      * 
      * <p>sqlMapClient.delete(\"{0}.{1}\", {2});
      * 
      * <p>Overriding methods should call the
-     * <code>setDeleteMethodTemplate(String)</code> method to set the template.
+     * <code>setDeleteMethodTemplate(String)</code> method to set the templates.
      */
     protected abstract void configureDeleteMethodTemplate();
 }

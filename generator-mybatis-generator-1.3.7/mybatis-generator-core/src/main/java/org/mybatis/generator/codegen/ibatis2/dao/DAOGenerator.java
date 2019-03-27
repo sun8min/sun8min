@@ -126,17 +126,17 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
         CommentGenerator commentGenerator = context.getCommentGenerator();
         commentGenerator.addJavaFileComment(answer);
 
-        // add constructor from the template
+        // add constructor from the templates
         answer.addMethod(daoTemplate.getConstructorClone(commentGenerator,
                 implementationType, introspectedTable));
 
-        // add any fields from the template
+        // add any fields from the templates
         for (Field field : daoTemplate.getFieldClones(commentGenerator,
                 introspectedTable)) {
             answer.addField(field);
         }
 
-        // add any methods from the template
+        // add any methods from the templates
         for (Method method : daoTemplate.getMethodClones(commentGenerator,
                 introspectedTable)) {
             answer.addMethod(method);

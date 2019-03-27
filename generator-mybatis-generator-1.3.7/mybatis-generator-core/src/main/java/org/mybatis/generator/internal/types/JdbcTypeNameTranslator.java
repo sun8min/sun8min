@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO - Delete Me
- * 
  * @author Jeff Butler
  */
 public class JdbcTypeNameTranslator {

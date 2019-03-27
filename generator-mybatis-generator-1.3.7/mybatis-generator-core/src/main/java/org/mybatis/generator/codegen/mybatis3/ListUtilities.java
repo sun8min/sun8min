@@ -27,8 +27,6 @@ import org.mybatis.generator.api.IntrospectedColumn;
  * 
  * <p>If a column is identity, it should not be referenced on an insert method.
  *  
- * <p>TODO - Replace this with Lambdas when we get to Java 8
- * 
  * @author Jeff Butler
  *
  */
