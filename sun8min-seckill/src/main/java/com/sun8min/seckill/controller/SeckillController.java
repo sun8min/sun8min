@@ -1,6 +1,5 @@
 package com.sun8min.seckill.controller;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import com.sun8min.capital.api.CapitalService;
 import com.sun8min.redpacket.api.RedpacketService;
 import com.sun8min.shop.api.ProductService;
@@ -8,7 +7,6 @@ import com.sun8min.shop.api.ShopService;
 import com.sun8min.shop.entity.Product;
 import com.sun8min.shop.entity.Shop;
 import com.sun8min.user.api.UserService;
-import com.sun8min.user.entity.User;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,9 +23,6 @@ import java.util.List;
 @Controller
 public class SeckillController {
 
-//    @Autowired
-//    TestFeign testFeign;
-
     @Reference(version = "${service.version}")
     UserService userService;
     @Reference(version = "${service.version}")
@@ -41,16 +36,8 @@ public class SeckillController {
 
     @GetMapping("/")
     public String index(String name){
-//        List<User> users = testFeign.selectAll();
-//        users.forEach(System.out::println);
-
-        List<User> users = userService.selectAll();
-        users.forEach(System.out::println);
-        System.out.println();
-
-        return "hello "+name+"，this is first messge";
+        return "hello " + name + "，this is first messge";
     }
-
 
     @PostMapping("/login")
     public String login(String username, String password){
