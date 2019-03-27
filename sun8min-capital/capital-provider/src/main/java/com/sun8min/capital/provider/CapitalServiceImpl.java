@@ -33,4 +33,8 @@ public class CapitalServiceImpl implements CapitalService {
     public int updateByPrimaryKey(Capital record) {
         return capitalDao.updateByPrimaryKey(record);
     }
+
+    public Long findAmountByUserId(Long userId) {
+        return capitalDao.findByUserId(userId).getCapitalAmount();
+    }
 }

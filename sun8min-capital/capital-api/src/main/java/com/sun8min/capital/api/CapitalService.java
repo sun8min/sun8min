@@ -14,4 +14,11 @@ public interface CapitalService {
     List<Capital> selectAll();
 
     int updateByPrimaryKey(Capital record);
+
+    /**
+     * 根据用户id查找账户余额
+     * @param userId
+     * @return
+     */
+    Long findAmountByUserId(Long userId);
 }

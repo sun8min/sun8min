@@ -13,4 +13,6 @@ public interface CapitalDao {
     List<Capital> selectAll();
 
     int updateByPrimaryKey(Capital record);
+
+    Capital findByUserId(Long userId);
 }
