@@ -51,6 +51,22 @@
 			<artifactId>base-web</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+
+		<!-- thymeleaf -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<!-- springboot devtools -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<!-- 在执行时需要使用 -->
+			<scope>runtime</scope>
+			<!-- 在当前项目被依赖时，此依赖可选。即不传递 -->
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<build>
