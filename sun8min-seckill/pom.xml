@@ -14,57 +14,42 @@
 	<version>1.0.0</version>
 
 	<dependencies>
+		<!-- user-api -->
 		<dependency>
 			<groupId>com.sun8min.user</groupId>
 			<artifactId>user-api</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-
-		<!-- Spring Boot -->
+		<!-- shop-api -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<groupId>com.sun8min.shop</groupId>
+			<artifactId>shop-api</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<!-- capital-api -->
+		<dependency>
+			<groupId>com.sun8min.capital</groupId>
+			<artifactId>capital-api</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<!-- redpacket-api -->
+		<dependency>
+			<groupId>com.sun8min.redpacket</groupId>
+			<artifactId>redpacket-api</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<!-- order-api -->
+		<dependency>
+			<groupId>com.sun8min.order</groupId>
+			<artifactId>order-api</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 
-		<!-- springboot web -->
+		<!-- base-web -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<!-- springboot test -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-		</dependency>
-
-		<!-- Dubbo Spring Boot Starter -->
-		<dependency>
-			<groupId>org.apache.dubbo</groupId>
-			<artifactId>dubbo-spring-boot-starter</artifactId>
-			<version>${dubbo.version}</version>
-		</dependency>
-
-		<!-- Dubbo -->
-		<dependency>
-			<groupId>org.apache.dubbo</groupId>
-			<artifactId>dubbo</artifactId>
-		</dependency>
-
-		<!-- Zookeeper -->
-		<dependency>
-			<groupId>org.apache.zookeeper</groupId>
-			<artifactId>zookeeper</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-framework</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-recipes</artifactId>
+			<groupId>com.sun8min.base</groupId>
+			<artifactId>base-web</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 

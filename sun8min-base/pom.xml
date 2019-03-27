@@ -22,6 +22,7 @@
     <modules>
         <module>base-entity</module>
         <module>base-provider</module>
+        <module>base-web</module>
     </modules>
 
 </project>
