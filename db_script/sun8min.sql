@@ -187,17 +187,17 @@ create table product
 -- 用户库
 use sun8min_user;
 -- -- 用户表
-insert into `user`(user_nick_name) values ('AAA'),('BBB');
+insert into `user`(user_nick_name) values ('AAA'), ('BBB'), ('CCC');
 
 -- 账户库
 use sun8min_capital;
 -- -- 账户表
-insert into `capital`(user_id, capital_amount) values (1, 100000), (2, 100000);
+insert into `capital`(user_id, capital_amount) values (1, 100000), (2, 100000), (3, 100000);
 
 -- 红包库
 use sun8min_redpacket;
 -- -- 红包表
-insert into `redpacket`(user_id, redpacket_amount) values (1, 50000), (2, 50000);
+insert into `redpacket`(user_id, redpacket_amount) values (1, 50000), (2, 50000), (3, 50000);
 
 -- 商店库
 use sun8min_shop;
