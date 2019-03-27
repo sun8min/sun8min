@@ -14,4 +14,11 @@ public interface ProductService {
     List<Product> selectAll();
 
     int updateByPrimaryKey(Product record);
+
+    /**
+     * 根据商店id查找商品列表
+     * @param shopId
+     * @return
+     */
+    List<Product> findByShopId(Long shopId);
 }

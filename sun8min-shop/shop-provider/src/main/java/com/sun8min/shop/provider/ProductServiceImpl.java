@@ -33,4 +33,8 @@ public class ProductServiceImpl implements ProductService {
     public int updateByPrimaryKey(Product record) {
         return productDao.updateByPrimaryKey(record);
     }
+
+    public List<Product> findByShopId(Long shopId) {
+        return productDao.findByShopId(shopId);
+    }
 }

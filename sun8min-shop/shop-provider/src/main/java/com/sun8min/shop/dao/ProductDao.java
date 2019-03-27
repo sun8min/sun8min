@@ -13,4 +13,6 @@ public interface ProductDao {
     List<Product> selectAll();
 
     int updateByPrimaryKey(Product record);
+
+    List<Product> findByShopId(Long shopId);
 }

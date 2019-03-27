@@ -82,4 +82,10 @@
     <include refid="Base_Select_Column" />
     from product
   </select>
+  <select id="findByShopId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Select_Column" />
+    from product
+    where product_shop_id = #{productShopId}
+  </select>
 </mapper>
