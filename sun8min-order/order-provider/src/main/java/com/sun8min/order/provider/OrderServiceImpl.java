@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order findByTradeOrderNo(Long tradeOrderNo) {
+    public Order findByTradeOrderNo(String tradeOrderNo) {
         return orderDao.findByTradeOrderNo(tradeOrderNo);
     }
 

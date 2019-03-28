@@ -23,7 +23,7 @@ public interface OrderService {
      * @param tradeOrderNo
      * @return
      */
-    Order findByTradeOrderNo(Long tradeOrderNo);
+    Order findByTradeOrderNo(String tradeOrderNo);
 
     /**
      * 下单

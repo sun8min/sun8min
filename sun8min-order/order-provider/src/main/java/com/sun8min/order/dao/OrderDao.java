@@ -14,5 +14,5 @@ public interface OrderDao {
 
     int updateByPrimaryKey(Order record);
 
-    Order findByTradeOrderNo(Long tradeOrderNo);
+    Order findByTradeOrderNo(String tradeOrderNo);
 }

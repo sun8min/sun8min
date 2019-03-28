@@ -1,6 +1,5 @@
 package com.sun8min.seckill.controller;
 
-import com.google.common.base.Strings;
 import com.sun8min.capital.api.CapitalService;
 import com.sun8min.capital.api.CapitalTradeOrderService;
 import com.sun8min.order.api.OrderLineService;
@@ -15,8 +14,6 @@ import com.sun8min.shop.api.ShopService;
 import com.sun8min.shop.entity.Product;
 import com.sun8min.shop.entity.Shop;
 import com.sun8min.user.api.UserService;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.math.BigDecimal;
-import java.security.InvalidParameterException;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 // consumer://172.20.10.5/com.sun8min.user.api.gege.userService2?application=consumer&category=consumers&check=false&dubbo=2.5.3&interface=com.sun8min.user.api.gege.userService2&methods=selectAll&pid=2385&revision=1.0.0&side=consumer&timestamp=1553422997200&version=1.0.0
 @Controller
@@ -46,8 +43,6 @@ public class SeckillController {
     RedpacketService redpacketService;
     @Reference(version = "${service.version}")
     OrderService orderService;
-    @Reference(version = "${service.version}")
-    OrderLineService orderLineService;
     @Reference(version = "${service.version}")
     RedpacketTradeOrderService redpacketTradeOrderService;
     @Reference(version = "${service.version}")
@@ -104,32 +99,39 @@ public class SeckillController {
         long userId = 3L;
         PlaceOrderRequest placeOrderRequest = PlaceOrderRepository.buildQuest(productId, redpacketPayAmountStr, userId);
         // TODO 分布式事务
-        // 下单
-        Order order = orderService.placeOrder(
-                placeOrderRequest.getFromUserId(),
-                placeOrderRequest.getToUserId(),
-                placeOrderRequest.getProductQuantitiesList(),
-                placeOrderRequest.getRedpacketPayAmount()
-        );
-        // 红包交易
-        redpacketTradeOrderService.trade(
-                order.getTradeOrderNo(),
-                placeOrderRequest.getFromUserId(),
-                placeOrderRequest.getToUserId(),
-                placeOrderRequest.getRedpacketPayAmount()
-        );
-        // 账户交易
-        capitalTradeOrderService.trade(
-                order.getTradeOrderNo(),
-                placeOrderRequest.getFromUserId(),
-                placeOrderRequest.getToUserId(),
-                order.getCapitalTradeAmount()
-        );
+        Order order = null;
+        try {
+            // 下单
+            order = orderService.placeOrder(
+                    placeOrderRequest.getFromUserId(),
+                    placeOrderRequest.getToUserId(),
+                    placeOrderRequest.getProductQuantitiesList(),
+                    placeOrderRequest.getRedpacketPayAmount()
+            );
+            // 红包交易
+            redpacketTradeOrderService.trade(
+                    order.getTradeOrderNo(),
+                    placeOrderRequest.getFromUserId(),
+                    placeOrderRequest.getToUserId(),
+                    placeOrderRequest.getRedpacketPayAmount()
+            );
+            // 账户交易
+            capitalTradeOrderService.trade(
+                    order.getTradeOrderNo(),
+                    placeOrderRequest.getFromUserId(),
+                    placeOrderRequest.getToUserId(),
+                    order.getCapitalTradeAmount()
+            );
+            // 交易完成，订单修改为支付成功
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 交易失败，订单修改为支付失败
+        }
         return new RedirectView("/payresult/" + order.getTradeOrderNo());
     }
 
     @GetMapping("/payresult/{tradeOrderNo}")
-    public String payResult(@PathVariable long tradeOrderNo, ModelMap map) {
+    public String payResult(@PathVariable String tradeOrderNo, ModelMap map) {
         Order foundOrder = orderService.findByTradeOrderNo(tradeOrderNo);
 
         // 订单支付结果，null则返回"Unknown"
