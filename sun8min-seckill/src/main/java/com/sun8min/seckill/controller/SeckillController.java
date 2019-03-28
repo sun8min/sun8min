@@ -8,6 +8,8 @@ import com.sun8min.order.api.OrderService;
 import com.sun8min.order.entity.Order;
 import com.sun8min.redpacket.api.RedpacketService;
 import com.sun8min.redpacket.api.RedpacketTradeOrderService;
+import com.sun8min.seckill.service.PlaceOrderRepository;
+import com.sun8min.seckill.vo.PlaceOrderRequest;
 import com.sun8min.shop.api.ProductService;
 import com.sun8min.shop.api.ShopService;
 import com.sun8min.shop.entity.Product;
@@ -53,19 +55,19 @@ public class SeckillController {
 
 
     @GetMapping("/")
-    public String index(String name){
+    public String index(String name) {
         return "hello " + name + "，this is first messge";
     }
 
     @PostMapping("/login")
-    public String login(String username, String password){
+    public String login(String username, String password) {
         // TODO 用户登陆，用于购买商品等操作
 //        userService.
         return null;
     }
 
     @GetMapping("/shops")
-    public String findShops(ModelMap map){
+    public String findShops(ModelMap map) {
         List<Shop> shops = shopService.selectAll();
         map.addAttribute("title", "商家列表");
         map.addAttribute("shops", shops);
@@ -73,7 +75,7 @@ public class SeckillController {
     }
 
     @GetMapping("/shop/{shopId}")
-    public String findProductsByShopId(@PathVariable long shopId, ModelMap map){
+    public String findProductsByShopId(@PathVariable long shopId, ModelMap map) {
         List<Product> products = productService.findByShopId(shopId);
         map.addAttribute("title", "商品列表");
         map.addAttribute("products", products);
@@ -81,7 +83,7 @@ public class SeckillController {
     }
 
     @GetMapping("/product/{productId}/confirm")
-    public String confirm(@PathVariable long productId, ModelMap map){
+    public String confirm(@PathVariable long productId, ModelMap map) {
         // TODO 暂时先定购买用户id为3，去购买其他两家的商品
         long userId = 3L;
         BigDecimal capitalAmount = capitalService.findAmountByUserId(userId);
@@ -97,30 +99,37 @@ public class SeckillController {
 
     @PostMapping("/placeOrder")
     public RedirectView placeOrder(@RequestParam long productId,
-                                   @RequestParam  String redpacketPayAmountStr)
-                                    throws Exception {
+                                   @RequestParam String redpacketPayAmountStr) {
         // TODO 暂时先定购买用户id为3，去购买其他两家的商品
         long userId = 3L;
-        PlaceOrderRequest placeOrderRequest = new PlaceOrderRequest(productId, redpacketPayAmountStr, userId).invoke();
-        BigDecimal redpacketPayAmount = placeOrderRequest.getRedpacketPayAmount();
-        List<Pair<Product, Integer>> productQuantitiesList = placeOrderRequest.getProductQuantitiesList();
-        long fromUserId = placeOrderRequest.getFromUserId();
-        long toUserId = placeOrderRequest.getToUserId();
+        PlaceOrderRequest placeOrderRequest = PlaceOrderRepository.buildQuest(productId, redpacketPayAmountStr, userId);
         // TODO 分布式事务
         // 下单
-        Order order = orderService.placeOrder(fromUserId, toUserId, productQuantitiesList, redpacketPayAmount);
-
+        Order order = orderService.placeOrder(
+                placeOrderRequest.getFromUserId(),
+                placeOrderRequest.getToUserId(),
+                placeOrderRequest.getProductQuantitiesList(),
+                placeOrderRequest.getRedpacketPayAmount()
+        );
         // 红包交易
-        redpacketTradeOrderService.trade(order.getTradeOrderNo(), fromUserId, toUserId, redpacketPayAmount);
-
+        redpacketTradeOrderService.trade(
+                order.getTradeOrderNo(),
+                placeOrderRequest.getFromUserId(),
+                placeOrderRequest.getToUserId(),
+                placeOrderRequest.getRedpacketPayAmount()
+        );
         // 账户交易
-        capitalTradeOrderService.trade(order.getTradeOrderNo(), fromUserId, toUserId, order.getCapitalTradeAmount());
-
+        capitalTradeOrderService.trade(
+                order.getTradeOrderNo(),
+                placeOrderRequest.getFromUserId(),
+                placeOrderRequest.getToUserId(),
+                order.getCapitalTradeAmount()
+        );
         return new RedirectView("/payresult/" + order.getTradeOrderNo());
     }
 
     @GetMapping("/payresult/{tradeOrderNo}")
-    public String payResult(@PathVariable long tradeOrderNo, ModelMap map){
+    public String payResult(@PathVariable long tradeOrderNo, ModelMap map) {
         Order foundOrder = orderService.findByTradeOrderNo(tradeOrderNo);
 
         // 订单支付结果，null则返回"Unknown"
@@ -137,62 +146,5 @@ public class SeckillController {
 
         map.addAttribute("title", "支付结果");
         return "payResult";
-    }
-
-    private class PlaceOrderRequest {
-        private long productId;
-        private String redpacketPayAmountStr;
-        private long userId;
-        private BigDecimal redpacketPayAmount;
-        private List<Pair<Product, Integer>> productQuantitiesList;
-        private long fromUserId;
-        private long toUserId;
-
-        public PlaceOrderRequest(long productId, String redpacketPayAmountStr, long userId) {
-            this.productId = productId;
-            this.redpacketPayAmountStr = redpacketPayAmountStr;
-            this.userId = userId;
-        }
-
-        public BigDecimal getRedpacketPayAmount() {
-            return redpacketPayAmount;
-        }
-
-        public List<Pair<Product, Integer>> getProductQuantitiesList() {
-            return productQuantitiesList;
-        }
-
-        public long getFromUserId() {
-            return fromUserId;
-        }
-
-        public long getToUserId() {
-            return toUserId;
-        }
-
-        public PlaceOrderRequest invoke() {
-            Product product = productService.selectByPrimaryKey(productId);
-            redpacketPayAmount = Strings.isNullOrEmpty(redpacketPayAmountStr) ? BigDecimal.ZERO : new BigDecimal(redpacketPayAmountStr);
-            // 参数校验
-            checkParam(product, userId, redpacketPayAmount);
-            // 订单商品列表
-            productQuantitiesList = new ArrayList<>();
-            productQuantitiesList.add(new ImmutablePair<>(product, 1));
-            // 付款人
-            fromUserId = userId;
-            // 收款人
-            toUserId = shopService.selectByPrimaryKey(product.getShopId()).getUserId();
-            return this;
-        }
-
-        private void checkParam(Product product, long payerUserId, BigDecimal redpacketPayAmount) {
-            // 商品价格
-            BigDecimal productPrice = product.getProductPrice();
-            // 校验合法性
-            boolean smallThanZero = redpacketPayAmount.compareTo(BigDecimal.ZERO) < 0;
-            boolean bigThanProductPrice = redpacketPayAmount.compareTo(productPrice) > 0;
-            if (smallThanZero) throw new InvalidParameterException("红包金额不能小于0");
-            if (bigThanProductPrice) throw new InvalidParameterException("红包金额不能大于商品价格");
-        }
     }
 }
