@@ -39,6 +39,13 @@
             <artifactId>base-dubbo</artifactId>
             <version>1.1.0</version>
         </dependency>
+
+        <!-- base-common -->
+        <dependency>
+            <groupId>com.sun8min.base</groupId>
+            <artifactId>base-common</artifactId>
+            <version>1.1.0</version>
+        </dependency>
     </dependencies>
 
 </project>
