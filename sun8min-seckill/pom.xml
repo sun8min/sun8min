@@ -6,50 +6,50 @@
 	<parent>
 		<groupId>com.sun8min</groupId>
 		<artifactId>sun8min</artifactId>
-		<version>1.1.0</version>
+		<version>1.2.0</version>
 	</parent>
 
 	<groupId>com.sun8min.seckill</groupId>
 	<artifactId>sun8min-seckill</artifactId>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 
 	<dependencies>
 		<!-- user-api -->
 		<dependency>
 			<groupId>com.sun8min.user</groupId>
 			<artifactId>user-api</artifactId>
-			<version>1.1.0</version>
+			<version>1.2.0</version>
 		</dependency>
 		<!-- shop-api -->
 		<dependency>
 			<groupId>com.sun8min.shop</groupId>
 			<artifactId>shop-api</artifactId>
-			<version>1.1.0</version>
+			<version>1.2.0</version>
 		</dependency>
 		<!-- capital-api -->
 		<dependency>
 			<groupId>com.sun8min.capital</groupId>
 			<artifactId>capital-api</artifactId>
-			<version>1.1.0</version>
+			<version>1.2.0</version>
 		</dependency>
 		<!-- redpacket-api -->
 		<dependency>
 			<groupId>com.sun8min.redpacket</groupId>
 			<artifactId>redpacket-api</artifactId>
-			<version>1.1.0</version>
+			<version>1.2.0</version>
 		</dependency>
 		<!-- order-api -->
 		<dependency>
 			<groupId>com.sun8min.order</groupId>
 			<artifactId>order-api</artifactId>
-			<version>1.1.0</version>
+			<version>1.2.0</version>
 		</dependency>
 
 		<!-- precision-web -->
 		<dependency>
 			<groupId>com.sun8min.base</groupId>
 			<artifactId>base-web</artifactId>
-			<version>1.1.0</version>
+			<version>1.2.0</version>
 		</dependency>
 
 		<!-- thymeleaf -->

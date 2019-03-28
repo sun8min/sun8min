@@ -6,7 +6,7 @@
 
     <groupId>com.sun8min</groupId>
     <artifactId>sun8min</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
     <packaging>pom</packaging>
 
@@ -139,8 +139,8 @@
         <pluginManagement>
             <plugins>
                 <!-- 多模块版本号修改
-                1。参数-DallowSnapshots=true,表示允许release版修改为snapshot版。
-                2。参数-DprocessAllModules=true表示该模块下的子模块及依赖其的版本号都改成1.0.0
+                2。参数-DprocessAllModules=true表示处理所有的子模块，即该模块下的子模块及依赖其的版本号都改成1.0.0
+                1。参数-DallowSnapshots=true,表示允许快照版本，即允许release版修改为snapshot版。
                 3。执行命令 mvn versions:set -DoldVersion=* -DnewVersion=1.0.0 -DprocessAllModules=true -DallowSnapshots=true
                 4。回滚 mvn versions:revert
                 5。提交 mvn versions:commit
