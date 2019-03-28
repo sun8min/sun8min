@@ -20,5 +20,4 @@
         <module>order-entity</module>
         <module>order-provider</module>
     </modules>
-
 </project>
