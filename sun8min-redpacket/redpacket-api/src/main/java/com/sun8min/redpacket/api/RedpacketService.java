@@ -2,6 +2,7 @@ package com.sun8min.redpacket.api;
 
 import com.sun8min.redpacket.entity.Redpacket;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface RedpacketService {
@@ -20,5 +21,5 @@ public interface RedpacketService {
      * @param userId
      * @return
      */
-    Long findAmountByUserId(Long userId);
+    BigDecimal findAmountByUserId(Long userId);
 }

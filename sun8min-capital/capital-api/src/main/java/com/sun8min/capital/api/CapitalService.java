@@ -2,6 +2,7 @@ package com.sun8min.capital.api;
 
 import com.sun8min.capital.entity.Capital;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CapitalService {
@@ -20,5 +21,5 @@ public interface CapitalService {
      * @param userId
      * @return
      */
-    Long findAmountByUserId(Long userId);
+    BigDecimal findAmountByUserId(Long userId);
 }

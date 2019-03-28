@@ -1,6 +1,7 @@
 package com.sun8min.shop.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
  * 商品表
  *
  * @author sun8min
- * @date 2019-03-27 00:49:21
+ * @date 2019-03-28 13:28:32
  */
 @Data
 @NoArgsConstructor
@@ -32,9 +33,9 @@ public class Product implements Serializable {
     private String productImage;
 
     /**
-     * 商品售价（精确到万分之一）
+     * 商品售价（精确到分）
      */
-    private Long productPrice;
+    private BigDecimal productPrice;
 
     /**
      * 商品折扣类型（0：无折扣，1：输入折后价，2：输入折扣百分比）
@@ -42,9 +43,9 @@ public class Product implements Serializable {
     private Integer productDiscountType;
 
     /**
-     * 商品折后价（精确到万分之一）
+     * 商品折后价（精确到分）
      */
-    private Long productDiscountPrice;
+    private BigDecimal productDiscountPrice;
 
     /**
      * 商品折扣百分比
@@ -54,7 +55,7 @@ public class Product implements Serializable {
     /**
      * 所属商店id
      */
-    private Long productShopId;
+    private Long shopId;
 
     /**
      * 创建时间

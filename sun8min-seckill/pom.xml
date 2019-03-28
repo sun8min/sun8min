@@ -45,7 +45,7 @@
 			<version>1.1.0</version>
 		</dependency>
 
-		<!-- base-web -->
+		<!-- precision-web -->
 		<dependency>
 			<groupId>com.sun8min.base</groupId>
 			<artifactId>base-web</artifactId>

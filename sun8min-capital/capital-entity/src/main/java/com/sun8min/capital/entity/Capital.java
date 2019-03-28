@@ -1,17 +1,17 @@
 package com.sun8min.capital.entity;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 用户账户表
  *
  * @author sun8min
- * @date 2019-03-27 01:28:16
+ * @date 2019-03-28 13:17:34
  */
 @Data
 @NoArgsConstructor
@@ -28,9 +28,9 @@ public class Capital implements Serializable {
     private Long userId;
 
     /**
-     * 账户余额合计（精确到万分之一）
+     * 账户余额合计（精确到分）
      */
-    private Long capitalAmount;
+    private BigDecimal capitalAmount;
 
     /**
      * 创建时间

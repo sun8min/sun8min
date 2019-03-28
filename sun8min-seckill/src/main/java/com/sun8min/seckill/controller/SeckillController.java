@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.math.BigDecimal;
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.UUID;
 
 // consumer://172.20.10.5/com.sun8min.user.api.gege.userService2?application=consumer&category=consumers&check=false&dubbo=2.5.3&interface=com.sun8min.user.api.gege.userService2&methods=selectAll&pid=2385&revision=1.0.0&side=consumer&timestamp=1553422997200&version=1.0.0
 @Controller
@@ -66,8 +67,8 @@ public class SeckillController {
     public String confirm(@PathVariable long productId, ModelMap map){
         // TODO 暂时先定购买用户id为3，去购买其他两家的商品
         long userId = 3L;
-        Long capitalAmount = capitalService.findAmountByUserId(userId);
-        Long redpacketAmount = redpacketService.findAmountByUserId(userId);
+        BigDecimal capitalAmount = capitalService.findAmountByUserId(userId);
+        BigDecimal redpacketAmount = redpacketService.findAmountByUserId(userId);
         Product product = productService.selectByPrimaryKey(productId);
 
         map.addAttribute("title", "确认下单");
@@ -87,6 +88,11 @@ public class SeckillController {
         checkParam(productId, userId, redPacketPayAmount);
         // TODO 分布式事务
         // 生成订单
+        String tradeOrderNo = UUID.randomUUID().toString();
+        long fromUserId = userId;
+        long shopId = productService.selectByPrimaryKey(productId).getShopId();
+        long toUserId = shopService.selectByPrimaryKey(shopId).getUserId();
+        int orderStatus = 0;
         // 生成红包订单
         // 生成账户订单
         map.addAttribute("title", "支付结果");
@@ -97,16 +103,16 @@ public class SeckillController {
         // 用户输入的支付所用红包余额
         BigDecimal redPacketPayAmountInBigDecimal = new BigDecimal(redPacketPayAmount);
         // 商品价格
-        BigDecimal productPrice = new BigDecimal(productService.selectByPrimaryKey(productId).getProductPrice());
+        BigDecimal productPrice = productService.selectByPrimaryKey(productId).getProductPrice();
         // 校验合法性
         boolean smallThanZero = redPacketPayAmountInBigDecimal.compareTo(BigDecimal.ZERO) < 0;
         boolean bigThanProductPrice = redPacketPayAmountInBigDecimal.compareTo(productPrice) > 0;
-        if (smallThanZero || bigThanProductPrice)
-            throw new InvalidParameterException("非法红包输入 :" + redPacketPayAmount);
+        if (smallThanZero) throw new InvalidParameterException("红包金额不能小于0");
+        if (bigThanProductPrice) throw new InvalidParameterException("红包金额不能大于商品价格");
         // 校验余额是否充足
-        BigDecimal redpacketAmount = new BigDecimal(redpacketService.findAmountByUserId(payerUserId));
-        if (redPacketPayAmountInBigDecimal.compareTo(redpacketAmount) > 0)
-            throw new InvalidParameterException("红包余额不足 :" + redPacketPayAmount);
+        BigDecimal redpacketAmount = redpacketService.findAmountByUserId(payerUserId);
+        boolean bigThanRedpacketAmount = redPacketPayAmountInBigDecimal.compareTo(redpacketAmount) > 0;
+        if (bigThanRedpacketAmount) throw new InvalidParameterException("红包余额不足");
     }
 
 }

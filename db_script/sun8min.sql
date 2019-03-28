@@ -28,9 +28,9 @@ use sun8min_capital;
 drop table if exists capital;
 create table capital
 (
-  capital_id     bigint unsigned auto_increment comment '账户id',
+  capital_id          bigint unsigned auto_increment comment '账户id',
   user_id             bigint unsigned not null comment '用户id',
-  capital_amount bigint unsigned not null comment '账户余额合计（精确到万分之一）',
+  capital_amount      decimal(10,2) unsigned not null comment '账户余额合计（精确到分）',
   gmt_create          datetime        not null default current_timestamp comment '创建时间',
   gmt_modified        datetime        not null default current_timestamp on update current_timestamp comment '修改时间',
   is_deleted          tinyint         not null default 0 comment '是否删除（0:正常，1:已删）',
@@ -47,7 +47,7 @@ create table capital_trade_order
   capital_trade_order_id bigint unsigned auto_increment comment '账户交易id',
   from_user_id                bigint unsigned not null comment '资金转出用户id',
   to_user_id                  bigint unsigned not null comment '资金转入用户id',
-  capital_trade_amount        bigint unsigned not null comment '交易金额合计（精确到万分之一）',
+  capital_trade_amount        decimal(10,2) unsigned not null comment '交易金额合计（精确到分）',
   trade_order_no              varchar(32)     not null comment '订单交易号',
   gmt_create                  datetime        not null default current_timestamp comment '创建时间',
   gmt_modified                datetime        not null default current_timestamp on update current_timestamp comment '修改时间',
@@ -67,9 +67,9 @@ use sun8min_redpacket;
 drop table if exists redpacket;
 create table redpacket
 (
-  redpacket_id     bigint unsigned auto_increment comment '红包id',
+  redpacket_id          bigint unsigned auto_increment comment '红包id',
   user_id               bigint unsigned not null comment '用户id',
-  redpacket_amount bigint unsigned not null comment '红包余额合计（精确到万分之一）',
+  redpacket_amount      decimal(10,2) unsigned not null comment '红包余额合计（精确到分）',
   gmt_create            datetime        not null default current_timestamp comment '创建时间',
   gmt_modified          datetime        not null default current_timestamp on update current_timestamp comment '修改时间',
   is_deleted            tinyint         not null default 0 comment '是否删除（0:正常，1:已删）',
@@ -83,10 +83,10 @@ create table redpacket
 drop table if exists redpacket_trade_order;
 create table redpacket_trade_order
 (
-  redpacket_trade_order_id bigint unsigned auto_increment comment '红包交易id',
+  redpacket_trade_order_id      bigint unsigned auto_increment comment '红包交易id',
   from_user_id                  bigint unsigned not null comment '资金转出用户id',
   to_user_id                    bigint unsigned not null comment '资金转入用户id',
-  redpacket_trade_amount        bigint unsigned not null comment '交易金额合计（精确到万分之一）',
+  redpacket_trade_amount        decimal(10,2) unsigned not null comment '交易金额合计（精确到分）',
   trade_order_no                varchar(32)     not null comment '订单交易号',
   gmt_create                    datetime        not null default current_timestamp comment '创建时间',
   gmt_modified                  datetime        not null default current_timestamp on update current_timestamp comment '修改时间',
@@ -106,11 +106,11 @@ use sun8min_order;
 drop table if exists `order`;
 create table `order`
 (
-  order_id          bigint unsigned auto_increment comment '订单id',
+  order_id               bigint unsigned auto_increment comment '订单id',
   from_user_id           bigint unsigned not null comment '资金转出用户id',
   to_user_id             bigint unsigned not null comment '资金转入用户id',
-  capital_trade_amount   bigint unsigned not null comment '账户交易金额合计（精确到万分之一）',
-  redpacket_trade_amount bigint unsigned not null comment '红包交易金额合计（精确到万分之一）',
+  capital_trade_amount   decimal(10,2) unsigned not null comment '账户交易金额合计（精确到分）',
+  redpacket_trade_amount decimal(10,2) unsigned not null comment '红包交易金额合计（精确到分）',
   order_status           tinyint         not null comment '订单支付状态（0:初始化，1:支付中，2:支付成功，3:取消支付）',
   trade_order_no         varchar(32)     not null comment '订单交易号',
   gmt_create             datetime        not null default current_timestamp comment '创建时间',
@@ -126,9 +126,9 @@ create table `order`
 drop table if exists order_line;
 create table order_line
 (
-  order_line_id bigint unsigned auto_increment comment '订单商品项id',
+  order_line_id      bigint unsigned auto_increment comment '订单商品项id',
   product_id         bigint unsigned not null comment '商品id',
-  product_price      bigint unsigned not null comment '商品价格（精确到万分之一）',
+  product_price      decimal(10,2) unsigned not null comment '商品价格（精确到分）',
   product_quantity   bigint unsigned not null comment '商品数量',
   trade_order_no     varchar(32)     not null comment '主订单交易号',
   gmt_create         datetime        not null default current_timestamp comment '创建时间',
@@ -151,7 +151,7 @@ create table shop
 (
   shop_id      bigint unsigned auto_increment comment '商店id',
   shop_name    varchar(16)     not null comment '商店名',
-  user_id bigint unsigned not null comment '所属用户id',
+  user_id      bigint unsigned not null comment '所属用户id',
   gmt_create   datetime        not null default current_timestamp comment '创建时间',
   gmt_modified datetime        not null default current_timestamp on update current_timestamp comment '修改时间',
   is_deleted   tinyint         not null default 0 comment '是否删除（0:正常，1:已删）',
@@ -167,11 +167,11 @@ create table product
   product_id               bigint unsigned auto_increment comment '商品id',
   product_name             varchar(16)     not null comment '商品名',
   product_image            varchar(128)    not null default '' comment '商品图片url',
-  product_price            bigint unsigned not null comment '商品售价（精确到万分之一）',
+  product_price            decimal(10,2) unsigned not null comment '商品售价（精确到分）',
   product_discount_type    tinyint         not null default 0 comment '商品折扣类型（0：无折扣，1：输入折后价，2：输入折扣百分比）',
-  product_discount_price   bigint unsigned comment '商品折后价（精确到万分之一）',
+  product_discount_price   decimal(10,2) unsigned comment '商品折后价（精确到分）',
   product_discount_percent tinyint unsigned comment '商品折扣百分比',
-  product_shop_id          bigint unsigned not null comment '所属商店id',
+  shop_id                  bigint unsigned not null comment '所属商店id',
   gmt_create               datetime        not null default current_timestamp comment '创建时间',
   gmt_modified             datetime        not null default current_timestamp on update current_timestamp comment '修改时间',
   is_deleted               tinyint         not null default 0 comment '是否删除（0:正常，1:已删）',
@@ -204,5 +204,5 @@ use sun8min_shop;
 -- 商店表
 insert into `shop`(shop_name, user_id) values ('AAA的小店', 1), ('BBB的小店', 2);
 -- -- 商品表
-insert into `product`(product_name, product_price, product_shop_id) values ('A1', 1, 1), ('A2', 10, 1), ('A3', 100, 1), ('A4', 1000, 1), ('A5', 10000, 1);
-insert into `product`(product_name, product_price, product_shop_id) values ('B1', 1, 2), ('B2', 10, 2), ('B3', 100, 2), ('B4', 1000, 2), ('B5', 10000, 2);
+insert into `product`(product_name, product_price, shop_id) values ('A1', 1, 1), ('A2', 10, 1), ('A3', 100, 1), ('A4', 1000, 1), ('A5', 10000, 1);
+insert into `product`(product_name, product_price, shop_id) values ('B1', 1, 2), ('B2', 10, 2), ('B3', 100, 2), ('B4', 1000, 2), ('B5', 10000, 2);

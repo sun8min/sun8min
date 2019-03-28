@@ -1,6 +1,7 @@
 package com.sun8min.capital.dao;
 
 import com.sun8min.capital.entity.Capital;
+
 import java.util.List;
 
 public interface CapitalDao {

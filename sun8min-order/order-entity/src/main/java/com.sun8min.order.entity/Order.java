@@ -1,17 +1,17 @@
 package com.sun8min.order.entity;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 订单表
  *
  * @author sun8min
- * @date 2019-03-27 01:12:51
+ * @date 2019-03-28 13:22:51
  */
 @Data
 @NoArgsConstructor
@@ -33,14 +33,14 @@ public class Order implements Serializable {
     private Long toUserId;
 
     /**
-     * 账户交易金额合计（精确到万分之一）
+     * 账户交易金额合计（精确到分）
      */
-    private Long capitalTradeAmount;
+    private BigDecimal capitalTradeAmount;
 
     /**
-     * 红包交易金额合计（精确到万分之一）
+     * 红包交易金额合计（精确到分）
      */
-    private Long redpacketTradeAmount;
+    private BigDecimal redpacketTradeAmount;
 
     /**
      * 订单支付状态（0:初始化，1:支付中，2:支付成功，3:取消支付）

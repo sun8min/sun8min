@@ -6,6 +6,7 @@ import com.sun8min.redpacket.entity.Redpacket;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service(version = "${service.version}")
@@ -34,7 +35,7 @@ public class RedpacketServiceImpl implements RedpacketService {
         return redpacketDao.updateByPrimaryKey(record);
     }
 
-    public Long findAmountByUserId(Long userId) {
+    public BigDecimal findAmountByUserId(Long userId) {
         return redpacketDao.findByUserId(userId).getRedpacketAmount();
     }
 }

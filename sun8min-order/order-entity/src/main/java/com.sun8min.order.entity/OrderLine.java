@@ -1,17 +1,17 @@
 package com.sun8min.order.entity;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 订单商品项表
  *
  * @author sun8min
- * @date 2019-03-27 01:12:51
+ * @date 2019-03-28 13:22:51
  */
 @Data
 @NoArgsConstructor
@@ -28,9 +28,9 @@ public class OrderLine implements Serializable {
     private Long productId;
 
     /**
-     * 商品价格（精确到万分之一）
+     * 商品价格（精确到分）
      */
-    private Long productPrice;
+    private BigDecimal productPrice;
 
     /**
      * 商品数量

@@ -1,17 +1,17 @@
 package com.sun8min.redpacket.entity;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 用户红包表
  *
  * @author sun8min
- * @date 2019-03-27 00:55:43
+ * @date 2019-03-28 13:26:03
  */
 @Data
 @NoArgsConstructor
@@ -28,9 +28,9 @@ public class Redpacket implements Serializable {
     private Long userId;
 
     /**
-     * 红包余额合计（精确到万分之一）
+     * 红包余额合计（精确到分）
      */
-    private Long redpacketAmount;
+    private BigDecimal redpacketAmount;
 
     /**
      * 创建时间

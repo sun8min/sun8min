@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * 商店表
  *
  * @author sun8min
- * @date 2019-03-27 00:49:21
+ * @date 2019-03-28 13:28:32
  */
 @Data
 @NoArgsConstructor
