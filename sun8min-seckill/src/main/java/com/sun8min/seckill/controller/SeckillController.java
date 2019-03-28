@@ -97,7 +97,7 @@ public class SeckillController {
 
     @PostMapping("/placeOrder")
     public RedirectView placeOrder(@RequestParam long productId,
-                                   String redpacketPayAmountStr) {
+                                   @RequestParam String redpacketPayAmountStr) {
         // TODO 暂时先定购买用户id为3，去购买其他两家的商品
         long userId = 3L;
         PlaceOrderRequest placeOrderRequest = placeOrderRepository.buildQuest(productId, redpacketPayAmountStr, userId);
@@ -111,6 +111,7 @@ public class SeckillController {
                     placeOrderRequest.getProductQuantitiesList(),
                     placeOrderRequest.getRedpacketPayAmount()
             );
+            System.out.println(order);
             // 红包交易
             redpacketTradeOrderService.trade(
                     order.getTradeOrderNo(),
