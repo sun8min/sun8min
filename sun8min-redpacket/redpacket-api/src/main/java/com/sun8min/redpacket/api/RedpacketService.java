@@ -22,4 +22,11 @@ public interface RedpacketService {
      * @return
      */
     BigDecimal findAmountByUserId(Long userId);
+
+    /**
+     * 根据用户id查找红包
+     * @param userId
+     * @return
+     */
+    Redpacket findByUserId(Long userId);
 }

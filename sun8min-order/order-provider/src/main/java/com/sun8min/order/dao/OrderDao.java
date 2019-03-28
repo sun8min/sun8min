@@ -13,4 +13,6 @@ public interface OrderDao {
     List<Order> selectAll();
 
     int updateByPrimaryKey(Order record);
+
+    Order findByTradeOrderNo(Long tradeOrderNo);
 }

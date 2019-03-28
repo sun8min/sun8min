@@ -78,4 +78,10 @@
     <include refid="Base_Select_Column" />
     from `order`
   </select>
+  <select id="findByTradeOrderNo" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Select_Column" />
+    from `order`
+    where trade_order_no = #{tradeOrderNo}
+  </select>
 </mapper>
