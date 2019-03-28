@@ -111,7 +111,6 @@ public class SeckillController {
                     placeOrderRequest.getProductQuantitiesList(),
                     placeOrderRequest.getRedpacketPayAmount()
             );
-            System.out.println(order);
             // 红包交易
             redpacketTradeOrderService.trade(
                     order.getTradeOrderNo(),
