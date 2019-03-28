@@ -112,19 +112,25 @@ public class SeckillController {
                     placeOrderRequest.getRedpacketPayAmount()
             );
             // 红包交易
-            redpacketTradeOrderService.trade(
-                    order.getTradeOrderNo(),
-                    placeOrderRequest.getFromUserId(),
-                    placeOrderRequest.getToUserId(),
-                    placeOrderRequest.getRedpacketPayAmount()
-            );
+            // 如果交易金额<=0，则不记录
+            if (order.getRedpacketTradeAmount().compareTo(BigDecimal.ZERO) > 0) {
+                redpacketTradeOrderService.trade(
+                        order.getTradeOrderNo(),
+                        placeOrderRequest.getFromUserId(),
+                        placeOrderRequest.getToUserId(),
+                        order.getRedpacketTradeAmount()
+                );
+            }
             // 账户交易
-            capitalTradeOrderService.trade(
-                    order.getTradeOrderNo(),
-                    placeOrderRequest.getFromUserId(),
-                    placeOrderRequest.getToUserId(),
-                    order.getCapitalTradeAmount()
-            );
+            // 如果交易金额<=0，则不记录
+            if (order.getCapitalTradeAmount().compareTo(BigDecimal.ZERO) > 0) {
+                capitalTradeOrderService.trade(
+                        order.getTradeOrderNo(),
+                        placeOrderRequest.getFromUserId(),
+                        placeOrderRequest.getToUserId(),
+                        order.getCapitalTradeAmount()
+                );
+            }
             // 交易完成，订单修改为支付成功
         } catch (Exception e) {
             e.printStackTrace();
