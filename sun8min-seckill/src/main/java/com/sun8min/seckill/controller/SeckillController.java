@@ -15,6 +15,7 @@ import com.sun8min.shop.entity.Product;
 import com.sun8min.shop.entity.Shop;
 import com.sun8min.user.api.UserService;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +48,8 @@ public class SeckillController {
     RedpacketTradeOrderService redpacketTradeOrderService;
     @Reference(version = "${service.version}")
     CapitalTradeOrderService capitalTradeOrderService;
+    @Autowired
+    PlaceOrderRepository placeOrderRepository;
 
 
     @GetMapping("/")
@@ -94,10 +97,10 @@ public class SeckillController {
 
     @PostMapping("/placeOrder")
     public RedirectView placeOrder(@RequestParam long productId,
-                                   @RequestParam String redpacketPayAmountStr) {
+                                   String redpacketPayAmountStr) {
         // TODO 暂时先定购买用户id为3，去购买其他两家的商品
         long userId = 3L;
-        PlaceOrderRequest placeOrderRequest = PlaceOrderRepository.buildQuest(productId, redpacketPayAmountStr, userId);
+        PlaceOrderRequest placeOrderRequest = placeOrderRepository.buildQuest(productId, redpacketPayAmountStr, userId);
         // TODO 分布式事务
         Order order = null;
         try {

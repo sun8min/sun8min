@@ -8,20 +8,22 @@ import com.sun8min.shop.entity.Product;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class PlaceOrderRepository {
 
     @Reference(version = "${service.version}")
-    static ShopService shopService;
+    ShopService shopService;
     @Reference(version = "${service.version}")
-    static ProductService productService;
+    ProductService productService;
 
-    public static PlaceOrderRequest buildQuest(Long productId, String redpacketPayAmountStr, long userId) {
+    public PlaceOrderRequest buildQuest(Long productId, String redpacketPayAmountStr, long userId) {
         Product product = productService.selectByPrimaryKey(productId);
         BigDecimal redpacketPayAmount = Strings.isNullOrEmpty(redpacketPayAmountStr) ? BigDecimal.ZERO : new BigDecimal(redpacketPayAmountStr);
         // 参数校验
