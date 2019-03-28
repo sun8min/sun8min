@@ -68,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
             orderLine.setProductId(product.getProductId());
             orderLine.setProductPrice(product.getProductPrice());
             orderLine.setProductQuantity(quantities.longValue());
-            payAmount.add(product.getProductPrice().multiply(new BigDecimal(quantities.longValue())));
+            payAmount = payAmount.add(product.getProductPrice().multiply(new BigDecimal(quantities.longValue())));
             orderLine.setTradeOrderNo(tradeOrderNo);
             orderLineDao.insert(orderLine);
         }
