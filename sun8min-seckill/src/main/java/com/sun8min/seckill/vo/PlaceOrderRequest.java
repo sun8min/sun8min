@@ -9,6 +9,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * 下单请求
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

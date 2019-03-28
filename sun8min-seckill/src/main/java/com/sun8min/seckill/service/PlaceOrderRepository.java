@@ -15,6 +15,9 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 下单服务
+ */
 @Service
 public class PlaceOrderRepository {
 
@@ -23,7 +26,14 @@ public class PlaceOrderRepository {
     @Reference(version = "${service.version}")
     ProductService productService;
 
-    public PlaceOrderRequest buildQuest(Long productId, String redpacketPayAmountStr, long userId) {
+    /**
+     * 构建下单请求
+     * @param userId 用户id
+     * @param productId 商品id
+     * @param redpacketPayAmountStr 所输入的红包支付金额字符串
+     * @return
+     */
+    public PlaceOrderRequest buildQuest(long userId, Long productId, String redpacketPayAmountStr) {
         Product product = productService.selectByPrimaryKey(productId);
         BigDecimal redpacketPayAmount = Strings.isNullOrEmpty(redpacketPayAmountStr) ? BigDecimal.ZERO : new BigDecimal(redpacketPayAmountStr);
         // 参数校验
@@ -38,6 +48,11 @@ public class PlaceOrderRepository {
         return new PlaceOrderRequest(fromUserId, toUserId, productQuantitiesList, redpacketPayAmount);
     }
 
+    /**
+     * 参数校验
+     * @param product 商品
+     * @param redpacketPayAmount 用户输入的红包交易额
+     */
     private static void checkParam(Product product, BigDecimal redpacketPayAmount) {
         // 商品价格
         BigDecimal productPrice = product.getProductPrice();

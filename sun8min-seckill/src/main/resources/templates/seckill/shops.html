@@ -7,12 +7,10 @@
 <body>
 <h1 th:text="${title}"></h1>
 <table>
-    <tr th:each="product,iterStat : ${products}">
+    <tr th:each="shop,iterStat : ${shops}">
         <th scope="row" th:text="${iterStat.count} + '.'"></th>
-        <td th:text="${product.productName}"/>
-        <td th:text="${product.productPrice}"/>
-        <td><a th:href="@{'/product/' + ${product.productId} + '/confirm'}"
-               th:text="立即购买"></a></td>
+        <td><a th:href="@{'/' + ${prefix} + '/shop/' + ${shop.shopId}}"
+               th:text="${shop.shopName}"></a></td>
     </tr>
 </table>
 </body>
