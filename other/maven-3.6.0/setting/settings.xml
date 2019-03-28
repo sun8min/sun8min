@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <settings   xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
     <!--本地仓库。该值表示构建系统本地仓库的路径。其默认值为${user.home}/.m2/repository。  -->
     <localRepository>/Volumes/mac_data/maven/repository</localRepository>
-    
+
     <mirrors>
         <mirror>
             <id>aliyun-maven</id>
@@ -16,17 +16,32 @@
     </mirrors>
 
     <profiles>
-      <profile>
-          <id>downloadSourcesAndJavadocs</id>
-          <properties>
-              <downloadSources>true</downloadSources>
-              <downloadJavadocs>true</downloadJavadocs>
-          </properties>
-      </profile>
+        <profile>
+            <id>downloadSourcesAndJavadocs</id>
+            <properties>
+                <downloadSources>true</downloadSources>
+                <downloadJavadocs>true</downloadJavadocs>
+            </properties>
+        </profile>
+        <!-- settings配置maven编译版本为1.8，默认1.5 -->
+        <!-- 否则需要在pom.xml文件配置maven.compiler.sourcet与target属性 -->
+        <!-- 或者在pom.xml文件配置maven-compiler-plugin插件的sourcet与target属性 -->
+        <profile>
+            <id>development</id>
+            <activation>
+                <jdk>1.8</jdk>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <maven.compiler.source>1.8</maven.compiler.source>
+                <maven.compiler.target>1.8</maven.compiler.target>
+                <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+            </properties>
+        </profile>
     </profiles>
 
     <activeProfiles>
-<!--      <activeProfile>downloadSourcesAndJavadocs</activeProfile>-->
+        <!--      <activeProfile>downloadSourcesAndJavadocs</activeProfile>-->
     </activeProfiles>
 
 </settings>
