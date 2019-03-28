@@ -131,10 +131,10 @@ public class SeckillController {
                         order.getCapitalTradeAmount()
                 );
             }
-            // 交易完成，订单修改为支付成功
+            // TODO 交易完成，订单修改为支付成功
         } catch (Exception e) {
             e.printStackTrace();
-            // 交易失败，订单修改为支付失败
+            // TODO 交易失败，订单修改为支付失败
         }
         return new RedirectView("/payresult/" + order.getTradeOrderNo());
     }
