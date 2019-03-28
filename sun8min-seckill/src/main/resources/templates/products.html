@@ -2,17 +2,17 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title><span th:text="${title}" /></title>
+    <title th:text="${title}"></title>
 </head>
 <body>
-<h1><span th:text="${title}" /></h1>
+<h1 th:text="${title}"></h1>
 <table>
     <tr th:each="product,iterStat : ${products}">
         <th scope="row" th:text="${iterStat.count} + '.'"></th>
         <td th:text="${product.productName}"/>
         <td th:text="${product.productPrice}"/>
         <td><a th:href="@{'/product/' + ${product.productId} + '/confirm'}"
-               th:text="购买"></a></td>
+               th:text="立即购买"></a></td>
     </tr>
 </table>
 </body>

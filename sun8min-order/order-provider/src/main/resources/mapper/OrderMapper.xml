@@ -18,11 +18,11 @@
     order_status, trade_order_no, gmt_create, gmt_modified, is_deleted
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from order
+    delete from `order`
     where order_id = #{orderId}
   </delete>
   <insert id="insert" parameterType="com.sun8min.order.entity.Order">
-    insert into order (
+    insert into `order` (
       <trim suffixOverrides=",">
         <if test="orderId != null">order_id,</if>
         <if test="fromUserId != null">from_user_id,</if>
@@ -52,7 +52,7 @@
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.sun8min.order.entity.Order">
-    update order set 
+    update `order` set
     <trim suffixOverrides=",">
       <if test="orderId != null">order_id = #{orderId},</if>
       <if test="fromUserId != null">from_user_id = #{fromUserId},</if>
@@ -70,12 +70,12 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Select_Column" />
-    from order
+    from `order`
     where order_id = #{orderId}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select 
     <include refid="Base_Select_Column" />
-    from order
+    from `order`
   </select>
 </mapper>
