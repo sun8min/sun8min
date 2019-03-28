@@ -111,7 +111,7 @@ create table `order`
   to_user_id             bigint unsigned not null comment '资金转入用户id',
   capital_trade_amount   decimal(10,2) unsigned not null comment '账户交易金额合计（精确到分）',
   redpacket_trade_amount decimal(10,2) unsigned not null comment '红包交易金额合计（精确到分）',
-  order_status           tinyint         not null comment '订单支付状态（0:初始化，1:支付中，2:支付成功，3:取消支付）',
+  order_status           tinyint         not null comment '订单支付状态（0:初始化，1:支付中，2:支付成功，3:支付失败，4:取消支付）',
   trade_order_no         varchar(32)     not null comment '订单交易号',
   gmt_create             datetime        not null default current_timestamp comment '创建时间',
   gmt_modified           datetime        not null default current_timestamp on update current_timestamp comment '修改时间',

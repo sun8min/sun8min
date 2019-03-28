@@ -1,11 +1,15 @@
 package com.sun8min.order.entity;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 订单表
@@ -43,7 +47,7 @@ public class Order implements Serializable {
     private BigDecimal redpacketTradeAmount;
 
     /**
-     * 订单支付状态（0:初始化，1:支付中，2:支付成功，3:取消支付）
+     * 订单支付状态（0:初始化，1:支付中，2:支付成功，3:支付失败，4:取消支付)
      */
     private Integer orderStatus;
 
@@ -68,4 +72,33 @@ public class Order implements Serializable {
     private Integer isDeleted;
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 订单支付状态枚举类
+     */
+    @Getter
+    @AllArgsConstructor
+    public enum OrderStatus {
+        DRAFT(0, "初始化"),
+        PAYING(1, "支付中"),
+        PAY_CONFIRM(2, "支付成功"),
+        PAY_FAILED(3, "支付失败"),
+        PAY_CANCEL(4, "取消支付");
+
+        private int value;
+        private String desc;
+
+        public static String getDescByValue(int value) {
+            OrderStatus[] OrderStatusEnums = values();
+            for (OrderStatus orderStatusEnum : OrderStatusEnums) {
+                if (orderStatusEnum.getValue() == value) {
+                    return orderStatusEnum.getDesc();
+                }
+            }
+            return null;
+        }
+    }
+
+    private List<OrderLine> orderLines = new ArrayList<>();
+
 }
