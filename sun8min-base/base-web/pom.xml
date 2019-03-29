@@ -40,13 +40,6 @@
             <version>1.2.0</version>
         </dependency>
 
-        <!-- fescar(分布式事务) -->
-        <dependency>
-            <groupId>com.alibaba.fescar</groupId>
-            <artifactId>fescar-all</artifactId>
-            <version>${fescar.version}</version>
-        </dependency>
-
         <!-- base-common -->
         <dependency>
             <groupId>com.sun8min.base</groupId>

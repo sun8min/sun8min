@@ -41,13 +41,16 @@
         <!-- maven编码 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- maven配置-->
+        <maven.test.skip>true</maven.test.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
         <!-- springboot -->
         <spring-boot.version>2.1.3.RELEASE</spring-boot.version>
         <!-- dubbo -->
         <dubbo.version>2.7.0</dubbo.version>
         <!-- springcloud -->
         <spring-cloud-build.version>2.1.3.RELEASE</spring-cloud-build.version>
-        <spring-boot-eureka.version>2.1.1.RELEASE</spring-boot-eureka.version>
+        <spring-cloud-eureka.version>2.1.1.RELEASE</spring-cloud-eureka.version>
         <!-- springboot-mybayis -->
         <spring-boot-mybatis.version>2.0.0</spring-boot-mybatis.version>
         <!-- mybatis-generator -->
@@ -78,6 +81,15 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-dependencies-bom</artifactId>
                 <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- fescar(分布式事务)(pom) -->
+            <dependency>
+                <groupId>com.alibaba.fescar</groupId>
+                <artifactId>fescar-all</artifactId>
+                <version>${fescar.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -121,14 +133,14 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-                <version>${spring-boot-eureka.version}</version>
+                <version>${spring-cloud-eureka.version}</version>
             </dependency>
 
             <!-- SpringCloud Eureka Server -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-                <version>${spring-boot-eureka.version}</version>
+                <version>${spring-cloud-eureka.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -67,6 +67,16 @@
 			<!-- 在当前项目被依赖时，此依赖可选。即不传递 -->
 			<optional>true</optional>
 		</dependency>
+
+		<!-- fescar -->
+		<dependency>
+			<groupId>com.alibaba.fescar</groupId>
+			<artifactId>fescar-spring</artifactId>
+		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.alibaba.fescar</groupId>-->
+			<!--<artifactId>fescar-dubbo</artifactId>-->
+		<!--</dependency>-->
     </dependencies>
 
 	<build>
