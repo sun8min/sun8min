@@ -5,19 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>base-parent</artifactId>
         <groupId>com.sun8min.base</groupId>
+        <artifactId>base-parent</artifactId>
         <version>1.2.0</version>
     </parent>
 
     <groupId>com.sun8min.base</groupId>
     <artifactId>base-common</artifactId>
     <version>1.2.0</version>
-
-    <properties>
-        <guava.version>27.1-jre</guava.version>
-        <commons-lang3.version>3.8.1</commons-lang3.version>
-    </properties>
 
     <dependencies>
         <!-- guava -->

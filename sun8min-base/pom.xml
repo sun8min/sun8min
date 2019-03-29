@@ -26,5 +26,4 @@
         <module>base-dubbo</module>
         <module>base-common</module>
     </modules>
-
 </project>

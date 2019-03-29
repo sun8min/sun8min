@@ -54,6 +54,12 @@
         <mybatis-generator.version>1.3.7</mybatis-generator.version>
         <!-- mysql -->
         <mysql.version>8.0.15</mysql.version>
+        <!-- fescar(分布式事务) -->
+        <fescar.version>0.4.0</fescar.version>
+        <!-- guava -->
+        <guava.version>27.1-jre</guava.version>
+        <!-- commons-lang3 -->
+        <commons-lang3.version>3.8.1</commons-lang3.version>
     </properties>
 
     <dependencyManagement>
