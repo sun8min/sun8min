@@ -25,6 +25,7 @@
         <module>base-web</module>
         <module>base-dubbo</module>
         <module>base-common</module>
+        <module>base-fescar</module>
     </modules>
 
     <dependencyManagement>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.sun8min.base</groupId>
+        <artifactId>base-parent</artifactId>
+        <version>1.2.0</version>
+    </parent>
+
+    <groupId>com.sun8min.base</groupId>
+    <artifactId>base-fescar</artifactId>
+    <version>1.2.0</version>
+
+    <dependencies>
+        <!-- fescar -->
+        <dependency>
+            <groupId>com.alibaba.fescar</groupId>
+            <artifactId>fescar-spring</artifactId>
+            <version>${fescar.version}</version>
+        </dependency>
+
+        <!--dependency for Apache Dubbo-->
+        <dependency>
+            <groupId>com.alibaba.fescar</groupId>
+            <artifactId>fescar-dubbo</artifactId>
+            <version>${fescar.version}</version>
+        </dependency>
+
+        <!--dependency for Alibaba Dubbo-->
+        <dependency>
+            <groupId>com.alibaba.fescar</groupId>
+            <artifactId>fescar-dubbo-alibaba</artifactId>
+            <version>${fescar.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

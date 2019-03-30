@@ -51,6 +51,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>
+
+        <!-- fescar -->
+        <dependency>
+            <groupId>com.sun8min.base</groupId>
+            <artifactId>base-fescar</artifactId>
+            <version>1.2.0</version>
+        </dependency>
     </dependencies>
 
 </project>

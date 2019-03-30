@@ -68,16 +68,13 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- fescar -->
+		<!-- base-fescar -->
 		<dependency>
-			<groupId>com.alibaba.fescar</groupId>
-			<artifactId>fescar-spring</artifactId>
+			<groupId>com.sun8min.base</groupId>
+			<artifactId>base-fescar</artifactId>
+			<version>1.2.0</version>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>com.alibaba.fescar</groupId>-->
-			<!--<artifactId>fescar-dubbo</artifactId>-->
-		<!--</dependency>-->
-    </dependencies>
+	</dependencies>
 
 	<build>
 		<plugins>
