@@ -1,14 +1,14 @@
-package com.sun8min.seckill.service;
+package com.sun8min.seckill.repository;
 
 import com.google.common.base.Strings;
-import com.sun8min.seckill.vo.PlaceOrderRequest;
+import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
 import com.sun8min.shop.api.ProductService;
 import com.sun8min.shop.api.ShopService;
 import com.sun8min.shop.entity.Product;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.dubbo.config.annotation.Reference;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.security.InvalidParameterException;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 下单服务
  */
-@Service
+@Repository
 public class PlaceOrderRepository {
 
     @Reference(version = "${service.version}")
@@ -28,12 +28,13 @@ public class PlaceOrderRepository {
 
     /**
      * 构建下单请求
-     * @param userId 用户id
-     * @param productId 商品id
+     *
+     * @param userId                用户id
+     * @param productId             商品id
      * @param redpacketPayAmountStr 所输入的红包支付金额字符串
      * @return
      */
-    public PlaceOrderRequest buildQuest(long userId, Long productId, String redpacketPayAmountStr) {
+    public PlaceOrderRequestDTO buildQuestDTO(long userId, Long productId, String redpacketPayAmountStr) {
         Product product = productService.selectByPrimaryKey(productId);
         BigDecimal redpacketPayAmount = Strings.isNullOrEmpty(redpacketPayAmountStr) ? BigDecimal.ZERO : new BigDecimal(redpacketPayAmountStr);
         // 参数校验
@@ -45,12 +46,13 @@ public class PlaceOrderRepository {
         long fromUserId = userId;
         // 收款人
         long toUserId = shopService.selectByPrimaryKey(product.getShopId()).getUserId();
-        return new PlaceOrderRequest(fromUserId, toUserId, productQuantitiesList, redpacketPayAmount);
+        return new PlaceOrderRequestDTO(fromUserId, toUserId, productQuantitiesList, redpacketPayAmount);
     }
 
     /**
      * 参数校验
-     * @param product 商品
+     *
+     * @param product            商品
      * @param redpacketPayAmount 用户输入的红包交易额
      */
     private static void checkParam(Product product, BigDecimal redpacketPayAmount) {

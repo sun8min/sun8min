@@ -1,5 +1,6 @@
 package com.sun8min.order.provider;
 
+import com.alibaba.fescar.core.context.RootContext;
 import com.sun8min.order.api.OrderService;
 import com.sun8min.order.dao.OrderDao;
 import com.sun8min.order.dao.OrderLineDao;
@@ -56,6 +57,8 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public Order placeOrder(Long fromUserId, Long toUserId, List<Pair<Product, Integer>> productQuantitiesList, BigDecimal redpacketPayAmount) {
+        System.out.println("全局事务id ：" + RootContext.getXID());
+        // 订单编号
         String tradeOrderNo = UUID.randomUUID().toString().replace("-", "");
 
         // 订单总金额

@@ -1,5 +1,6 @@
 package com.sun8min.capital.provider;
 
+import com.alibaba.fescar.core.context.RootContext;
 import com.sun8min.capital.api.CapitalTradeOrderService;
 import com.sun8min.capital.dao.CapitalDao;
 import com.sun8min.capital.dao.CapitalTradeOrderDao;
@@ -43,6 +44,7 @@ public class CapitalTradeOrderServiceImpl implements CapitalTradeOrderService {
     @Transactional
     @Override
     public Boolean trade(String tradeOrderNo, long fromUserId, long toUserId, BigDecimal capitalPayAmount) {
+        System.out.println("全局事务id ：" + RootContext.getXID());
         // 账户交易记录
         CapitalTradeOrder capitalTradeOrder = new CapitalTradeOrder();
         capitalTradeOrder.setFromUserId(fromUserId);

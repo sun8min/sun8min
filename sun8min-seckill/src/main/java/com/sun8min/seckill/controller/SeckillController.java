@@ -1,13 +1,12 @@
 package com.sun8min.seckill.controller;
 
 import com.sun8min.capital.api.CapitalService;
-import com.sun8min.capital.api.CapitalTradeOrderService;
 import com.sun8min.order.api.OrderService;
 import com.sun8min.order.entity.Order;
 import com.sun8min.redpacket.api.RedpacketService;
-import com.sun8min.redpacket.api.RedpacketTradeOrderService;
-import com.sun8min.seckill.service.PlaceOrderRepository;
-import com.sun8min.seckill.vo.PlaceOrderRequest;
+import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
+import com.sun8min.seckill.repository.PlaceOrderRepository;
+import com.sun8min.seckill.service.SeckillService;
 import com.sun8min.shop.api.ProductService;
 import com.sun8min.shop.api.ShopService;
 import com.sun8min.shop.entity.Product;
@@ -41,18 +40,17 @@ public class SeckillController {
     RedpacketService redpacketService;
     @Reference(version = "${service.version}")
     OrderService orderService;
-    @Reference(version = "${service.version}")
-    RedpacketTradeOrderService redpacketTradeOrderService;
-    @Reference(version = "${service.version}")
-    CapitalTradeOrderService capitalTradeOrderService;
     @Autowired
     PlaceOrderRepository placeOrderRepository;
+    @Autowired
+    SeckillService seckillService;
 
     private static final String prefix = "seckill";
     private static final String prefixPath = prefix + "\\";
 
     /**
      * 商家列表
+     *
      * @param map
      * @return
      */
@@ -67,6 +65,7 @@ public class SeckillController {
 
     /**
      * 商品列表
+     *
      * @param shopId 商家id
      * @param map
      * @return
@@ -82,6 +81,7 @@ public class SeckillController {
 
     /**
      * 确认下单
+     *
      * @param productId 商品id
      * @param map
      * @return
@@ -104,7 +104,8 @@ public class SeckillController {
 
     /**
      * 下单
-     * @param productId 商品id
+     *
+     * @param productId             商品id
      * @param redpacketPayAmountStr 用户所输入的红包交易额字符串
      * @return 重定向地址
      */
@@ -113,47 +114,16 @@ public class SeckillController {
                                    @RequestParam String redpacketPayAmountStr) {
         // TODO 暂时先定购买用户id为3，去购买其他两家的商品
         long userId = 3L;
-        PlaceOrderRequest placeOrderRequest = placeOrderRepository.buildQuest(userId, productId, redpacketPayAmountStr);
-        // TODO 分布式事务
-        Order order = null;
-        try {
-            // 下单
-            order = orderService.placeOrder(
-                    placeOrderRequest.getFromUserId(),
-                    placeOrderRequest.getToUserId(),
-                    placeOrderRequest.getProductQuantitiesList(),
-                    placeOrderRequest.getRedpacketPayAmount()
-            );
-            // 红包交易
-            // 如果交易金额<=0，则不记录
-            if (order.getRedpacketTradeAmount().compareTo(BigDecimal.ZERO) > 0) {
-                redpacketTradeOrderService.trade(
-                        order.getTradeOrderNo(),
-                        placeOrderRequest.getFromUserId(),
-                        placeOrderRequest.getToUserId(),
-                        order.getRedpacketTradeAmount()
-                );
-            }
-            // 账户交易
-            // 如果交易金额<=0，则不记录
-            if (order.getCapitalTradeAmount().compareTo(BigDecimal.ZERO) > 0) {
-                capitalTradeOrderService.trade(
-                        order.getTradeOrderNo(),
-                        placeOrderRequest.getFromUserId(),
-                        placeOrderRequest.getToUserId(),
-                        order.getCapitalTradeAmount()
-                );
-            }
-            // TODO 交易完成，订单修改为支付成功
-        } catch (Exception e) {
-            e.printStackTrace();
-            // TODO 交易失败，订单修改为支付失败
-        }
+        PlaceOrderRequestDTO placeOrderRequestDTO = placeOrderRepository.buildQuestDTO(userId, productId, redpacketPayAmountStr);
+        Order order = seckillService.handleSeckill(placeOrderRequestDTO);
         return new RedirectView("payresult/" + order.getTradeOrderNo());
     }
 
+
+
     /**
      * 支付结果
+     *
      * @param tradeOrderNo
      * @param map
      * @return

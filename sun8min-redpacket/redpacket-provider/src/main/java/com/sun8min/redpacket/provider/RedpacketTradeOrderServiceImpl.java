@@ -1,5 +1,6 @@
 package com.sun8min.redpacket.provider;
 
+import com.alibaba.fescar.core.context.RootContext;
 import com.sun8min.redpacket.api.RedpacketTradeOrderService;
 import com.sun8min.redpacket.dao.RedpacketDao;
 import com.sun8min.redpacket.dao.RedpacketTradeOrderDao;
@@ -48,6 +49,7 @@ public class RedpacketTradeOrderServiceImpl implements RedpacketTradeOrderServic
     @Override
     @Transactional
     public Boolean trade(String tradeOrderNo, Long fromUserId, Long toUserId, BigDecimal redPacketPayAmount) {
+        System.out.println("全局事务id ：" + RootContext.getXID());
         // 红包交易记录
         RedpacketTradeOrder redpacketTradeOrder = new RedpacketTradeOrder();
         redpacketTradeOrder.setFromUserId(fromUserId);
