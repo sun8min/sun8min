@@ -2,9 +2,9 @@ package com.sun8min.seckill.repository;
 
 import com.google.common.base.Strings;
 import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
-import com.sun8min.shop.api.ProductService;
-import com.sun8min.shop.api.ShopService;
-import com.sun8min.shop.entity.Product;
+import com.sun8min.product.api.ProductService;
+import com.sun8min.product.api.ShopService;
+import com.sun8min.product.entity.Product;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.dubbo.config.annotation.Reference;
@@ -35,7 +35,8 @@ public class PlaceOrderRepository {
      * @return
      */
     public PlaceOrderRequestDTO buildQuestDTO(long userId, Long productId, String redpacketPayAmountStr) {
-        Product product = productService.selectByPrimaryKey(productId);
+//        Product product = productService.selectByPrimaryKey(productId);
+        Product product = null;
         BigDecimal redpacketPayAmount = Strings.isNullOrEmpty(redpacketPayAmountStr) ? BigDecimal.ZERO : new BigDecimal(redpacketPayAmountStr);
         // 参数校验
         checkParam(product, redpacketPayAmount);

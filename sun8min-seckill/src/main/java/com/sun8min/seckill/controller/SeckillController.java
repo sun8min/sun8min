@@ -7,10 +7,10 @@ import com.sun8min.redpacket.api.RedpacketService;
 import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
 import com.sun8min.seckill.repository.PlaceOrderRepository;
 import com.sun8min.seckill.service.SeckillService;
-import com.sun8min.shop.api.ProductService;
-import com.sun8min.shop.api.ShopService;
-import com.sun8min.shop.entity.Product;
-import com.sun8min.shop.entity.Shop;
+import com.sun8min.product.api.ProductService;
+import com.sun8min.product.api.ShopService;
+import com.sun8min.product.entity.Product;
+import com.sun8min.product.entity.Shop;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -92,11 +92,11 @@ public class SeckillController {
         long userId = 3L;
         BigDecimal capitalAmount = capitalService.findAmountByUserId(userId);
         BigDecimal redpacketAmount = redpacketService.findAmountByUserId(userId);
-        Product product = productService.selectByPrimaryKey(productId);
+//        Product product = productService.selectByPrimaryKey(productId);
 
         map.addAttribute("prefix", prefix);
         map.addAttribute("title", "确认下单");
-        map.addAttribute("product", product);
+//        map.addAttribute("product", product);
         map.addAttribute("capitalAmount", capitalAmount);
         map.addAttribute("redpacketAmount", redpacketAmount);
         return prefixPath + "confirmOrder";
@@ -119,8 +119,6 @@ public class SeckillController {
         return new RedirectView("payresult/" + order.getTradeOrderNo());
     }
 
-
-
     /**
      * 支付结果
      *
@@ -140,7 +138,7 @@ public class SeckillController {
         // 红包余额
         BigDecimal redPacketAmount = redpacketService.findAmountByUserId(foundOrder.getFromUserId());
 
-        map.addAttribute("payResult", payResultTip);
+        map.addAttribute("payResultTip", payResultTip);
         map.addAttribute("capitalAmount", capitalAmount);
         map.addAttribute("redPacketAmount", redPacketAmount);
 

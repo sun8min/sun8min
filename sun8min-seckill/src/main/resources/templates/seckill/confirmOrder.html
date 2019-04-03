@@ -10,8 +10,8 @@
     <p>名称: <span th:text="${product.productName}" /></p>
     <p>价格: <span th:text="${product.productPrice}" />元</p>
 
-    <p>可用账户余额: <span th:text="${capitalAmount}" />元</p>
-    <p>可用红包余额: <span th:text="${redpacketAmount}" />元</p>
+    <p>账户余额: <span th:text="${capitalAmount}" />元</p>
+    <p>红包余额: <span th:text="${redpacketAmount}" />元</p>
 
     <form th:action="@{'/' + ${prefix} + '/placeOrder'}" method="post">
         红包金额:&nbsp;&nbsp;&nbsp;<input type="text" style="width: 220px" name="redpacketPayAmountStr" value=""

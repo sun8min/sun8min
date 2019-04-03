@@ -6,5 +6,11 @@
 </head>
 <body>
 <h1 th:text="${title}"></h1>
+<div>
+    <p>结果： <span th:text="${payResultTip}" /></p>
+
+    <p>账户余额: <span th:text="${capitalAmount}" />元</p>
+    <p>红包余额: <span th:text="${redpacketAmount}" />元</p>
+</div>
 </body>
 </html>
