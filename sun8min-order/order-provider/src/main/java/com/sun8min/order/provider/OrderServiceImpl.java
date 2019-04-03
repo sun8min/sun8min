@@ -6,7 +6,7 @@ import com.sun8min.order.dao.OrderDao;
 import com.sun8min.order.dao.OrderLineDao;
 import com.sun8min.order.entity.Order;
 import com.sun8min.order.entity.OrderLine;
-import com.sun8min.shop.entity.Product;
+import com.sun8min.product.entity.Product;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +84,8 @@ public class OrderServiceImpl implements OrderService {
         order.setToUserId(toUserId);
         order.setCapitalTradeAmount(capitalPayAmount);
         order.setRedpacketTradeAmount(redpacketPayAmount);
-        order.setOrderStatus(Order.OrderStatus.PAYING.getValue());
+//        order.setOrderStatus(Order.OrderStatus.PAYING.getValue());
+        order.setOrderStatus(1);
         order.setTradeOrderNo(tradeOrderNo);
         orderDao.insert(order);
         return order;
