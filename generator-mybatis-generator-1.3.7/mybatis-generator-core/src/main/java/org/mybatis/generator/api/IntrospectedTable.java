@@ -834,8 +834,8 @@ public abstract class IntrospectedTable {
                 sb.append('.');
             }
             sb.append(fullyQualifiedTable.getDomainObjectName());
-//            sb.append("Mapper"); //$NON-NLS-1$
-            sb.append("Dao"); //$NON-NLS-1$
+            sb.append("Mapper"); //$NON-NLS-1$
+//            sb.append("Dao"); //$NON-NLS-1$
         }
         setMyBatis3JavaMapperType(sb.toString());
 
