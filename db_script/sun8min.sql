@@ -9,15 +9,15 @@ drop table if exists sun8min_user;
 create table sun8min_user
 (
   user_id         bigint unsigned auto_increment comment '用户id',
-  user_nick_name  varchar(16)      not null comment '用户显示名',
-  user_real_name  varchar(16)      not null default '' comment '用户真实名',
-  user_phone      varchar(32)      not null default '' comment '用户手机号',
-  user_sex        tinyint          not null default '0' comment '用户性别（0:未知，1:男，2:女）',
-  extension_field varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version         int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create      datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified    datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted      tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  user_nick_name  varchar(16)         not null comment '用户显示名',
+  user_real_name  varchar(16)         not null default '' comment '用户真实名',
+  user_phone      varchar(32)         not null default '' comment '用户手机号',
+  user_sex        tinyint             not null default '0' comment '用户性别（0:未知，1:男，2:女）',
+  extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create      datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified    datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted      tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (user_id)
 ) engine = innodb
   default charset = utf8mb4
@@ -39,7 +39,7 @@ create table sun8min_account
   version         int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create      datetime                not null default current_timestamp comment '创建时间',
   gmt_modified    datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted      tinyint unsigned        not null default 0 comment '是否删除（0：否，1：是）',
+  is_deleted      tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
   primary key (account_id),
   unique key uk_user_id (user_id)
 ) engine = innodb
@@ -59,7 +59,7 @@ create table sun8min_account_trade_order
   version                int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create             datetime                not null default current_timestamp comment '创建时间',
   gmt_modified           datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted             tinyint unsigned        not null default 0 comment '是否删除（0：否，1：是）',
+  is_deleted             tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
   primary key (account_trade_order_id),
   unique key uk_trade_order_no (trade_order_no)
 ) engine = innodb
@@ -100,7 +100,7 @@ create table sun8min_redpacket
   version          int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create       datetime                not null default current_timestamp comment '创建时间',
   gmt_modified     datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted       tinyint unsigned        not null default 0 comment '是否删除（0：否，1：是）',
+  is_deleted       tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
   primary key (redpacket_id),
   unique key uk_user_id (user_id)
 ) engine = innodb
@@ -120,7 +120,7 @@ create table sun8min_redpacket_trade_order
   version                  int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create               datetime                not null default current_timestamp comment '创建时间',
   gmt_modified             datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted               tinyint unsigned        not null default 0 comment '是否删除（0：否，1：是）',
+  is_deleted               tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
   primary key (redpacket_trade_order_id),
   unique key uk_trade_order_no (trade_order_no)
 ) engine = innodb
@@ -165,7 +165,7 @@ create table sun8min_order
   version                int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create             datetime                not null default current_timestamp comment '创建时间',
   gmt_modified           datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted             tinyint unsigned        not null default 0 comment '是否删除（0：否，1：是）',
+  is_deleted             tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
   primary key (order_id),
   unique key uk_trade_order_no (trade_order_no)
 ) engine = innodb
@@ -185,7 +185,7 @@ create table sun8min_order_line
   version          int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create       datetime                not null default current_timestamp comment '创建时间',
   gmt_modified     datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted       tinyint unsigned        not null default 0 comment '是否删除（0：否，1：是）',
+  is_deleted       tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
   primary key (order_line_id),
   unique key uk_trade_order_no_product_id (trade_order_no, product_id)
 ) engine = innodb
@@ -220,14 +220,14 @@ drop table if exists sun8min_brand;
 create table sun8min_brand
 (
   brand_id        bigint unsigned auto_increment comment '品牌id',
-  brand_name      varchar(64)      not null default '' comment '品牌名',
-  brand_image     varchar(128)     not null default '' comment '品牌图片存储（不含域名）',
-  brand_desc      varchar(255)     not null default '' comment '品牌描述',
-  extension_field varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version         int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create      datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified    datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted      tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  brand_name      varchar(64)         not null default '' comment '品牌名',
+  brand_image     varchar(128)        not null default '' comment '品牌图片存储（不含域名）',
+  brand_desc      varchar(255)        not null default '' comment '品牌描述',
+  extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create      datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified    datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted      tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (brand_id)
 ) engine = innodb
   default charset = utf8mb4
@@ -238,20 +238,20 @@ drop table if exists sun8min_category;
 create table sun8min_category
 (
   category_id        bigint unsigned auto_increment comment '类目id',
-  category_name      varchar(32)      not null comment '类目名',
-  category_pid       bigint unsigned  not null comment '父id',
-  category_rid       bigint unsigned  not null comment '根节点id',
-  is_leaf            tinyint unsigned not null default 0 comment '是否叶子节点（0：否，1：是）',
-  is_contain_mapping tinyint unsigned not null default 0 comment '是否包含映射（0：否，1：是，ps：是即需要去关联表找子项）',
-  category_level     tinyint unsigned not null comment '类目层级（从0开始）',
-  category_type      tinyint unsigned not null comment '类目类型（1：后台类目，2：前台类目）',
-  category_sort      bigint unsigned  not null comment '排序id（默认应该和主键相同,调整排序好修改）',
-  category_image     varchar(128)     not null default '' comment '类目图片存储（不含域名）',
-  extension_field    varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version            int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create         datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified       datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted         tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  category_name      varchar(32)         not null comment '类目名',
+  category_pid       bigint unsigned     not null comment '父id',
+  category_rid       bigint unsigned     not null comment '根节点id',
+  is_leaf            tinyint(1) unsigned not null default 0 comment '是否叶子节点（0：否，1：是）',
+  is_contain_mapping tinyint(1) unsigned not null default 0 comment '是否包含映射（0：否，1：是，ps：是即需要去关联表找子项）',
+  category_level     tinyint unsigned    not null comment '类目层级（从0开始）',
+  category_type      tinyint unsigned    not null comment '类目类型（1：后台类目，2：前台类目）',
+  category_sort      bigint unsigned     not null comment '排序id（默认应该和主键相同,调整排序好修改）',
+  category_image     varchar(128)        not null default '' comment '类目图片存储（不含域名）',
+  extension_field    varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version            int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create         datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified       datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted         tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (category_id)
 ) engine = innodb
   default charset = utf8mb4
@@ -262,13 +262,13 @@ drop table if exists sun8min_category_category;
 create table sun8min_category_category
 (
   category_category_id bigint unsigned auto_increment comment '类目类目id',
-  parent_category_id   bigint unsigned  not null comment '类目id',
-  child_category_id    bigint unsigned  not null comment '子类目id',
-  extension_field      varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version              int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create           datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified         datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted           tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  parent_category_id   bigint unsigned     not null comment '类目id',
+  child_category_id    bigint unsigned     not null comment '子类目id',
+  extension_field      varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version              int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create           datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified         datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted           tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (category_category_id)
 ) engine = innodb
   default charset = utf8
@@ -279,16 +279,16 @@ drop table if exists sun8min_spu;
 create table sun8min_spu
 (
   spu_id          bigint unsigned auto_increment comment 'spu_id',
-  spu_name        varchar(16)      not null comment 'spu名',
-  spu_image       varchar(128)     not null default '' comment 'spu图片存储（不含域名）',
-  spu_video       varchar(128)     not null default '' comment 'spu视频存储（不含域名）',
-  brand_id        bigint unsigned  not null comment '品牌id',
-  category_id     bigint unsigned  not null comment '类目id',
-  extension_field varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version         int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create      datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified    datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted      tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  spu_name        varchar(16)         not null comment 'spu名',
+  spu_image       varchar(128)        not null default '' comment 'spu图片存储（不含域名）',
+  spu_video       varchar(128)        not null default '' comment 'spu视频存储（不含域名）',
+  brand_id        bigint unsigned     not null comment '品牌id',
+  category_id     bigint unsigned     not null comment '类目id',
+  extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create      datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified    datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted      tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (spu_id)
 ) engine = innodb
   default charset = utf8mb4
@@ -299,16 +299,16 @@ drop table if exists sun8min_property_key;
 create table sun8min_property_key
 (
   property_key_id   bigint unsigned auto_increment comment '属性key_id',
-  property_key_name varchar(16)      not null comment '属性key名',
-  property_key_type tinyint unsigned not null default 0 comment '属性key类型（0：未知，1：关键属性，2：非关键属性，3：销售属性，ps：影响具体商品价格、库存的即销售属性，例如：手机容量，而关键属性即能确定spu的属性，例如：手机型号，其他即非关键属性，例如：手机毛重）',
-  property_key_sort bigint unsigned  not null comment '排序id（默认应该和主键相同,调整排序好修改）',
-  is_required       tinyint unsigned not null default 1 comment '是否必填（0：否，1：是）',
-  category_id       bigint unsigned  not null comment '类目id',
-  extension_field   varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version           int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create        datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified      datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted        tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  property_key_name varchar(16)         not null comment '属性key名',
+  property_key_type tinyint unsigned    not null default 0 comment '属性key类型（0：未知，1：关键属性，2：非关键属性，3：销售属性，ps：影响具体商品价格、库存的即销售属性，例如：手机容量，而关键属性即能确定spu的属性，例如：手机型号，其他即非关键属性，例如：手机毛重）',
+  property_key_sort bigint unsigned     not null comment '排序id（默认应该和主键相同,调整排序好修改）',
+  is_required       tinyint(1) unsigned not null default 1 comment '是否必填（0：否，1：是）',
+  category_id       bigint unsigned     not null comment '类目id',
+  extension_field   varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version           int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create        datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified      datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted        tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (property_key_id)
 ) engine = innodb
   default charset = utf8mb4
@@ -319,14 +319,14 @@ drop table if exists sun8min_property_value;
 create table sun8min_property_value
 (
   property_value_id   bigint unsigned auto_increment comment '属性value_id',
-  property_value_name varchar(16)      not null comment '属性value名',
-  property_value_sort bigint unsigned  not null comment '排序id（默认应该和主键相同,调整排序好修改）',
-  property_key_id     bigint unsigned  not null comment '属性key_id',
-  extension_field     varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version             int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create          datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified        datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted          tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  property_value_name varchar(16)         not null comment '属性value名',
+  property_value_sort bigint unsigned     not null comment '排序id（默认应该和主键相同,调整排序好修改）',
+  property_key_id     bigint unsigned     not null comment '属性key_id',
+  extension_field     varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version             int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create          datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified        datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted          tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (property_value_id)
 ) engine = innodb
   default charset = utf8mb4
@@ -337,14 +337,14 @@ drop table if exists sun8min_spu_property;
 create table sun8min_spu_property
 (
   spu_property_id   bigint unsigned auto_increment comment 'spu-关键非关键属性关联id',
-  spu_id            bigint unsigned  not null comment 'spu_id',
-  property_key_id   bigint unsigned  not null comment '属性key值',
-  property_value_id bigint unsigned  not null comment '属性value值',
-  extension_field   varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version           int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create        datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified      datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted        tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  spu_id            bigint unsigned     not null comment 'spu_id',
+  property_key_id   bigint unsigned     not null comment '属性key值',
+  property_value_id bigint unsigned     not null comment '属性value值',
+  extension_field   varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version           int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create        datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified      datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted        tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (spu_property_id)
 ) engine = innodb
   default charset = utf8
@@ -355,13 +355,13 @@ drop table if exists sun8min_sku;
 create table sun8min_sku
 (
   sku_id          bigint unsigned auto_increment comment 'sku_id',
-  sku_name        varchar(16)      not null comment 'sku名',
-  spu_id          bigint unsigned  not null comment 'spu_id',
-  extension_field varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version         int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create      datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified    datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted      tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  sku_name        varchar(16)         not null comment 'sku名',
+  spu_id          bigint unsigned     not null comment 'spu_id',
+  extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create      datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified    datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted      tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (sku_id)
 ) engine = innodb
   default charset = utf8mb4
@@ -372,14 +372,14 @@ drop table if exists sun8min_sku_property;
 create table sun8min_sku_property
 (
   sku_property_id   bigint unsigned auto_increment comment 'sku-销售属性关联id',
-  sku_id            bigint unsigned  not null comment 'sku_id',
-  property_key_id   bigint unsigned  not null comment '属性key值',
-  property_value_id bigint unsigned  not null comment '属性value值',
-  extension_field   varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version           int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create        datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified      datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted        tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  sku_id            bigint unsigned     not null comment 'sku_id',
+  property_key_id   bigint unsigned     not null comment '属性key值',
+  property_value_id bigint unsigned     not null comment '属性value值',
+  extension_field   varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version           int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create        datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified      datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted        tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (sku_property_id)
 ) engine = innodb
   default charset = utf8
@@ -390,13 +390,13 @@ drop table if exists sun8min_shop;
 create table sun8min_shop
 (
   shop_id         bigint unsigned auto_increment comment '商店id',
-  shop_name       varchar(16)      not null comment '商店名',
-  user_id         bigint unsigned  not null comment '所属用户id',
-  extension_field varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version         int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create      datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified    datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted      tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  shop_name       varchar(16)         not null comment '商店名',
+  user_id         bigint unsigned     not null comment '所属用户id',
+  extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create      datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified    datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted      tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (shop_id)
 ) engine = innodb
   default charset = utf8mb4
@@ -417,15 +417,15 @@ create table sun8min_product
   product_discount_price   decimal(10, 2) unsigned comment '商品折后价（精确到分）',
   product_discount_percent tinyint unsigned comment '商品折扣百分比',
   product_type             tinyint unsigned        not null default 0 comment '商品类型（0：单品，1：打包品，ps：非单品即需要去关联表找子项）',
-  is_up_shelves            tinyint unsigned        not null default 0 comment '是否上架（0：否，1：是）',
-  is_show                  tinyint unsigned        not null default 1 comment '是否展示（0：否，1：是）ps:保证可售卖而用户不可直接购买该单品，用例如：打包品中的单品，只能通过打包品买',
+  is_up_shelves            tinyint(1) unsigned     not null default 0 comment '是否上架（0：否，1：是）',
+  is_show                  tinyint(1) unsigned     not null default 1 comment '是否展示（0：否，1：是）ps:保证可售卖而用户不可直接购买该单品，用例如：打包品中的单品，只能通过打包品买',
   shop_id                  bigint unsigned         not null comment '所属商店id',
   product_activity_flag    int unsigned            not null default 0 comment '商品活动标识（二进制位，为1表示是，右侧第1为1，1：秒杀，2：拼团，3：预售，4：团购，5：拍卖）',
   extension_field          varchar(255)            not null default '' comment '扩展字段（json格式）',
   version                  int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create               datetime                not null default current_timestamp comment '创建时间',
   gmt_modified             datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted               tinyint unsigned        not null default 0 comment '是否删除（0：否，1：是）',
+  is_deleted               tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
   primary key (product_id)
 ) engine = innodb
   default charset = utf8mb4
@@ -436,15 +436,15 @@ drop table if exists sun8min_product_image;
 create table sun8min_product_image
 (
   product_image_id   bigint unsigned auto_increment comment '商品图片id',
-  product_image_name varchar(32)      not null default '' comment '商品图片名',
-  product_id         bigint unsigned  not null comment '商品id',
-  product_image      varchar(128)     not null default '' comment '商品图片存储（不含域名）',
-  product_image_sort bigint unsigned  not null comment '排序id（默认应该和主键相同,调整排序好修改）',
-  extension_field    varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version            int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create         datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified       datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted         tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  product_image_name varchar(32)         not null default '' comment '商品图片名',
+  product_id         bigint unsigned     not null comment '商品id',
+  product_image      varchar(128)        not null default '' comment '商品图片存储（不含域名）',
+  product_image_sort bigint unsigned     not null comment '排序id（默认应该和主键相同,调整排序好修改）',
+  extension_field    varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version            int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create         datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified       datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted         tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (product_image_id)
 ) engine = innodb
   default charset = utf8mb4
@@ -455,13 +455,13 @@ drop table if exists sun8min_product_product;
 create table sun8min_product_product
 (
   product_product_id bigint unsigned auto_increment comment '商品商品关联id',
-  parent_product_id  bigint unsigned  not null comment '商品id',
-  child_product_id   bigint unsigned  not null comment '子商品id',
-  extension_field    varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version            int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create         datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified       datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted         tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  parent_product_id  bigint unsigned     not null comment '商品id',
+  child_product_id   bigint unsigned     not null comment '子商品id',
+  extension_field    varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version            int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create         datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified       datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted         tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (product_product_id)
 ) engine = innodb
   default charset = utf8
@@ -472,18 +472,18 @@ drop table if exists sun8min_product_schedule;
 create table sun8min_product_schedule
 (
   product_schedule_id      bigint unsigned auto_increment comment '商品商品关联id',
-  schedule_type            tinyint unsigned not null default 0 comment '定时任务类型（0：一次性[使用上下架时间]，1：周期性[使用cron表达式]）',
+  schedule_type            tinyint unsigned    not null default 0 comment '定时任务类型（0：一次性[使用上下架时间]，1：周期性[使用cron表达式]）',
   gmt_up_shelves           datetime comment '上架时间',
   gmt_down_shelves         datetime comment '下架时间',
   cron_expression          varchar(32) comment 'cron表达式',
   cron_gmt_begin           datetime comment 'corn执行开始时间',
   cron_gmt_end             datetime comment 'corn执行结束时间',
   cron_up_shelves_duration bigint unsigned comment 'cron周期执行时，商品上架持续时间（单位：秒）',
-  extension_field          varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version                  int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create               datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified             datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted               tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  extension_field          varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version                  int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create               datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified             datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted               tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (product_schedule_id)
 ) engine = innodb
   default charset = utf8
@@ -494,13 +494,13 @@ drop table if exists sun8min_inventory;
 create table sun8min_inventory
 (
   inventory_id    bigint unsigned auto_increment comment '库存id',
-  product_id      bigint unsigned  not null comment '商品id',
-  product_stock   int unsigned     not null default 0 comment '库存量',
-  extension_field varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version         int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create      datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified    datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted      tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  product_id      bigint unsigned     not null comment '商品id',
+  product_stock   int unsigned        not null default 0 comment '库存量',
+  extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create      datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified    datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted      tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (inventory_id)
 ) engine = innodb
   default charset = utf8
@@ -534,15 +534,15 @@ drop table if exists sun8min_cloud_domain;
 create table sun8min_cloud_domain
 (
   cloud_domain_id     bigint unsigned auto_increment comment '云存储域名id',
-  cloud_domain_name   varchar(255)     not null default '' comment '域名',
-  cloud_domain_target tinyint unsigned not null default 0 comment '针对目标标识（0：未知，1：所有，2：商品，3：品牌）',
-  cloud_domain_type   tinyint unsigned not null default 0 comment '类型标识（0：未知，1:所有，2：图片，3：视频）',
-  cloud_domain_desc   varchar(255)     not null default '' comment '描述',
-  extension_field     varchar(255)     not null default '' comment '扩展字段（json格式）',
-  version             int unsigned     not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create          datetime         not null default current_timestamp comment '创建时间',
-  gmt_modified        datetime         not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted          tinyint unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  cloud_domain_name   varchar(255)        not null default '' comment '域名',
+  cloud_domain_target tinyint unsigned    not null default 0 comment '针对目标标识（0：未知，1：所有，2：商品，3：品牌）',
+  cloud_domain_type   tinyint unsigned    not null default 0 comment '类型标识（0：未知，1:所有，2：图片，3：视频）',
+  cloud_domain_desc   varchar(255)        not null default '' comment '描述',
+  extension_field     varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version             int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create          datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified        datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted          tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (cloud_domain_id)
 ) engine = innodb
   default charset = utf8
@@ -577,7 +577,7 @@ values (1, 50000),
        (3, 50000);
 
 -- 商店库
-use sun8min_shop;
+use sun8min_product;
 -- 商店表
 insert into sun8min_shop(shop_name, user_id)
 values ('aaa的小店', 1),
