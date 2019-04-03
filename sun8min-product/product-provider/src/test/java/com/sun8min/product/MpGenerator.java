@@ -48,15 +48,15 @@ public class MpGenerator {
     private void generateByTables(boolean serviceNameStartWithI, String packageName, String... tableNames) {
         // 全局配置
         GlobalConfig config = new GlobalConfig();
-        config.setActiveRecord(true)
-                .setAuthor("sun8min")
-                .setOutputDir(outputDir)
-                .setFileOverride(true)
+        config.setActiveRecord(true)// ActiveRecord特性，model继承Model<T>
+                .setAuthor("sun8min")// 作者
+                .setOutputDir(outputDir)// 输出目录
+                .setFileOverride(true)// 文件覆盖
                 .setEnableCache(false)// XML 二级缓存
                 .setBaseResultMap(true)// XML ResultMap
                 .setBaseColumnList(true);// XML columList
         if (!serviceNameStartWithI) {
-            config.setServiceName("%sService");
+            config.setServiceName("%sService");// 接口前缀去除I
         }
         // 数据源配置
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
@@ -77,15 +77,15 @@ public class MpGenerator {
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
                 .setCapitalMode(true) // 全局大写命名 ORACLE 注意
-                .setEntityLombokModel(true)
+                .setEntityLombokModel(true) // lombok注解
                 .setTablePrefix("sun8min_")// 表前缀
                 .setFieldPrefix("is_")// 字段前缀
-                .setNaming(NamingStrategy.underline_to_camel)
+                .setNaming(NamingStrategy.underline_to_camel)// 表名生成策略
                 .setInclude(tableNames);// 需要生成的表名数组
-        // 模块配置，设置 空 OR Null 将不生成该模块
+        // 模块配置
         TemplateConfig templateConfig = new TemplateConfig();
         if (templateConfigFlag == 1) {
-            templateConfig.setController(null);
+            templateConfig.setController(null);// 设置 空 OR Null 将不生成该模块
         }
         new AutoGenerator()
                 .setGlobalConfig(config)
