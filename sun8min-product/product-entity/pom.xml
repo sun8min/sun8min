@@ -5,21 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.sun8min.shop</groupId>
-        <artifactId>shop-parent</artifactId>
+        <groupId>com.sun8min.product</groupId>
+        <artifactId>product-parent</artifactId>
         <version>1.2.0</version>
     </parent>
 
-    <groupId>com.sun8min.shop</groupId>
-    <artifactId>shop-api</artifactId>
+    <groupId>com.sun8min.product</groupId>
+    <artifactId>product-entity</artifactId>
     <version>1.2.0</version>
 
     <dependencies>
         <dependency>
-            <groupId>com.sun8min.shop</groupId>
-            <artifactId>shop-entity</artifactId>
+            <groupId>com.sun8min.base</groupId>
+            <artifactId>base-entity</artifactId>
             <version>1.2.0</version>
         </dependency>
     </dependencies>
-
 </project>
