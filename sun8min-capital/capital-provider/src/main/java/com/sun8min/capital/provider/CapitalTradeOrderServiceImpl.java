@@ -59,7 +59,7 @@ public class CapitalTradeOrderServiceImpl implements CapitalTradeOrderService {
         // 账户转入
         Capital toCapital = capitalDao.findByUserId(toUserId);
         toCapital.setCapitalAmount(toCapital.getCapitalAmount().add(capitalPayAmount));
-        capitalDao.updateByPrimaryKey(fromCapital);
+        capitalDao.updateByPrimaryKey(toCapital);
         return true;
     }
 }

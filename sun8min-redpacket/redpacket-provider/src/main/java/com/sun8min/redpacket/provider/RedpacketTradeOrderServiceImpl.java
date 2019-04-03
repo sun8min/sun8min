@@ -64,7 +64,7 @@ public class RedpacketTradeOrderServiceImpl implements RedpacketTradeOrderServic
         // 红包转入
         Redpacket toRedpacket = redpacketDao.findByUserId(toUserId);
         toRedpacket.setRedpacketAmount(toRedpacket.getRedpacketAmount().add(redPacketPayAmount));
-        redpacketDao.updateByPrimaryKey(fromRedpacket);
+        redpacketDao.updateByPrimaryKey(toRedpacket);
         return true;
     }
 }
