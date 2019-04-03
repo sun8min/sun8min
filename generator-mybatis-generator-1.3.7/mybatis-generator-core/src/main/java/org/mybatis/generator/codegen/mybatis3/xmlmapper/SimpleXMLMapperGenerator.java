@@ -78,8 +78,8 @@ public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
     }
 
     protected void addSelectAllElement(XmlElement parentElement) {
-        AbstractXmlElementGenerator elementGenerator = new SimpleSelectAllElementGenerator();
-        initializeAndExecuteGenerator(elementGenerator, parentElement);
+//        AbstractXmlElementGenerator elementGenerator = new SimpleSelectAllElementGenerator();
+//        initializeAndExecuteGenerator(elementGenerator, parentElement);
     }
 
     protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
