@@ -20,6 +20,7 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 /**
@@ -69,6 +70,10 @@ public class ResultMapWithBLOBsElementGenerator extends
         if (context.getPlugins()
                 .sqlMapResultMapWithBLOBsElementGenerated(answer,
                         introspectedTable)) {
+            // 换行
+            parentElement.addElement(new TextElement(""));
+            // 注释
+            parentElement.addElement(new TextElement("<!-- 通用查询映射结果 -->"));
             parentElement.addElement(answer);
         }
     }

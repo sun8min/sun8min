@@ -71,7 +71,7 @@ public class SimpleSelectAllElementGenerator extends
 //        }
         answer.addElement(new TextElement(sb.toString()));
         sb.setLength(0);
-        sb.append("<include refid=\"Base_Select_Column\" />");
+        sb.append("<include refid=\"Base_Column_List\" />");
         answer.addElement(new TextElement(sb.toString()));
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$

@@ -34,7 +34,8 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 public class BaseSelectColumnElementGenerator extends
         AbstractXmlElementGenerator {
 
-    private String baseSelectColumn = "Base_Select_Column";
+    // 通用查询结果列
+    private String baseSelectColumn = "Base_Column_List";
 
     @Override
     public void addElements(XmlElement parentElement) {
@@ -64,6 +65,11 @@ public class BaseSelectColumnElementGenerator extends
         if (sb.length() > 0) {
             answer.addElement(new TextElement(sb.toString()));
         }
+
+        // 换行
+        parentElement.addElement(new TextElement(""));
+        // 注释
+        parentElement.addElement(new TextElement("<!-- 通用查询结果列 -->"));
         parentElement.addElement(answer);
     }
 
