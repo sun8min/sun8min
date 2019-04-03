@@ -42,6 +42,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- maven配置-->
+        <!-- 相当于-Dmaven.test.skip=true，表示跳过测试，与-DskipTests的区别就是skipTests如果测试类有错误会提示，而skip=true直接跳过 -->
         <maven.test.skip>true</maven.test.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <!-- springboot -->
