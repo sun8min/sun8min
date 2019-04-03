@@ -1,4 +1,4 @@
-package com.sun8min.shop.entity;
+package com.sun8min.product.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -42,7 +42,7 @@ public class Shop implements Serializable {
     private Date gmtModified;
 
     /**
-     * 是否删除（0:正常，1:已删）
+     * 是否删除（0：否，1：是）
      */
     private Integer isDeleted;
 

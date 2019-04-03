@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun8min.product.mapper.ProductMapper">
+  
+  <!-- 通用查询映射结果 -->
+  <resultMap id="BaseResultMap" type="com.sun8min.product.entity.Product">
+    <id column="product_id" property="productId" />
+    <result column="product_name" property="productName" />
+    <result column="sku_id" property="skuId" />
+    <result column="product_measure_unit" property="productMeasureUnit" />
+    <result column="product_quantity" property="productQuantity" />
+    <result column="product_video" property="productVideo" />
+    <result column="product_price" property="productPrice" />
+    <result column="product_discount_type" property="productDiscountType" />
+    <result column="product_discount_price" property="productDiscountPrice" />
+    <result column="product_discount_percent" property="productDiscountPercent" />
+    <result column="product_type" property="productType" />
+    <result column="is_up_shelves" property="isUpShelves" />
+    <result column="is_show" property="isShow" />
+    <result column="shop_id" property="shopId" />
+    <result column="product_activity_flag" property="productActivityFlag" />
+    <result column="extension_field" property="extensionField" />
+    <result column="version" property="version" />
+    <result column="gmt_create" property="gmtCreate" />
+    <result column="gmt_modified" property="gmtModified" />
+    <result column="is_deleted" property="isDeleted" />
+  </resultMap>
+  
+  <!-- 通用查询结果列 -->
+  <sql id="Base_Column_List">
+    product_id, product_name, sku_id, product_measure_unit, product_quantity, product_video, 
+    product_price, product_discount_type, product_discount_price, product_discount_percent, 
+    product_type, is_up_shelves, is_show, shop_id, product_activity_flag, extension_field, 
+    version, gmt_create, gmt_modified, is_deleted
+  </sql>
+</mapper>

@@ -1,6 +1,6 @@
-package com.sun8min.shop.api;
+package com.sun8min.product.api;
 
-import com.sun8min.shop.entity.Shop;
+import com.sun8min.product.entity.Shop;
 
 import java.util.List;
 

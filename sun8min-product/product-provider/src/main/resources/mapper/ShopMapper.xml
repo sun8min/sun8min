@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sun8min.shop.dao.ShopDao">
-  <resultMap id="BaseResultMap" type="com.sun8min.shop.entity.Shop">
+<mapper namespace="com.sun8min.product.dao.ShopDao">
+  <resultMap id="BaseResultMap" type="com.sun8min.product.entity.Shop">
     <id column="shop_id" property="shopId" />
     <result column="shop_name" property="shopName" />
     <result column="user_id" property="userId" />
@@ -16,7 +16,7 @@
     delete from shop
     where shop_id = #{shopId}
   </delete>
-  <insert id="insert" parameterType="com.sun8min.shop.entity.Shop">
+  <insert id="insert" parameterType="com.sun8min.product.entity.Shop">
     insert into shop (
       <trim suffixOverrides=",">
         <if test="shopId != null">shop_id,</if>
@@ -38,7 +38,7 @@
       </trim>
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.sun8min.shop.entity.Shop">
+  <update id="updateByPrimaryKey" parameterType="com.sun8min.product.entity.Shop">
     update shop set 
     <trim suffixOverrides=",">
       <if test="shopId != null">shop_id = #{shopId},</if>

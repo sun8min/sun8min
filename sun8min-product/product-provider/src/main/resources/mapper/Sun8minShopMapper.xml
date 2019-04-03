@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun8min.product.mapper.Sun8minShopMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sun8min.product.entity.Sun8minShop">
+        <id column="shop_id" property="shopId" />
+        <result column="shop_name" property="shopName" />
+        <result column="user_id" property="userId" />
+        <result column="extension_field" property="extensionField" />
+        <result column="version" property="version" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        shop_id, shop_name, user_id, extension_field, version, gmt_create, gmt_modified, is_deleted
+    </sql>
+
+</mapper>
