@@ -108,11 +108,15 @@ public class MpGenerator {
      * @return
      */
     private MpGenerator readVersionAndNameFromProperties() {
-        String resourceName = "application.properties";
+        String[] resourceNames = new String[]{"application.properties", "application.yml", "application.yaml"};
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try {
-            InputStream resourceStream = loader.getResourceAsStream(resourceName);
+            InputStream resourceStream = null;
+            for (String resourceName : resourceNames) {
+                resourceStream = loader.getResourceAsStream(resourceName);
+                if (resourceStream != null) break;
+            }
             props.load(resourceStream);
         } catch (IOException e) {
             e.printStackTrace();
