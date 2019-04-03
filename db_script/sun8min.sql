@@ -420,7 +420,7 @@ create table sun8min_product
   is_up_shelves            tinyint unsigned        not null default 0 comment '是否上架（0：否，1：是）',
   is_show                  tinyint unsigned        not null default 1 comment '是否展示（0：否，1：是）ps:保证可售卖而用户不可直接购买该单品，用例如：打包品中的单品，只能通过打包品买',
   shop_id                  bigint unsigned         not null comment '所属商店id',
-  product_activity_flag    tinyblob comment '商品活动标识（二进制位，为1表示是，右侧第1为1，1：秒杀，2：拼团，3：预售，4：团购，5：拍卖）',
+  product_activity_flag    int unsigned            not null default 0 comment '商品活动标识（二进制位，为1表示是，右侧第1为1，1：秒杀，2：拼团，3：预售，4：团购，5：拍卖）',
   extension_field          varchar(255)            not null default '' comment '扩展字段（json格式）',
   version                  int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create               datetime                not null default current_timestamp comment '创建时间',
