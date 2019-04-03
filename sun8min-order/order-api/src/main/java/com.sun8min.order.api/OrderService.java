@@ -1,7 +1,7 @@
 package com.sun8min.order.api;
 
 import com.sun8min.order.entity.Order;
-import com.sun8min.shop.entity.Product;
+import com.sun8min.product.entity.Product;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.math.BigDecimal;

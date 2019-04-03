@@ -20,7 +20,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order implements Serializable {
+public class Order implements Serializable{
     /**
      * 订单id
      */
@@ -47,7 +47,7 @@ public class Order implements Serializable {
     private BigDecimal redpacketTradeAmount;
 
     /**
-     * 订单支付状态（0:初始化，1:支付中，2:支付成功，3:支付失败，4:取消支付)
+     * 订单支付状态（0:初始化，1:支付中，2:支付成功，3:支付失败，4:取消支付）
      */
     private Integer orderStatus;
 
@@ -67,7 +67,7 @@ public class Order implements Serializable {
     private Date gmtModified;
 
     /**
-     * 是否删除（0:正常，1:已删）
+     * 是否删除（0：否，1：是）
      */
     private Integer isDeleted;
 
@@ -100,5 +100,4 @@ public class Order implements Serializable {
     }
 
     private List<OrderLine> orderLines = new ArrayList<>();
-
 }

@@ -53,7 +53,7 @@ public class RedpacketTradeOrder implements Serializable {
     private Date gmtModified;
 
     /**
-     * 是否删除（0:正常，1:已删）
+     * 是否删除（0：否，1：是）
      */
     private Integer isDeleted;
 

@@ -21,8 +21,8 @@
             <version>1.2.0</version>
         </dependency>
         <dependency>
-            <groupId>com.sun8min.shop</groupId>
-            <artifactId>shop-entity</artifactId>
+            <groupId>com.sun8min.product</groupId>
+            <artifactId>product-entity</artifactId>
             <version>1.2.0</version>
         </dependency>
         <dependency>
