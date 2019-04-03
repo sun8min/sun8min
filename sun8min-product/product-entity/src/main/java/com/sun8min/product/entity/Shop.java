@@ -1,25 +1,36 @@
 package com.sun8min.product.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
+import java.math.BigInteger;
 import java.io.Serializable;
-import java.util.Date;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
+ * <p>
  * 商店表
+ * </p>
  *
  * @author sun8min
- * @date 2019-03-28 13:28:32
+ * @since 2019-04-04
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("sun8min_shop")
 public class Shop implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 商店id
      */
-    private Long shopId;
+    @TableId(value = "shop_id", type = IdType.AUTO)
+    private BigInteger shopId;
 
     /**
      * 商店名
@@ -29,22 +40,32 @@ public class Shop implements Serializable {
     /**
      * 所属用户id
      */
-    private Long userId;
+    private BigInteger userId;
+
+    /**
+     * 扩展字段（json格式）
+     */
+    private String extensionField;
+
+    /**
+     * 版本号（用于乐观锁）
+     */
+    private Integer version;
 
     /**
      * 创建时间
      */
-    private Date gmtCreate;
+    private LocalDateTime gmtCreate;
 
     /**
      * 修改时间
      */
-    private Date gmtModified;
+    private LocalDateTime gmtModified;
 
     /**
      * 是否删除（0：否，1：是）
      */
-    private Integer isDeleted;
+    private Boolean deleted;
 
-    private static final long serialVersionUID = 1L;
+
 }

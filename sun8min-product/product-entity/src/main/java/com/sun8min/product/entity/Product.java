@@ -1,33 +1,37 @@
 package com.sun8min.product.entity;
 
+import java.math.BigDecimal;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import java.time.LocalDateTime;
+import java.math.BigInteger;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
+ * <p>
  * 商品表
+ * </p>
  *
  * @author sun8min
- * @date 2019-04-03 19:10:23
+ * @since 2019-04-04
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 @TableName("sun8min_product")
-public class Product extends Model<Product> {
+public class Product implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 商品id
      */
     @TableId(value = "product_id", type = IdType.AUTO)
-    private Long productId;
+    private BigInteger productId;
 
     /**
      * 商品名
@@ -37,7 +41,7 @@ public class Product extends Model<Product> {
     /**
      * sku_id
      */
-    private Long skuId;
+    private BigInteger skuId;
 
     /**
      * 计量单位（0：个，1：ml）
@@ -82,17 +86,17 @@ public class Product extends Model<Product> {
     /**
      * 是否上架（0：否，1：是）
      */
-    private Integer isUpShelves;
+    private Boolean upShelves;
 
     /**
      * 是否展示（0：否，1：是）ps:保证可售卖而用户不可直接购买该单品，用例如：打包品中的单品，只能通过打包品买
      */
-    private Integer isShow;
+    private Boolean show;
 
     /**
      * 所属商店id
      */
-    private Long shopId;
+    private BigInteger shopId;
 
     /**
      * 商品活动标识（二进制位，为1表示是，右侧第1为1，1：秒杀，2：拼团，3：预售，4：团购，5：拍卖）
@@ -112,20 +116,17 @@ public class Product extends Model<Product> {
     /**
      * 创建时间
      */
-    private Date gmtCreate;
+    private LocalDateTime gmtCreate;
 
     /**
      * 修改时间
      */
-    private Date gmtModified;
+    private LocalDateTime gmtModified;
 
     /**
      * 是否删除（0：否，1：是）
      */
-    private Integer isDeleted;
+    private Boolean deleted;
 
-    @Override
-    protected Serializable pkVal() {
-        return this.productId;
-    }
+
 }
