@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 商店表
+ * spu表
  * </p>
  *
  * @author sun8min
@@ -21,28 +21,46 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sun8min_shop")
-public class Shop extends Model<Shop> {
+@TableName("sun8min_spu")
+public class Spu extends Model<Spu> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 商店id
+     * spu_id
      */
-    @TableId(value = "shop_id", type = IdType.AUTO)
-    private BigInteger shopId;
+    @TableId(value = "spu_id", type = IdType.AUTO)
+    private BigInteger spuId;
 
     /**
-     * 商店名
+     * spu名
      */
-    @TableField("shop_name")
-    private String shopName;
+    @TableField("spu_name")
+    private String spuName;
 
     /**
-     * 所属用户id
+     * spu图片存储（不含域名）
      */
-    @TableField("user_id")
-    private BigInteger userId;
+    @TableField("spu_image")
+    private String spuImage;
+
+    /**
+     * spu视频存储（不含域名）
+     */
+    @TableField("spu_video")
+    private String spuVideo;
+
+    /**
+     * 品牌id
+     */
+    @TableField("brand_id")
+    private BigInteger brandId;
+
+    /**
+     * 类目id
+     */
+    @TableField("category_id")
+    private BigInteger categoryId;
 
     /**
      * 扩展字段（json格式）
@@ -79,7 +97,7 @@ public class Shop extends Model<Shop> {
 
     @Override
     protected Serializable pkVal() {
-        return this.shopId;
+        return this.spuId;
     }
 
 }

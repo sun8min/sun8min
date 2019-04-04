@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 商店表
+ * 商品表
  * </p>
  *
  * @author sun8min
@@ -21,28 +21,40 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sun8min_shop")
-public class Shop extends Model<Shop> {
+@TableName("sun8min_product_image")
+public class ProductImage extends Model<ProductImage> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 商店id
+     * 商品图片id
      */
-    @TableId(value = "shop_id", type = IdType.AUTO)
-    private BigInteger shopId;
+    @TableId(value = "product_image_id", type = IdType.AUTO)
+    private BigInteger productImageId;
 
     /**
-     * 商店名
+     * 商品图片名
      */
-    @TableField("shop_name")
-    private String shopName;
+    @TableField("product_image_name")
+    private String productImageName;
 
     /**
-     * 所属用户id
+     * 商品id
      */
-    @TableField("user_id")
-    private BigInteger userId;
+    @TableField("product_id")
+    private BigInteger productId;
+
+    /**
+     * 商品图片存储（不含域名）
+     */
+    @TableField("product_image")
+    private String productImage;
+
+    /**
+     * 排序id（默认应该和主键相同,调整排序好修改）
+     */
+    @TableField("product_image_sort")
+    private BigInteger productImageSort;
 
     /**
      * 扩展字段（json格式）
@@ -79,7 +91,7 @@ public class Shop extends Model<Shop> {
 
     @Override
     protected Serializable pkVal() {
-        return this.shopId;
+        return this.productImageId;
     }
 
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun8min.product.mapper.PropertyKeyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sun8min.product.entity.PropertyKey">
+        <id column="property_key_id" property="propertyKeyId" />
+        <result column="property_key_name" property="propertyKeyName" />
+        <result column="property_key_type" property="propertyKeyType" />
+        <result column="property_key_sort" property="propertyKeySort" />
+        <result column="is_required" property="required" />
+        <result column="category_id" property="categoryId" />
+        <result column="extension_field" property="extensionField" />
+        <result column="version" property="version" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="is_deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        property_key_id, property_key_name, property_key_type, property_key_sort, is_required, category_id, extension_field, version, gmt_create, gmt_modified, is_deleted
+    </sql>
+
+</mapper>

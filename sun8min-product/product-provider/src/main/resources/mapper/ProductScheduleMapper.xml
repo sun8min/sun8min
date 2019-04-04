@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun8min.product.mapper.ProductScheduleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sun8min.product.entity.ProductSchedule">
+        <id column="product_schedule_id" property="productScheduleId" />
+        <result column="schedule_type" property="scheduleType" />
+        <result column="gmt_up_shelves" property="gmtUpShelves" />
+        <result column="gmt_down_shelves" property="gmtDownShelves" />
+        <result column="cron_expression" property="cronExpression" />
+        <result column="cron_gmt_begin" property="cronGmtBegin" />
+        <result column="cron_gmt_end" property="cronGmtEnd" />
+        <result column="cron_up_shelves_duration" property="cronUpShelvesDuration" />
+        <result column="extension_field" property="extensionField" />
+        <result column="version" property="version" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="is_deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        product_schedule_id, schedule_type, gmt_up_shelves, gmt_down_shelves, cron_expression, cron_gmt_begin, cron_gmt_end, cron_up_shelves_duration, extension_field, version, gmt_create, gmt_modified, is_deleted
+    </sql>
+
+</mapper>

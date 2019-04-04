@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun8min.product.mapper.ProductImageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sun8min.product.entity.ProductImage">
+        <id column="product_image_id" property="productImageId" />
+        <result column="product_image_name" property="productImageName" />
+        <result column="product_id" property="productId" />
+        <result column="product_image" property="productImage" />
+        <result column="product_image_sort" property="productImageSort" />
+        <result column="extension_field" property="extensionField" />
+        <result column="version" property="version" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="is_deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        product_image_id, product_image_name, product_id, product_image, product_image_sort, extension_field, version, gmt_create, gmt_modified, is_deleted
+    </sql>
+
+</mapper>

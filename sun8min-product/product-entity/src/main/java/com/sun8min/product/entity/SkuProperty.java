@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 商店表
+ * sku-销售属性关联表
  * </p>
  *
  * @author sun8min
@@ -21,28 +21,34 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sun8min_shop")
-public class Shop extends Model<Shop> {
+@TableName("sun8min_sku_property")
+public class SkuProperty extends Model<SkuProperty> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 商店id
+     * sku-销售属性关联id
      */
-    @TableId(value = "shop_id", type = IdType.AUTO)
-    private BigInteger shopId;
+    @TableId(value = "sku_property_id", type = IdType.AUTO)
+    private BigInteger skuPropertyId;
 
     /**
-     * 商店名
+     * sku_id
      */
-    @TableField("shop_name")
-    private String shopName;
+    @TableField("sku_id")
+    private BigInteger skuId;
 
     /**
-     * 所属用户id
+     * 属性key值
      */
-    @TableField("user_id")
-    private BigInteger userId;
+    @TableField("property_key_id")
+    private BigInteger propertyKeyId;
+
+    /**
+     * 属性value值
+     */
+    @TableField("property_value_id")
+    private BigInteger propertyValueId;
 
     /**
      * 扩展字段（json格式）
@@ -79,7 +85,7 @@ public class Shop extends Model<Shop> {
 
     @Override
     protected Serializable pkVal() {
-        return this.shopId;
+        return this.skuPropertyId;
     }
 
 }

@@ -1,4 +1,5 @@
 -- 默认字符集utfmb4，排序规则utf8mb4_unicode_ci，是为了兼容emoji表情
+-- is_(?!deleted).* ,正则使用零宽度断言(?!exp)查找以is_开头不含deleted的字段
 
 -- 用户库
 drop database if exists sun8min_user;
@@ -418,9 +419,9 @@ create table sun8min_product
   product_discount_percent tinyint unsigned comment '商品折扣百分比',
   product_type             tinyint unsigned        not null default 0 comment '商品类型（0：单品，1：打包品，ps：非单品即需要去关联表找子项）',
   is_up_shelves            tinyint(1) unsigned     not null default 0 comment '是否上架（0：否，1：是）',
-  is_show                  tinyint(1) unsigned     not null default 1 comment '是否展示（0：否，1：是）ps:保证可售卖而用户不可直接购买该单品，用例如：打包品中的单品，只能通过打包品买',
+  is_visible               tinyint(1) unsigned     not null default 1 comment '是否展示（0：否，1：是）ps:保证可售卖而用户不可直接购买该单品，用例如：打包品中的单品，只能通过打包品买',
   shop_id                  bigint unsigned         not null comment '所属商店id',
-  product_activity_flag    int unsigned            not null default 0 comment '商品活动标识（二进制位，为1表示是，右侧第1为1，1：秒杀，2：拼团，3：预售，4：团购，5：拍卖）',
+  product_activity_flag    int unsigned            not null default 0 comment '商品活动标识（二进制位，为1表示是，右侧第1为1，1：秒杀，2：拼团，3：预售，4：团购，5：拍卖，ps:拼团是基于熟人之间的社交化电商传播，团购则是陌生人之间的传播）',
   extension_field          varchar(255)            not null default '' comment '扩展字段（json格式）',
   version                  int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create               datetime                not null default current_timestamp comment '创建时间',
@@ -601,3 +602,13 @@ use sun8min_cloud_domain;
 insert into sun8min_cloud_domain(cloud_domain_name, cloud_domain_target, cloud_domain_type, cloud_domain_desc)
 values ('http://img.sun8min.com', 1, 2, '阿里云oss，用于存储图片'),
        ('http://vod.sun8min.com', 1, 3, '阿里云视频点播，用于存储视频');
+
+-- ###################################
+-- 测试数据插入
+
+-- 商品库
+use sun8min_product;
+-- -- 类目表
+insert into sun8min_category(category_name, category_pid, category_rid, category_level, category_type, category_sort)
+values ("前台test", 0, 0, 0, 1, 0),
+       ("后台test", 0, 0, 0, 2, 0);
