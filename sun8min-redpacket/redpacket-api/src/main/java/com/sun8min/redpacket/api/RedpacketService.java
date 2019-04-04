@@ -1,32 +1,25 @@
 package com.sun8min.redpacket.api;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.sun8min.redpacket.entity.Redpacket;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.math.BigInteger;
 
-public interface RedpacketService {
-    int deleteByPrimaryKey(Long redpacketId);
-
-    int insert(Redpacket record);
-
-    Redpacket selectByPrimaryKey(Long redpacketId);
-
-    List<Redpacket> selectAll();
-
-    int updateByPrimaryKey(Redpacket record);
+/**
+ * <p>
+ * 用户红包表 服务类
+ * </p>
+ *
+ * @author sun8min
+ * @since 2019-04-04
+ */
+public interface RedpacketService extends IService<Redpacket> {
 
     /**
      * 根据用户id查找红包余额
      * @param userId
      * @return
      */
-    BigDecimal findAmountByUserId(Long userId);
-
-    /**
-     * 根据用户id查找红包
-     * @param userId
-     * @return
-     */
-    Redpacket findByUserId(Long userId);
+    BigDecimal findAmountByUserId(BigInteger userId);
 }

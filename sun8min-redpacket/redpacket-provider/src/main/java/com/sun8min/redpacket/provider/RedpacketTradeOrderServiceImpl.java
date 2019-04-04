@@ -1,54 +1,38 @@
 package com.sun8min.redpacket.provider;
 
 import com.alibaba.fescar.core.context.RootContext;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sun8min.redpacket.api.RedpacketTradeOrderService;
-import com.sun8min.redpacket.dao.RedpacketDao;
-import com.sun8min.redpacket.dao.RedpacketTradeOrderDao;
 import com.sun8min.redpacket.entity.Redpacket;
 import com.sun8min.redpacket.entity.RedpacketTradeOrder;
-import org.apache.dubbo.config.annotation.Service;
+import com.sun8min.redpacket.mapper.RedpacketMapper;
+import com.sun8min.redpacket.mapper.RedpacketTradeOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.math.BigInteger;
 
-@Service(version = "${service.version}")
-public class RedpacketTradeOrderServiceImpl implements RedpacketTradeOrderService {
+/**
+ * <p>
+ * 用户红包交易表 服务实现类
+ * </p>
+ *
+ * @author sun8min
+ * @since 2019-04-04
+ */
+@Service
+public class RedpacketTradeOrderServiceImpl extends ServiceImpl<RedpacketTradeOrderMapper, RedpacketTradeOrder> implements RedpacketTradeOrderService {
 
     @Autowired
-    RedpacketTradeOrderDao redpacketTradeOrderDao;
+    RedpacketTradeOrderMapper redpacketTradeOrderMapper;
     @Autowired
-    RedpacketDao redpacketDao;
+    RedpacketMapper redpacketMapper;
 
-    @Override
-    public int deleteByPrimaryKey(Long redpacketTradeOrderId) {
-        return redpacketTradeOrderDao.deleteByPrimaryKey(redpacketTradeOrderId);
-    }
-
-    @Override
-    public int insert(RedpacketTradeOrder record) {
-        return redpacketTradeOrderDao.insert(record);
-    }
-
-    @Override
-    public RedpacketTradeOrder selectByPrimaryKey(Long redpacketTradeOrderId) {
-        return redpacketTradeOrderDao.selectByPrimaryKey(redpacketTradeOrderId);
-    }
-
-    @Override
-    public List<RedpacketTradeOrder> selectAll() {
-        return redpacketTradeOrderDao.selectAll();
-    }
-
-    @Override
-    public int updateByPrimaryKey(RedpacketTradeOrder record) {
-        return redpacketTradeOrderDao.updateByPrimaryKey(record);
-    }
-
-    @Override
     @Transactional
-    public Boolean trade(String tradeOrderNo, Long fromUserId, Long toUserId, BigDecimal redPacketPayAmount) {
+    @Override
+    public Boolean trade(String tradeOrderNo, BigInteger fromUserId, BigInteger toUserId, BigDecimal redPacketPayAmount) {
         System.out.println("全局事务id ：" + RootContext.getXID());
         // 红包交易记录
         RedpacketTradeOrder redpacketTradeOrder = new RedpacketTradeOrder();
@@ -56,15 +40,15 @@ public class RedpacketTradeOrderServiceImpl implements RedpacketTradeOrderServic
         redpacketTradeOrder.setToUserId(toUserId);
         redpacketTradeOrder.setRedpacketTradeAmount(redPacketPayAmount);
         redpacketTradeOrder.setTradeOrderNo(tradeOrderNo);
-        redpacketTradeOrderDao.insert(redpacketTradeOrder);
+        redpacketTradeOrderMapper.insert(redpacketTradeOrder);
         // 红包转出
-        Redpacket fromRedpacket = redpacketDao.findByUserId(fromUserId);
+        Redpacket fromRedpacket = redpacketMapper.findByUserId(fromUserId);
         fromRedpacket.setRedpacketAmount(fromRedpacket.getRedpacketAmount().subtract(redPacketPayAmount));
-        redpacketDao.updateByPrimaryKey(fromRedpacket);
+        redpacketMapper.updateById(fromRedpacket);
         // 红包转入
-        Redpacket toRedpacket = redpacketDao.findByUserId(toUserId);
+        Redpacket toRedpacket = redpacketMapper.findByUserId(toUserId);
         toRedpacket.setRedpacketAmount(toRedpacket.getRedpacketAmount().add(redPacketPayAmount));
-        redpacketDao.updateByPrimaryKey(toRedpacket);
+        redpacketMapper.updateById(toRedpacket);
         return true;
     }
 }

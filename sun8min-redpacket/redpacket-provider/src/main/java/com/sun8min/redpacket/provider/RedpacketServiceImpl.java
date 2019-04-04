@@ -1,52 +1,27 @@
 package com.sun8min.redpacket.provider;
 
-import com.sun8min.redpacket.api.RedpacketService;
-import com.sun8min.redpacket.dao.RedpacketDao;
 import com.sun8min.redpacket.entity.Redpacket;
-import org.apache.dubbo.config.annotation.Service;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sun8min.redpacket.mapper.RedpacketMapper;
+import com.sun8min.redpacket.api.RedpacketService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.math.BigInteger;
 
-@Service(version = "${service.version}")
-public class RedpacketServiceImpl implements RedpacketService {
-
-    @Autowired
-    RedpacketDao redpacketDao;
-
-    @Override
-    public int deleteByPrimaryKey(Long RedpacketId) {
-        return redpacketDao.deleteByPrimaryKey(RedpacketId);
-    }
-
-    @Override
-    public int insert(Redpacket record) {
-        return redpacketDao.insert(record);
-    }
+/**
+ * <p>
+ * 用户红包表 服务实现类
+ * </p>
+ *
+ * @author sun8min
+ * @since 2019-04-04
+ */
+@Service
+public class RedpacketServiceImpl extends ServiceImpl<RedpacketMapper, Redpacket> implements RedpacketService {
 
     @Override
-    public Redpacket selectByPrimaryKey(Long RedpacketId) {
-        return redpacketDao.selectByPrimaryKey(RedpacketId);
-    }
-
-    @Override
-    public List<Redpacket> selectAll() {
-        return redpacketDao.selectAll();
-    }
-
-    @Override
-    public int updateByPrimaryKey(Redpacket record) {
-        return redpacketDao.updateByPrimaryKey(record);
-    }
-
-    @Override
-    public BigDecimal findAmountByUserId(Long userId) {
-        return redpacketDao.findByUserId(userId).getRedpacketAmount();
-    }
-
-    @Override
-    public Redpacket findByUserId(Long userId) {
-        return redpacketDao.findByUserId(userId);
+    public BigDecimal findAmountByUserId(BigInteger userId) {
+        return baseMapper.findByUserId(userId).getRedpacketAmount();
     }
 }
