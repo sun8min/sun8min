@@ -74,8 +74,8 @@ public class MpGenerator {
                     @Override // 自定义数据库表字段类型转换
                     public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
                         String t = fieldType.toLowerCase();
-                        if (t.contains("bigint") && t.contains("unsigned")) return DbColumnType.BIG_INTEGER;
-                        if (t.contains("int") && t.contains("unsigned")) return DbColumnType.LONG;
+                        if (t.startsWith("bigint") && t.contains("unsigned")) return DbColumnType.BIG_INTEGER;
+                        if (t.startsWith("int") && t.contains("unsigned")) return DbColumnType.LONG;
                         return super.processTypeConvert(globalConfig, fieldType);
                     }
                 });
