@@ -75,6 +75,7 @@ public class MpGenerator {
                     public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
                         String t = fieldType.toLowerCase();
                         if (t.contains("bigint") && t.contains("unsigned")) return DbColumnType.BIG_INTEGER;
+                        if (t.contains("int") && t.contains("unsigned")) return DbColumnType.LONG;
                         return super.processTypeConvert(globalConfig, fieldType);
                     }
                 });

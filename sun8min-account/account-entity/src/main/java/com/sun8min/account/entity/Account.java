@@ -56,7 +56,7 @@ public class Account extends Model<Account> {
      */
     @TableField("version")
     @Version
-    private Integer version;
+    private Long version;
 
     /**
      * 创建时间

@@ -61,7 +61,7 @@ public class PropertyValue extends Model<PropertyValue> {
      */
     @TableField("version")
     @Version
-    private Integer version;
+    private Long version;
 
     /**
      * 创建时间

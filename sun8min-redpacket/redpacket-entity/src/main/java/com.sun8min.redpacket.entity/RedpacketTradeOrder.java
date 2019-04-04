@@ -68,7 +68,7 @@ public class RedpacketTradeOrder extends Model<RedpacketTradeOrder> {
      */
     @TableField("version")
     @Version
-    private Integer version;
+    private Long version;
 
     /**
      * 创建时间

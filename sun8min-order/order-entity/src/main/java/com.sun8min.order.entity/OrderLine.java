@@ -68,7 +68,7 @@ public class OrderLine extends Model<OrderLine> {
      */
     @TableField("version")
     @Version
-    private Integer version;
+    private Long version;
 
     /**
      * 创建时间

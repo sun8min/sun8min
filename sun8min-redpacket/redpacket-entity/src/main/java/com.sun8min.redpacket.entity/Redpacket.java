@@ -56,7 +56,7 @@ public class Redpacket extends Model<Redpacket> {
      */
     @TableField("version")
     @Version
-    private Integer version;
+    private Long version;
 
     /**
      * 创建时间

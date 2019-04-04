@@ -99,7 +99,7 @@ public class Category extends Model<Category> {
      */
     @TableField("version")
     @Version
-    private Integer version;
+    private Long version;
 
     /**
      * 创建时间

@@ -55,7 +55,7 @@ public class Shop extends Model<Shop> {
      */
     @TableField("version")
     @Version
-    private Integer version;
+    private Long version;
 
     /**
      * 创建时间

@@ -1,7 +1,7 @@
 package com.sun8min.order.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sun8min.order.entity.OrderLine;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>

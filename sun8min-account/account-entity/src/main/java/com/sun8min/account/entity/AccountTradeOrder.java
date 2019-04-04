@@ -68,7 +68,7 @@ public class AccountTradeOrder extends Model<AccountTradeOrder> {
      */
     @TableField("version")
     @Version
-    private Integer version;
+    private Long version;
 
     /**
      * 创建时间
