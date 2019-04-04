@@ -1,0 +1,42 @@
+## 基本配置
+server.port: 9200
+spring:
+  application:
+    name: sun8min-order
+    version: @project.version@
+
+## 数据源配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/sun8min_order?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+## Mybatis 配置
+#mybatis:
+#  type-aliases-package: com.sun8min.order.entity
+#  mapper-locations: classpath:mapper/*.xml
+logging:
+  level:
+    com.sun8min.order.mapper: debug
+
+##  Mybatis-plus 配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+## Eureka 配置
+eureka.client.serviceUrl.defaultZone: http://localhost:8761/eureka/
+
+## zookeeper 配置
+zookeeper.port: 2181
+
+## dubbo 配置（-1表示随机端口）
+dubbo:
+  protocol.name: dubbo
+  protocol.port: -1
+  registry.address: zookeeper://127.0.0.1:${zookeeper.port}
+  scan.base-packages: com.sun8min.order.provider
+  application.name: ${spring.application.name}
+
+## 服务版本号
+service.version: ${spring.application.version}

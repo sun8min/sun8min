@@ -1,77 +1,115 @@
 package com.sun8min.order.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
+ * <p>
  * 订单表
+ * </p>
  *
  * @author sun8min
- * @date 2019-03-28 13:22:51
+ * @since 2019-04-04
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Order implements Serializable{
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("sun8min_order")
+public class Order extends Model<Order> {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 订单id
      */
-    private Long orderId;
+    @TableId(value = "order_id", type = IdType.AUTO)
+    private BigInteger orderId;
 
     /**
      * 资金转出用户id
      */
-    private Long fromUserId;
+    @TableField("from_user_id")
+    private BigInteger fromUserId;
 
     /**
      * 资金转入用户id
      */
-    private Long toUserId;
+    @TableField("to_user_id")
+    private BigInteger toUserId;
 
     /**
      * 账户交易金额合计（精确到分）
      */
+    @TableField("capital_trade_amount")
     private BigDecimal capitalTradeAmount;
 
     /**
      * 红包交易金额合计（精确到分）
      */
+    @TableField("redpacket_trade_amount")
     private BigDecimal redpacketTradeAmount;
 
     /**
      * 订单支付状态（0:初始化，1:支付中，2:支付成功，3:支付失败，4:取消支付）
      */
+    @TableField("order_status")
     private Integer orderStatus;
 
     /**
      * 订单交易号
      */
+    @TableField("trade_order_no")
     private String tradeOrderNo;
+
+    /**
+     * 扩展字段（json格式）
+     */
+    @TableField("extension_field")
+    private String extensionField;
+
+    /**
+     * 版本号（用于乐观锁）
+     */
+    @TableField("version")
+    @Version
+    private Integer version;
 
     /**
      * 创建时间
      */
-    private Date gmtCreate;
+    @TableField("gmt_create")
+    private LocalDateTime gmtCreate;
 
     /**
      * 修改时间
      */
-    private Date gmtModified;
+    @TableField("gmt_modified")
+    private LocalDateTime gmtModified;
 
     /**
      * 是否删除（0：否，1：是）
      */
-    private Integer isDeleted;
+    @TableField("is_deleted")
+    @TableLogic
+    private Boolean deleted;
 
-    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected Serializable pkVal() {
+        return this.orderId;
+    }
 
     /**
      * 订单支付状态枚举类
@@ -87,17 +125,8 @@ public class Order implements Serializable{
 
         private int value;
         private String desc;
-
-        public static String getDescByValue(int value) {
-            OrderStatus[] OrderStatusEnums = values();
-            for (OrderStatus orderStatusEnum : OrderStatusEnums) {
-                if (orderStatusEnum.getValue() == value) {
-                    return orderStatusEnum.getDesc();
-                }
-            }
-            return null;
-        }
     }
 
-    private List<OrderLine> orderLines = new ArrayList<>();
+    private transient List<OrderLine> orderLines = new ArrayList<>();
+
 }

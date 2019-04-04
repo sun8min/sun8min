@@ -1,57 +1,42 @@
 package com.sun8min.order.provider;
 
 import com.alibaba.fescar.core.context.RootContext;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sun8min.order.api.OrderService;
-import com.sun8min.order.dao.OrderDao;
-import com.sun8min.order.dao.OrderLineDao;
 import com.sun8min.order.entity.Order;
 import com.sun8min.order.entity.OrderLine;
+import com.sun8min.order.mapper.OrderLineMapper;
+import com.sun8min.order.mapper.OrderMapper;
 import com.sun8min.product.entity.Product;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
-@Service(version = "${service.version}")
-public class OrderServiceImpl implements OrderService {
+/**
+ * <p>
+ * 订单表 服务实现类
+ * </p>
+ *
+ * @author sun8min
+ * @since 2019-04-04
+ */
+@Service
+public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
 
     @Autowired
-    OrderDao orderDao;
+    OrderMapper orderMapper;
     @Autowired
-    OrderLineDao orderLineDao;
-
-    @Override
-    public int deleteByPrimaryKey(Long orderId) {
-        return orderDao.deleteByPrimaryKey(orderId);
-    }
-
-    @Override
-    public int insert(Order record) {
-        return orderDao.insert(record);
-    }
-
-    @Override
-    public Order selectByPrimaryKey(Long orderId) {
-        return orderDao.selectByPrimaryKey(orderId);
-    }
-
-    @Override
-    public List<Order> selectAll() {
-        return orderDao.selectAll();
-    }
-
-    @Override
-    public int updateByPrimaryKey(Order record) {
-        return orderDao.updateByPrimaryKey(record);
-    }
+    OrderLineMapper orderLineMapper;
 
     @Override
     public Order findByTradeOrderNo(String tradeOrderNo) {
-        return orderDao.findByTradeOrderNo(tradeOrderNo);
+        return orderMapper.findByTradeOrderNo(tradeOrderNo);
     }
 
     @Transactional
@@ -70,25 +55,24 @@ public class OrderServiceImpl implements OrderService {
             OrderLine orderLine = new OrderLine();
             orderLine.setProductId(product.getProductId());
             orderLine.setProductPrice(product.getProductPrice());
-            orderLine.setProductQuantity(quantities.longValue());
+            orderLine.setProductQuantity(BigInteger.valueOf(quantities));
             payAmount = payAmount.add(product.getProductPrice().multiply(new BigDecimal(quantities.longValue())));
             orderLine.setTradeOrderNo(tradeOrderNo);
-            orderLineDao.insert(orderLine);
+            orderLineMapper.insert(orderLine);
         }
 
         // 账户交易金额
         BigDecimal capitalPayAmount = payAmount.subtract(redpacketPayAmount);
         // 订单交易记录
         Order order = new Order();
-        order.setFromUserId(fromUserId);
-        order.setToUserId(toUserId);
+        order.setFromUserId(BigInteger.valueOf(fromUserId));
+        order.setToUserId(BigInteger.valueOf(toUserId));
         order.setCapitalTradeAmount(capitalPayAmount);
         order.setRedpacketTradeAmount(redpacketPayAmount);
-//        order.setOrderStatus(Order.OrderStatus.PAYING.getValue());
-        order.setOrderStatus(1);
+        order.setOrderStatus(Order.OrderStatus.PAYING.getValue());
         order.setTradeOrderNo(tradeOrderNo);
-        orderDao.insert(order);
+        orderMapper.insert(order);
         return order;
     }
-
+    
 }

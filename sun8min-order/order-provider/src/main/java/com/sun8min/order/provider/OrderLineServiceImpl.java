@@ -1,36 +1,20 @@
 package com.sun8min.order.provider;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sun8min.order.api.OrderLineService;
-import com.sun8min.order.dao.OrderLineDao;
 import com.sun8min.order.entity.OrderLine;
-import org.apache.dubbo.config.annotation.Service;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sun8min.order.mapper.OrderLineMapper;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+/**
+ * <p>
+ * 订单商品项表 服务实现类
+ * </p>
+ *
+ * @author sun8min
+ * @since 2019-04-04
+ */
+@Service
+public class OrderLineServiceImpl extends ServiceImpl<OrderLineMapper, OrderLine> implements OrderLineService {
 
-@Service(version = "${service.version}")
-public class OrderLineServiceImpl implements OrderLineService {
-
-    @Autowired
-    OrderLineDao orderLineDao;
-
-    public int deleteByPrimaryKey(Long orderLineId) {
-        return orderLineDao.deleteByPrimaryKey(orderLineId);
-    }
-
-    public int insert(OrderLine record) {
-        return orderLineDao.insert(record);
-    }
-
-    public OrderLine selectByPrimaryKey(Long orderLineId) {
-        return orderLineDao.selectByPrimaryKey(orderLineId);
-    }
-
-    public List<OrderLine> selectAll() {
-        return orderLineDao.selectAll();
-    }
-
-    public int updateByPrimaryKey(OrderLine record) {
-        return orderLineDao.updateByPrimaryKey(record);
-    }
 }
