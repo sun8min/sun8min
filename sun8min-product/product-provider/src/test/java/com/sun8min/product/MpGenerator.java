@@ -106,6 +106,8 @@ public class MpGenerator {
                                 .setParent(packageName)
                                 .setController("controller")
                                 .setEntity("entity")
+                                .setService("api")
+                                .setServiceImpl("provider")
                 ).execute();
     }
 
