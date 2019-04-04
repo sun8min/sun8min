@@ -50,7 +50,7 @@ public class MpGenerator {
     private void generateByTables(boolean serviceNameStartWithI, String packageName, String... tableNames) {
         // 全局配置
         GlobalConfig config = new GlobalConfig();
-        config.setActiveRecord(true)// ActiveRecord特性，model继承Model<T>
+        config.setActiveRecord(true)// ActiveRecord特性，让model继承Model<T>
                 .setAuthor("sun8min")// 作者
                 .setOutputDir(outputDir)// 输出目录
                 .setFileOverride(true)// 文件覆盖
@@ -110,6 +110,7 @@ public class MpGenerator {
      * @return
      */
     private MpGenerator readVersionAndNameFromProperties() {
+        // 先尝试获取yaml，再获取properties，注意顺序，存在即使/src/main/resource/application.properties文件不存在，获取资源也不为空的情况
         String[] resourceNames = new String[]{"application.yml", "application.yaml", "application.properties"};
         Properties props = new Properties();
         try {
