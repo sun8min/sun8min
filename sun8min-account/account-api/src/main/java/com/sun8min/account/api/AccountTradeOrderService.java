@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sun8min.account.entity.AccountTradeOrder;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  * <p>
@@ -24,5 +25,5 @@ public interface AccountTradeOrderService extends IService<AccountTradeOrder> {
      * @param accountTradeAmount 账户交易额
      * @return 交易结果
      */
-    Boolean trade(String tradeOrderNo, long fromUserId, long toUserId, BigDecimal accountTradeAmount);
+    Boolean trade(String tradeOrderNo, BigInteger fromUserId, BigInteger toUserId, BigDecimal accountTradeAmount);
 }

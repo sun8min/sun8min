@@ -3,6 +3,8 @@ package com.sun8min.account.mapper;
 import com.sun8min.account.entity.Account;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.math.BigInteger;
+
 /**
  * <p>
  * 账户表 Mapper 接口
@@ -13,5 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface AccountMapper extends BaseMapper<Account> {
 
-    Account findByUserId(Long userId);
+    Account findByUserId(BigInteger userId);
 }

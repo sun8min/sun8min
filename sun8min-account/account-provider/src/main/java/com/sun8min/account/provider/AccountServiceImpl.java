@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  * <p>
@@ -20,7 +21,7 @@ import java.math.BigDecimal;
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements AccountService {
 
     @Override
-    public BigDecimal findAmountByUserId(Long userId) {
+    public BigDecimal findAmountByUserId(BigInteger userId) {
         return baseMapper.findByUserId(userId).getAccountAmount();
     }
 }

@@ -32,12 +32,12 @@ public class AccountTradeOrderServiceImpl extends ServiceImpl<AccountTradeOrderM
 
     @Transactional
     @Override
-    public Boolean trade(String tradeOrderNo, long fromUserId, long toUserId, BigDecimal accountTradeAmount) {
+    public Boolean trade(String tradeOrderNo, BigInteger fromUserId, BigInteger toUserId, BigDecimal accountTradeAmount) {
         System.out.println("全局事务id ：" + RootContext.getXID());
         // 账户交易记录
         AccountTradeOrder accountTradeOrder = new AccountTradeOrder();
-        accountTradeOrder.setFromUserId(BigInteger.valueOf(fromUserId));
-        accountTradeOrder.setToUserId(BigInteger.valueOf(toUserId));
+        accountTradeOrder.setFromUserId(fromUserId);
+        accountTradeOrder.setToUserId(fromUserId);
         accountTradeOrder.setAccountTradeAmount(accountTradeAmount);
         accountTradeOrder.setTradeOrderNo(tradeOrderNo);
         accountTradeOrderMapper.insert(accountTradeOrder);

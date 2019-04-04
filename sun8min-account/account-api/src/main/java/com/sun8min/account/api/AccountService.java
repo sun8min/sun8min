@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sun8min.account.entity.Account;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  * <p>
@@ -20,5 +21,5 @@ public interface AccountService extends IService<Account> {
      * @param userId
      * @return
      */
-    BigDecimal findAmountByUserId(Long userId);
+    BigDecimal findAmountByUserId(BigInteger userId);
 }
