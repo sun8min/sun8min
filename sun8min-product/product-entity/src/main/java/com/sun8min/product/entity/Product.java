@@ -57,7 +57,7 @@ public class Product extends Model<Product> {
      * 商品数量
      */
     @TableField("product_quantity")
-    private Integer productQuantity;
+    private Long productQuantity;
 
     /**
      * 商品视频存储（不含域名）
@@ -117,7 +117,7 @@ public class Product extends Model<Product> {
      * 商品活动标识（二进制位，为1表示是，右侧第1为1，1：秒杀，2：拼团，3：预售，4：团购，5：拍卖，ps:拼团是基于熟人之间的社交化电商传播，团购则是陌生人之间的传播）
      */
     @TableField("product_activity_flag")
-    private Integer productActivityFlag;
+    private Long productActivityFlag;
 
     /**
      * 扩展字段（json格式）

@@ -42,7 +42,7 @@ public class Inventory extends Model<Inventory> {
      * 库存量
      */
     @TableField("product_stock")
-    private Integer productStock;
+    private Long productStock;
 
     /**
      * 扩展字段（json格式）
