@@ -81,10 +81,13 @@ public class MpGenerator {
         // 策略配置
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
-                .setCapitalMode(true) // 全局大写命名 ORACLE 注意
-                .setEntityLombokModel(true) // lombok注解
+                .setCapitalMode(true)// 全局大写命名 ORACLE 注意
+                .setEntityLombokModel(true)// lombok注解
                 .setTablePrefix("sun8min_")// 表前缀
-                .setEntityBooleanColumnRemoveIsPrefix(true)// boolean字段移除is前缀
+                .setEntityBooleanColumnRemoveIsPrefix(true)// boolean字段移除is前缀，需要配合TableField
+                .setEntityTableFieldAnnotationEnable(true) // 导入TableField注解包
+                .setVersionFieldName("version")// 乐观锁属性名称
+                .setLogicDeleteFieldName("is_deleted")// 逻辑删除属性名称
                 .setNaming(NamingStrategy.underline_to_camel)// 表名生成策略
                 .setInclude(tableNames);// 需要生成的表名数组
         // 模块配置
