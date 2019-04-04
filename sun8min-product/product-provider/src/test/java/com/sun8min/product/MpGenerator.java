@@ -7,11 +7,13 @@ import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -29,7 +31,7 @@ public class MpGenerator {
     // 生成内容（默认全部生成，1：不生成controller)
     private int templateConfigFlag = 1;
     // 目录
-    private String outputDir = "src/main/java";
+    private String outputDir = "/src/main/java";
 
     // 以下在application配置文件修改，这里不需要改动
     private String url;
@@ -108,16 +110,25 @@ public class MpGenerator {
      * @return
      */
     private MpGenerator readVersionAndNameFromProperties() {
-        String[] resourceNames = new String[]{"application.properties", "application.yml", "application.yaml"};
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        String[] resourceNames = new String[]{"application.yml", "application.yaml", "application.properties"};
         Properties props = new Properties();
         try {
-            InputStream resourceStream = null;
             for (String resourceName : resourceNames) {
-                resourceStream = loader.getResourceAsStream(resourceName);
-                if (resourceStream != null) break;
+                Resource resource = new ClassPathResource(resourceName);
+                // 如果文件存在
+                if (resource.exists()) {
+                    if (resourceName.contains("yml") || resourceName.contains("yaml")) {
+                        // yaml文件加载配置
+                        YamlPropertiesFactoryBean yamlFactory = new YamlPropertiesFactoryBean();
+                        yamlFactory.setResources(resource);
+                        props = yamlFactory.getObject();
+                    } else {
+                        // properties文件加载配置
+                        props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName));
+                    }
+                    break;
+                }
             }
-            props.load(resourceStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
