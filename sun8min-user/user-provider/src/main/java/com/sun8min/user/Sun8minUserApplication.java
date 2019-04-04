@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 // 存放mapper的目录
-@MapperScan("com.sun8min.user.dao")
+@MapperScan("com.sun8min.user.mapper")
 // 使用eureka推荐该注解，否则@EnableDiscoveryClient
 //@EnableEurekaClient
 public class Sun8minUserApplication {
