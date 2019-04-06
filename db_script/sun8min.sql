@@ -13,7 +13,7 @@ create table sun8min_user
   user_nick_name  varchar(16)         not null comment '用户显示名',
   user_real_name  varchar(16)         not null default '' comment '用户真实名',
   user_phone      varchar(32)         not null default '' comment '用户手机号',
-  user_sex        tinyint             not null default '0' comment '用户性别（0:未知，1:男，2:女）',
+  user_sex        tinyint             not null default 0 comment '用户性别（0:未知，1:男，2:女）',
   extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
   version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
   gmt_create      datetime            not null default current_timestamp comment '创建时间',
@@ -24,6 +24,25 @@ create table sun8min_user
   default charset = utf8mb4
   collate = utf8mb4_unicode_ci
   auto_increment = 1 comment '用户表';
+-- -- 购物车表
+drop table if exists sun8min_cart;
+create table sun8min_cart
+(
+  cart_id             bigint unsigned auto_increment comment '购物车id',
+  user_id             bigint unsigned     not null comment '用户id',
+  product_id          bigint unsigned     not null comment '商品id',
+  product_quantity    int unsigned        not null default 1 comment '商品数量',
+  product_snapshot_id int unsigned        not null comment '商品快照id，ps：可用于通知价格、活动变动',
+  extension_field     varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version             int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create          datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified        datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted          tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  primary key (cart_id)
+) engine = innodb
+  default charset = utf8
+  collate = utf8_unicode_ci
+  auto_increment = 1 comment '购物车表';
 
 -- 账户库
 drop database if exists sun8min_account;
@@ -52,17 +71,17 @@ drop table if exists sun8min_account_trade_order;
 create table sun8min_account_trade_order
 (
   account_trade_order_id bigint unsigned auto_increment comment '账户交易id',
-  from_user_id           bigint unsigned         not null comment '资金转出用户id',
-  to_user_id             bigint unsigned         not null comment '资金转入用户id',
+  user_id                bigint unsigned         not null comment '用户id',
   account_trade_amount   decimal(10, 2) unsigned not null comment '交易金额合计（精确到分）',
   trade_order_no         varchar(32)             not null comment '订单交易号',
+  trade_type             tinyint unsigned        not null comment '交易类型（1：转出，2：转入）',
   extension_field        varchar(255)            not null default '' comment '扩展字段（json格式）',
   version                int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create             datetime                not null default current_timestamp comment '创建时间',
   gmt_modified           datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
   is_deleted             tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
   primary key (account_trade_order_id),
-  unique key uk_trade_order_no (trade_order_no)
+  unique key uk_user_id_trade_order_no_trade_type (user_id, trade_order_no, trade_type)
 ) engine = innodb
   default charset = utf8
   collate = utf8_unicode_ci
@@ -86,87 +105,48 @@ create table `undo_log`
   collate = utf8_unicode_ci
   auto_increment = 1 comment 'fescar_undo_log';
 
--- 红包库
-drop database if exists sun8min_redpacket;
-create database sun8min_redpacket default charset utf8 collate utf8_unicode_ci;
-use sun8min_redpacket;
--- -- 红包表
-drop table if exists sun8min_redpacket;
-create table sun8min_redpacket
-(
-  redpacket_id     bigint unsigned auto_increment comment '红包id',
-  redpacket_amount decimal(10, 2) unsigned not null comment '红包余额合计（精确到分）',
-  user_id          bigint unsigned         not null comment '用户id',
-  extension_field  varchar(255)            not null default '' comment '扩展字段（json格式）',
-  version          int unsigned            not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create       datetime                not null default current_timestamp comment '创建时间',
-  gmt_modified     datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted       tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
-  primary key (redpacket_id),
-  unique key uk_user_id (user_id)
-) engine = innodb
-  default charset = utf8
-  collate = utf8_unicode_ci
-  auto_increment = 1 comment '用户红包表';
--- -- 红包交易表
-drop table if exists sun8min_redpacket_trade_order;
-create table sun8min_redpacket_trade_order
-(
-  redpacket_trade_order_id bigint unsigned auto_increment comment '红包交易id',
-  from_user_id             bigint unsigned         not null comment '资金转出用户id',
-  to_user_id               bigint unsigned         not null comment '资金转入用户id',
-  redpacket_trade_amount   decimal(10, 2) unsigned not null comment '交易金额合计（精确到分）',
-  trade_order_no           varchar(32)             not null comment '订单交易号',
-  extension_field          varchar(255)            not null default '' comment '扩展字段（json格式）',
-  version                  int unsigned            not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create               datetime                not null default current_timestamp comment '创建时间',
-  gmt_modified             datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted               tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
-  primary key (redpacket_trade_order_id),
-  unique key uk_trade_order_no (trade_order_no)
-) engine = innodb
-  default charset = utf8
-  collate = utf8_unicode_ci
-  auto_increment = 1 comment '用户红包交易表';
--- -- fescar undo log
-drop table if exists `undo_log`;
-create table `undo_log`
-(
-  `id`            bigint(20)   not null auto_increment,
-  `branch_id`     bigint(20)   not null,
-  `xid`           varchar(100) not null,
-  `rollback_info` longblob     not null,
-  `log_status`    int(11)      not null,
-  `log_created`   datetime     not null,
-  `log_modified`  datetime     not null,
-  `ext`           varchar(100) default null,
-  primary key (`id`),
-  unique key `ux_undo_log` (`xid`, `branch_id`)
-) engine = innodb
-  default charset = utf8
-  collate = utf8_unicode_ci
-  auto_increment = 1 comment 'fescar_undo_log';
-
 -- 订单库
 drop database if exists sun8min_order;
 create database sun8min_order default charset utf8 collate utf8_unicode_ci;
 use sun8min_order;
+-- -- 主订单表
+drop table if exists sun8min_parent_order;
+create table sun8min_parent_order
+(
+  parent_order_id bigint unsigned auto_increment comment '主订单id',
+  parent_order_no bigint unsigned     not null comment '主订单号',
+  from_user_id    bigint unsigned     not null comment '资金转出用户id',
+  extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create      datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified    datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted      tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
+  primary key (parent_order_id),
+  unique key uk_parent_order_no (parent_order_no)
+) engine = innodb
+  default charset = utf8
+  collate = utf8_unicode_ci
+  auto_increment = 1 comment '主订单表';
 -- -- 订单表
 drop table if exists sun8min_order;
 create table sun8min_order
 (
-  order_id               bigint unsigned auto_increment comment '订单id',
-  from_user_id           bigint unsigned         not null comment '资金转出用户id',
-  to_user_id             bigint unsigned         not null comment '资金转入用户id',
-  account_trade_amount   decimal(10, 2) unsigned not null comment '账户交易金额合计（精确到分）',
-  redpacket_trade_amount decimal(10, 2) unsigned not null comment '红包交易金额合计（精确到分）',
-  order_status           tinyint                 not null comment '订单支付状态（0:初始化，1:支付中，2:支付成功，3:支付失败，4:取消支付）',
-  trade_order_no         varchar(32)             not null comment '订单交易号',
-  extension_field        varchar(255)            not null default '' comment '扩展字段（json格式）',
-  version                int unsigned            not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create             datetime                not null default current_timestamp comment '创建时间',
-  gmt_modified           datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted             tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
+  order_id           bigint unsigned auto_increment comment '订单id',
+  from_user_id       bigint unsigned         not null comment '资金转出用户id',
+  to_user_id         bigint unsigned         not null comment '资金转入用户id',
+  shop_id            bigint unsigned         not null comment '商店id',
+  order_trade_amount decimal(10, 2) unsigned not null comment '交易金额合计（精确到分）',
+  order_pay_channel  tinyint unsigned        not null comment '订单支付渠道（1：账户，2：支付宝，3：微信）',
+  order_pay_no       varchar(64)             not null default '' comment '渠道支付单号',
+  order_pay_time     datetime comment '支付时间',
+  order_status       tinyint unsigned        not null comment '订单状态（0:初始化，1：等待支付，2:支付中，3:支付成功，4:支付失败，5:取消支付，6：支付超时被系统关闭）',
+  trade_order_no     varchar(32)             not null comment '订单交易号',
+  parent_order_no    bigint unsigned         not null comment '主订单号',
+  extension_field    varchar(255)            not null default '' comment '扩展字段（json格式）',
+  version            int unsigned            not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create         datetime                not null default current_timestamp comment '创建时间',
+  gmt_modified       datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted         tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
   primary key (order_id),
   unique key uk_trade_order_no (trade_order_no)
 ) engine = innodb
@@ -177,18 +157,17 @@ create table sun8min_order
 drop table if exists sun8min_order_line;
 create table sun8min_order_line
 (
-  order_line_id    bigint unsigned auto_increment comment '订单商品项id',
-  product_id       bigint unsigned         not null comment '商品id',
-  product_price    decimal(10, 2) unsigned not null comment '商品价格（精确到分）',
-  product_quantity int unsigned            not null comment '商品数量',
-  trade_order_no   varchar(32)             not null comment '主订单交易号',
-  extension_field  varchar(255)            not null default '' comment '扩展字段（json格式）',
-  version          int unsigned            not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create       datetime                not null default current_timestamp comment '创建时间',
-  gmt_modified     datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted       tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
+  order_line_id       bigint unsigned auto_increment comment '订单商品项id',
+  product_snapshot_id bigint unsigned     not null comment '商品快照id',
+  product_quantity    int unsigned        not null comment '商品数量',
+  trade_order_no      varchar(32)         not null comment '订单交易号',
+  extension_field     varchar(255)        not null default '' comment '扩展字段（json格式）',
+  version             int unsigned        not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create          datetime            not null default current_timestamp comment '创建时间',
+  gmt_modified        datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted          tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
   primary key (order_line_id),
-  unique key uk_trade_order_no_product_id (trade_order_no, product_id)
+  unique key uk_trade_order_no_product_snapshot_id (trade_order_no, product_snapshot_id)
 ) engine = innodb
   default charset = utf8
   collate = utf8_unicode_ci
@@ -432,6 +411,30 @@ create table sun8min_product
   default charset = utf8mb4
   collate = utf8mb4_unicode_ci
   auto_increment = 1 comment '商品表';
+-- -- 商品快照表（记录价格、活动、上下架、删除变动）
+drop table if exists sun8min_product_snapshot;
+create table sun8min_product_snapshot
+(
+  product_snapshot_id      bigint unsigned auto_increment comment '商品快照id',
+  product_id               bigint unsigned         not null comment '商品id',
+  product_price            decimal(10, 2) unsigned not null comment '商品售价（精确到分）',
+  product_discount_type    tinyint                 not null default 0 comment '商品折扣类型（0：无折扣，1：输入折后价，2：输入折扣百分比）',
+  product_discount_price   decimal(10, 2) unsigned comment '商品折后价（精确到分）',
+  product_discount_percent tinyint unsigned comment '商品折扣百分比',
+  is_up_shelves            tinyint(1) unsigned     not null default 0 comment '是否上架（0：否，1：是）',
+  is_visible               tinyint(1) unsigned     not null default 1 comment '是否展示（0：否，1：是）ps:保证可售卖而用户不可直接购买该单品，用例如：打包品中的单品，只能通过打包品买',
+  product_activity_flag    int unsigned            not null default 0 comment '商品活动标识（二进制位，为1表示是，右侧第1为1，1：秒杀，2：拼团，3：预售，4：团购，5：拍卖，ps:拼团是基于熟人之间的社交化电商传播，团购则是陌生人之间的传播）',
+  product_is_deleted       tinyint(1) unsigned     not null default 0 comment '商品是否删除（0：否，1：是）',
+  extension_field          varchar(255)            not null default '' comment '扩展字段（json格式）',
+  version                  int unsigned            not null default 0 comment '版本号（用于乐观锁）',
+  gmt_create               datetime                not null default current_timestamp comment '创建时间',
+  gmt_modified             datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
+  is_deleted               tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
+  primary key (product_snapshot_id)
+) engine = innodb
+  default charset = utf8mb4
+  collate = utf8mb4_unicode_ci
+  auto_increment = 1 comment '商品快照表（记录价格、活动、上下架、删除变动）';
 -- -- 商品图片表
 drop table if exists sun8min_product_image;
 create table sun8min_product_image
@@ -450,7 +453,7 @@ create table sun8min_product_image
 ) engine = innodb
   default charset = utf8mb4
   collate = utf8mb4_unicode_ci
-  auto_increment = 1 comment '商品表';
+  auto_increment = 1 comment '商品图片表';
 -- -- 商品商品关联表
 drop table if exists sun8min_product_product;
 create table sun8min_product_product
@@ -472,7 +475,7 @@ create table sun8min_product_product
 drop table if exists sun8min_product_schedule;
 create table sun8min_product_schedule
 (
-  product_schedule_id      bigint unsigned auto_increment comment '商品商品关联id',
+  product_schedule_id      bigint unsigned auto_increment comment '商品上架定时id',
   schedule_type            tinyint unsigned    not null default 0 comment '定时任务类型（0：一次性[使用上下架时间]，1：周期性[使用cron表达式]）',
   gmt_up_shelves           datetime comment '上架时间',
   gmt_down_shelves         datetime comment '下架时间',
@@ -568,14 +571,6 @@ insert into sun8min_account(user_id, account_amount)
 values (1, 100000),
        (2, 100000),
        (3, 100000);
-
--- 红包库
-use sun8min_redpacket;
--- -- 红包表
-insert into sun8min_redpacket(user_id, redpacket_amount)
-values (1, 50000),
-       (2, 50000),
-       (3, 50000);
 
 -- 商店库
 use sun8min_product;
