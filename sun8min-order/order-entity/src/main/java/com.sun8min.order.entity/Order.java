@@ -156,7 +156,7 @@ public class Order extends Model<Order> {
     @AllArgsConstructor
     public enum OrderStatus {
         DRAFT(0, "初始化"),
-        WAIT_PAY(1, "初始化"),
+        WAIT_PAY(1, "等待支付"),
         PAYING(2, "支付中"),
         PAY_CONFIRMED(3, "支付成功"),
         PAY_FAILED(4, "支付失败"),
