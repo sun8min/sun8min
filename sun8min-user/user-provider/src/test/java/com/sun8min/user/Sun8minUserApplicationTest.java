@@ -1,7 +1,9 @@
 package com.sun8min.user;
 
+import com.sun8min.base.util.EnumUtils;
 import com.sun8min.user.entity.User;
 import com.sun8min.user.mapper.UserMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,10 +17,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.util.List;
 import java.util.Properties;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@Slf4j
 public class Sun8minUserApplicationTest {
 
     @Autowired
@@ -34,12 +39,16 @@ public class Sun8minUserApplicationTest {
         userMapper.insert(new User().setUserNickName("DDD"));
         userMapper.insert(new User().setUserNickName("EEE"));
 
-        User user = userMapper.selectById(6L);
+        List<User> users = userMapper.selectList(null);
+        User user = users.get(0);
+        BigInteger userId = user.getUserId();
+        log.info(EnumUtils.getEnumMsg(User.UserSex.class, user.getUserSex()));
+
         user.setUserNickName("gay");
         userMapper.updateById(user);
-        Assert.assertEquals(userMapper.selectById(6L).getUserNickName(), "gay");
+        Assert.assertEquals(userMapper.selectById(userId).getUserNickName(), "gay");
 
-        userMapper.deleteById(6L);
+        userMapper.deleteById(userId);
     }
 
 

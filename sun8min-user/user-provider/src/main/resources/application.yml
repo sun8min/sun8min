@@ -22,6 +22,7 @@ logging:
 
 ##  Mybatis-plus 配置
 mybatis-plus:
+  #  type-aliases-package: com.sun8min.user.entity
   mapper-locations: classpath*:/mapper/**/*.xml
 
 ## Eureka 配置

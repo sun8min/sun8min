@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sun8min.redpacket.mapper.RedpacketMapper">
+<mapper namespace="com.sun8min.user.mapper.CartMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.sun8min.redpacket.entity.Redpacket">
-        <id column="redpacket_id" property="redpacketId" />
-        <result column="redpacket_amount" property="redpacketAmount" />
+    <resultMap id="BaseResultMap" type="com.sun8min.user.entity.Cart">
+        <id column="cart_id" property="cartId" />
         <result column="user_id" property="userId" />
+        <result column="product_id" property="productId" />
+        <result column="product_quantity" property="productQuantity" />
+        <result column="product_snapshot_id" property="productSnapshotId" />
         <result column="extension_field" property="extensionField" />
         <result column="version" property="version" />
         <result column="gmt_create" property="gmtCreate" />
@@ -16,14 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        redpacket_id, redpacket_amount, user_id, extension_field, version, gmt_create, gmt_modified, is_deleted
+        cart_id, user_id, product_id, product_quantity, product_snapshot_id, extension_field, version, gmt_create, gmt_modified, is_deleted
     </sql>
-
-    <select id="findByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from redpacket
-        where user_id = #{userId}
-    </select>
 
 </mapper>

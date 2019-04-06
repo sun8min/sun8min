@@ -2,8 +2,10 @@ package com.sun8min.user.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -88,8 +90,23 @@ public class User extends Model<User> {
     @TableLogic
     private Boolean deleted;
 
+
     @Override
     protected Serializable pkVal() {
         return this.userId;
+    }
+
+    /**
+     * 用户性别枚举类（0:未知，1:男，2:女）
+     */
+    @Getter
+    @AllArgsConstructor
+    public enum UserSex {
+        UNKNOWN(0, "未知"),
+        MAN(1, "男"),
+        WOMAN(2, "女");
+
+        private int code;
+        private String msg;
     }
 }

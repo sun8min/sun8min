@@ -1,4 +1,4 @@
-package com.sun8min.redpacket.entity;
+package com.sun8min.user.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -7,43 +7,54 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 /**
  * <p>
- * 用户红包表
+ * 购物车表
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sun8min_redpacket")
-public class Redpacket extends Model<Redpacket> {
+@TableName("sun8min_cart")
+public class Cart extends Model<Cart> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 红包id
+     * 购物车id
      */
-    @TableId(value = "redpacket_id", type = IdType.AUTO)
-    private BigInteger redpacketId;
-
-    /**
-     * 红包余额合计（精确到分）
-     */
-    @TableField("redpacket_amount")
-    private BigDecimal redpacketAmount;
+    @TableId(value = "cart_id", type = IdType.AUTO)
+    private BigInteger cartId;
 
     /**
      * 用户id
      */
     @TableField("user_id")
     private BigInteger userId;
+
+    /**
+     * 商品id
+     */
+    @TableField("product_id")
+    private BigInteger productId;
+
+    /**
+     * 商品数量
+     */
+    @TableField("product_quantity")
+    private Long productQuantity;
+
+    /**
+     * 商品快照id，ps：可用于通知价格、活动变动
+     */
+    @TableField("product_snapshot_id")
+    private Long productSnapshotId;
 
     /**
      * 扩展字段（json格式）
@@ -80,7 +91,7 @@ public class Redpacket extends Model<Redpacket> {
 
     @Override
     protected Serializable pkVal() {
-        return this.redpacketId;
+        return this.cartId;
     }
 
 }
