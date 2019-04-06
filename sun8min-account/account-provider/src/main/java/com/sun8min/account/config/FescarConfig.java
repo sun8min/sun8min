@@ -3,9 +3,9 @@ package com.sun8min.account.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fescar.rm.datasource.DataSourceProxy;
 import com.alibaba.fescar.spring.annotation.GlobalTransactionScanner;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
@@ -68,7 +68,8 @@ public class FescarConfig {
      */
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSourceProxy dataSourceProxy) throws Exception {
-        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        // SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         factoryBean.setDataSource(dataSourceProxy);
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
                 .getResources("classpath*:/mapper/*.xml"));
