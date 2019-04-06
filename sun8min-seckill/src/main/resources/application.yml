@@ -1,0 +1,25 @@
+## 基本配置
+server.port: 9600
+spring:
+  application:
+    name: sun8min-seckill
+    version: @project.version@
+
+  ## thymeleaf配置
+  thymeleaf.cache: false
+  ## devtools配置
+  devtools.restart.enabled: false
+
+## Eureka 配置
+eureka.client.serviceUrl.defaultZone: http://localhost:8761/eureka/
+
+## zookeeper 配置
+zookeeper.port: 2181
+
+## dubbo 配置（-1表示随机端口）
+dubbo:
+  registry.address: zookeeper://127.0.0.1:${zookeeper.port}
+  application.name: ${spring.application.name}
+
+## 服务版本号
+service.version: ${spring.application.version}
