@@ -24,8 +24,7 @@ public class AccountMapperTest {
     @Transactional
     @Rollback
     public void crud() {
-        Account account = accountMapper.selectById(1);
-        Optional.ofNullable(account).map(Account::getGmtCreate).ifPresent(time -> log.info(time.toString()));
+        Optional.ofNullable(accountMapper.selectById(1)).map(Account::getGmtCreate).ifPresent(time -> log.info(time.toString()));
     }
 
 }

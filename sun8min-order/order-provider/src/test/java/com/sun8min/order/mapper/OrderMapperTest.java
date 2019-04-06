@@ -24,8 +24,7 @@ public class OrderMapperTest {
     @Transactional
     @Rollback
     public void crud() {
-        Order order = orderMapper.selectById(1);
-        Optional.ofNullable(order).map(Order::getGmtCreate).ifPresent(time -> log.info(time.toString()));
+        Optional.ofNullable(orderMapper.selectById(1)).map(Order::getGmtCreate).ifPresent(time -> log.info(time.toString()));
     }
 
 }

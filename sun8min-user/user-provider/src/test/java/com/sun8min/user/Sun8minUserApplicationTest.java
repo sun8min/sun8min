@@ -30,8 +30,7 @@ public class Sun8minUserApplicationTest {
     @Transactional
     @Rollback
     public void crud() {
-        User user = userMapper.selectById(1);
-        Optional.ofNullable(user).map(User::getGmtCreate).ifPresent(time -> log.info(time.toString()));
+        Optional.ofNullable(userMapper.selectById(1)).map(User::getGmtCreate).ifPresent(time -> log.info(time.toString()));
     }
 
     @Test
