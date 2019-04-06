@@ -1,7 +1,7 @@
 package com.sun8min.user.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sun8min.user.entity.User;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>

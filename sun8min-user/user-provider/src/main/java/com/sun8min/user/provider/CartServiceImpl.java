@@ -1,9 +1,9 @@
 package com.sun8min.user.provider;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sun8min.user.entity.Cart;
 import com.sun8min.user.mapper.CartMapper;
+import com.sun8min.user.api.CartService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2019-04-06
  */
 @Service
-public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IService<Cart> {
+public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements CartService {
 
 }
