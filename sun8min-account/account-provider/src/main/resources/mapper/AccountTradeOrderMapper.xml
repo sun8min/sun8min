@@ -5,10 +5,10 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sun8min.account.entity.AccountTradeOrder">
         <id column="account_trade_order_id" property="accountTradeOrderId" />
-        <result column="from_user_id" property="fromUserId" />
-        <result column="to_user_id" property="toUserId" />
+        <result column="user_id" property="userId" />
         <result column="account_trade_amount" property="accountTradeAmount" />
         <result column="trade_order_no" property="tradeOrderNo" />
+        <result column="trade_type" property="tradeType" />
         <result column="extension_field" property="extensionField" />
         <result column="version" property="version" />
         <result column="gmt_create" property="gmtCreate" />
@@ -18,7 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        account_trade_order_id, from_user_id, to_user_id, account_trade_amount, trade_order_no, extension_field, version, gmt_create, gmt_modified, is_deleted
+        account_trade_order_id, user_id, account_trade_amount, trade_order_no, trade_type, extension_field, version, gmt_create, gmt_modified, is_deleted
     </sql>
 
 </mapper>

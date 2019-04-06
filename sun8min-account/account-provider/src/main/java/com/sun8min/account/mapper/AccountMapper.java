@@ -1,7 +1,7 @@
 package com.sun8min.account.mapper;
 
-import com.sun8min.account.entity.Account;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sun8min.account.entity.Account;
 
 import java.math.BigInteger;
 
@@ -11,7 +11,7 @@ import java.math.BigInteger;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 public interface AccountMapper extends BaseMapper<Account> {
 

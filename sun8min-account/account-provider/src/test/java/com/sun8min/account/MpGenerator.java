@@ -27,7 +27,7 @@ public class MpGenerator {
     // 包名
     private String packageName = "com.sun8min.account";
     // 数据库查表语句
-    // set @table_schema = "sun8min_product";
+    // set @table_schema = "sun8min_account";
     // select group_concat(concat('"',table_name,'"')) from information_schema.tables where table_schema=@table_schema and table_name != "undo_log";
     // 表名
     private String[] tableNames = {"sun8min_account", "sun8min_account_trade_order"};

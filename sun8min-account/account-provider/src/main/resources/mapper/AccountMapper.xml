@@ -19,10 +19,10 @@
         account_id, account_amount, user_id, extension_field, version, gmt_create, gmt_modified, is_deleted
     </sql>
 
-    <select id="findByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="findByUserId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from capital
+        from sun8min_account
         where user_id = #{userId}
     </select>
 

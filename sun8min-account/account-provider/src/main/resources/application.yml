@@ -13,15 +13,16 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 ## Mybatis 配置
-#mybatis:
-#  type-aliases-package: com.sun8min.account.entity
-#  mapper-locations: classpath:mapper/*.xml
+mybatis:
+  type-aliases-package: com.sun8min.account.entity
+  mapper-locations: classpath:mapper/*.xml
 logging:
   level:
     com.sun8min.account.mapper: debug
 
 ##  Mybatis-plus 配置
 mybatis-plus:
+  type-aliases-package: com.sun8min.account.entity
   mapper-locations: classpath*:/mapper/**/*.xml
 
 ## Eureka 配置

@@ -12,10 +12,9 @@ import java.math.BigInteger;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 public interface AccountTradeOrderService extends IService<AccountTradeOrder> {
-
 
     /**
      * 账户交易
@@ -26,4 +25,6 @@ public interface AccountTradeOrderService extends IService<AccountTradeOrder> {
      * @return 交易结果
      */
     Boolean trade(String tradeOrderNo, BigInteger fromUserId, BigInteger toUserId, BigDecimal accountTradeAmount);
+
+
 }

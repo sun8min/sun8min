@@ -68,7 +68,7 @@ public class FescarConfig {
      */
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSourceProxy dataSourceProxy) throws Exception {
-        // SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+//         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         factoryBean.setDataSource(dataSourceProxy);
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()

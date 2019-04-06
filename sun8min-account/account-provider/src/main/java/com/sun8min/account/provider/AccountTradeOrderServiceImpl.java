@@ -20,7 +20,7 @@ import java.math.BigInteger;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 @Service
 public class AccountTradeOrderServiceImpl extends ServiceImpl<AccountTradeOrderMapper, AccountTradeOrder> implements AccountTradeOrderService {
@@ -34,18 +34,23 @@ public class AccountTradeOrderServiceImpl extends ServiceImpl<AccountTradeOrderM
     @Override
     public Boolean trade(String tradeOrderNo, BigInteger fromUserId, BigInteger toUserId, BigDecimal accountTradeAmount) {
         System.out.println("全局事务id ：" + RootContext.getXID());
-        // 账户交易记录
-        AccountTradeOrder accountTradeOrder = new AccountTradeOrder();
-        accountTradeOrder.setFromUserId(fromUserId);
-        accountTradeOrder.setToUserId(fromUserId);
-        accountTradeOrder.setAccountTradeAmount(accountTradeAmount);
-        accountTradeOrder.setTradeOrderNo(tradeOrderNo);
-        accountTradeOrderMapper.insert(accountTradeOrder);
-        // 账户转出
+        // 1. 交易记录转出
+        accountTradeOrderMapper.insert(new AccountTradeOrder()
+                .setAccountTradeAmount(accountTradeAmount)
+                .setTradeOrderNo(tradeOrderNo)
+                .setUserId(fromUserId)
+                .setTradeType(AccountTradeOrder.TradeType.TRANSFER_OUT.getCode()));
+        // 2. 交易记录转入
+        accountTradeOrderMapper.insert(new AccountTradeOrder()
+                .setAccountTradeAmount(accountTradeAmount)
+                .setTradeOrderNo(tradeOrderNo)
+                .setUserId(toUserId)
+                .setTradeType(AccountTradeOrder.TradeType.TRANSFER_IN.getCode()));
+        // 3. 账户转出
         Account fromAccount = accountMapper.findByUserId(fromUserId);
         fromAccount.setAccountAmount(fromAccount.getAccountAmount().subtract(accountTradeAmount));
         accountMapper.updateById(fromAccount);
-        // 账户转入
+        // 4. 账户转入
         Account toAccount = accountMapper.findByUserId(toUserId);
         toAccount.setAccountAmount(toAccount.getAccountAmount().add(accountTradeAmount));
         accountMapper.updateById(toAccount);

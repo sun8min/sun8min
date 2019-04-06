@@ -29,7 +29,6 @@
         <module>sun8min-user</module>
         <module>sun8min-product</module>
         <module>sun8min-account</module>
-        <module>sun8min-redpacket</module>
         <module>sun8min-order</module>
     </modules>
 
@@ -141,7 +140,7 @@
     </dependencyManagement>
 
     <build>
-        <!-- 使application.properties用通配符与pom.xml同步 -->
+        <!-- 使application配置文件与pom.xml同步,能用通配符获取pom的值 -->
         <!-- Example：application.version=@project.version@ -->
         <resources>
             <resource>
