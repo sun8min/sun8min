@@ -26,10 +26,10 @@
 			<artifactId>product-api</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-		<!-- capital-api -->
+		<!-- account-api -->
 		<dependency>
-			<groupId>com.sun8min.capital</groupId>
-			<artifactId>capital-api</artifactId>
+			<groupId>com.sun8min.account</groupId>
+			<artifactId>account-api</artifactId>
 			<version>1.2.0</version>
 		</dependency>
 		<!-- redpacket-api -->

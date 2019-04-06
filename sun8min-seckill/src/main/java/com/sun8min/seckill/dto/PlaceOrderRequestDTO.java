@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -16,8 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlaceOrderRequestDTO {
-    private long fromUserId;
-    private long toUserId;
-    private List<Pair<Product, Integer>> productQuantitiesList;
-    private BigDecimal redpacketPayAmount;
+    private BigInteger fromUserId;
+    private BigInteger toUserId;
+    private List<Pair<Product, Long>> productQuantitiesList;
 }

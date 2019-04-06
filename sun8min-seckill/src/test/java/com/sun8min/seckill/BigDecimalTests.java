@@ -1,34 +1,37 @@
 package com.sun8min.seckill;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 
-@Log
+@Slf4j
 public class BigDecimalTests {
 
 	@Test
 	public void test(){
 		BigDecimal bigDecimal = new BigDecimal("-0333000.0001");
 		// 相反数
-		System.out.println(bigDecimal.negate());
+		log(bigDecimal.negate());
 		// 本身
-		System.out.println(bigDecimal.plus());
+		log(bigDecimal.plus());
 		// 从左数第一个不是0的数字个数
-		System.out.println(bigDecimal.precision());
+		log(bigDecimal.precision());
 		// 小数位数（包括0）
-		System.out.println(bigDecimal.scale());
+		log(bigDecimal.scale());
 		// 正负号（1：正，-1：负）
-		System.out.println(bigDecimal.signum());
+		log(bigDecimal.signum());
 		// 精度（类似0.001）
-		System.out.println(bigDecimal.ulp());
+		log(bigDecimal.ulp());
 		// 去掉尾数的0
-		System.out.println(bigDecimal.stripTrailingZeros());
+		log(bigDecimal.stripTrailingZeros());
 		// 转字符串
-		System.out.println(bigDecimal.toPlainString());
+		log(bigDecimal.toPlainString());
 		// 去掉精度后的数值，即去掉小数点
-		System.out.println(bigDecimal.unscaledValue());
+		log(bigDecimal.unscaledValue());
 	}
 
+	private void log(Object obj) {
+		log.info(obj + "");
+	}
 }

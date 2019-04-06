@@ -1,5 +1,6 @@
 package com.sun8min.seckill;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 /**
@@ -73,40 +74,41 @@ import org.junit.Test;
  * a = a |(a>>16);
  * return (a+1)>>1;
  */
+@Slf4j
 public class BitManipulationTests {
 
     @Test
     public void test() {
         // 原先flag标示
         long flag = 0;
-        out(flag);
+        log(flag);
 
         // 开1
         flag = openActivity(flag, 1);
-        out(flag);
+        log(flag);
 
         // 开3
         flag = openActivity(flag, 3);
-        out(flag);
+        log(flag);
 
         // 关1
         flag = closeActivity(flag, 1);
-        out(flag);
+        log(flag);
 
         // 关2
         flag = closeActivity(flag, 2);
-        out(flag);
+        log(flag);
 
         // 关3
         flag = closeActivity(flag, 3);
-        out(flag);
+        log(flag);
 
         // 开2
         flag = openActivity(flag, 2);
-        out(flag);
+        log(flag);
 
         for (int i = 1; i <= 3; i++) {
-            System.out.println(isActivityOpen(flag, i) ? "开启" : "关闭");
+            log.info(isActivityOpen(flag, i) ? "开启" : "关闭");
         }
     }
 
@@ -148,7 +150,7 @@ public class BitManipulationTests {
      *
      * @param num
      */
-    private void out(long num) {
-        System.out.println("十进制数 ： " + num + ", 二进制数 ： " + Long.toBinaryString(num));
+    private void log(long num) {
+        log.info("十进制数 ： " + num + ", 二进制数 ： " + Long.toBinaryString(num));
     }
 }
