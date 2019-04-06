@@ -9,7 +9,7 @@ import com.sun8min.product.entity.Spu;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 public interface SpuService extends IService<Spu> {
 

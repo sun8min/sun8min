@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -113,8 +113,8 @@ public class PropertyKey extends Model<PropertyKey> {
         UN_IMPORTANT(2, "非关键属性"),
         SALE(3, "销售属性");
 
-        private int value;
-        private String desc;
+        private int code;
+        private String msg;
     }
 
 }

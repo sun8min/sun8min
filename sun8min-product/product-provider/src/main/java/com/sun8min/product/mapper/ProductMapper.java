@@ -1,7 +1,10 @@
 package com.sun8min.product.mapper;
 
-import com.sun8min.product.entity.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sun8min.product.entity.Product;
+
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * <p>
@@ -9,8 +12,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 public interface ProductMapper extends BaseMapper<Product> {
 
+    List<Product> findListByShopId(BigInteger shopId);
 }

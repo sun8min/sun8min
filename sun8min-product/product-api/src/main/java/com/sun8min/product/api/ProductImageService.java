@@ -5,11 +5,11 @@ import com.sun8min.product.entity.ProductImage;
 
 /**
  * <p>
- * 商品表 服务类
+ * 商品图片表 服务类
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 public interface ProductImageService extends IService<ProductImage> {
 

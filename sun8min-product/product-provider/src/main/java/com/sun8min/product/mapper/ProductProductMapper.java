@@ -1,7 +1,7 @@
 package com.sun8min.product.mapper;
 
-import com.sun8min.product.entity.ProductProduct;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sun8min.product.entity.ProductProduct;
 
 /**
  * <p>
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 public interface ProductProductMapper extends BaseMapper<ProductProduct> {
 

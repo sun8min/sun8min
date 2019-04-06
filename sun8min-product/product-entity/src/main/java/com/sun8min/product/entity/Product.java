@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -166,8 +166,8 @@ public class Product extends Model<Product> {
         UNIT(0, "个"),
         ML(1, "ml");
 
-        private int value;
-        private String desc;
+        private int code;
+        private String msg;
     }
 
     /**
@@ -180,8 +180,8 @@ public class Product extends Model<Product> {
         PRICE(1, "输入折后价"),
         PERCENT(2, "输入折扣百分比");
 
-        private int value;
-        private String desc;
+        private int code;
+        private String msg;
     }
 
     /**
@@ -190,11 +190,11 @@ public class Product extends Model<Product> {
     @Getter
     @AllArgsConstructor
     public enum ProductType {
-        DRAFT(0, "单品"),
-        PAYING(1, "打包品");
+        SINGLE(0, "单品"),
+        PACK(1, "打包品");
 
-        private int value;
-        private String desc;
+        private int code;
+        private String msg;
     }
 
     /**
@@ -209,8 +209,7 @@ public class Product extends Model<Product> {
         GROUP_STRANGER(4, "团购"),
         AUCTION(5, "拍卖");
 
-        private int value;
-        private String desc;
+        private int code;
+        private String msg;
     }
-
 }

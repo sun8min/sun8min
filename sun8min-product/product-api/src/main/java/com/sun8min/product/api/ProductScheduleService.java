@@ -9,7 +9,7 @@ import com.sun8min.product.entity.ProductSchedule;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 public interface ProductScheduleService extends IService<ProductSchedule> {
 

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -29,7 +29,7 @@ public class ProductSchedule extends Model<ProductSchedule> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 商品商品关联id
+     * 商品上架定时id
      */
     @TableId(value = "product_schedule_id", type = IdType.AUTO)
     private BigInteger productScheduleId;
@@ -123,8 +123,8 @@ public class ProductSchedule extends Model<ProductSchedule> {
         ONETIME(0, "一次性[使用上下架时间]"),
         CRON(1, "周期性[使用cron表达式]");
 
-        private int value;
-        private String desc;
+        private int code;
+        private String msg;
     }
 
 }

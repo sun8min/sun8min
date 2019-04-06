@@ -1,9 +1,9 @@
 package com.sun8min.product.provider;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sun8min.product.api.SpuPropertyService;
 import com.sun8min.product.entity.SpuProperty;
 import com.sun8min.product.mapper.SpuPropertyMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 @Service
-public class SpuPropertyServiceImpl extends ServiceImpl<SpuPropertyMapper, SpuProperty> implements IService<SpuProperty> {
+public class SpuPropertyServiceImpl extends ServiceImpl<SpuPropertyMapper, SpuProperty> implements SpuPropertyService {
 
 }

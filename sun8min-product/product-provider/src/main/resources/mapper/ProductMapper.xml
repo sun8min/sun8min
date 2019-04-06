@@ -31,4 +31,10 @@
         product_id, product_name, sku_id, product_measure_unit, product_quantity, product_video, product_price, product_discount_type, product_discount_price, product_discount_percent, product_type, is_up_shelves, is_visible, shop_id, product_activity_flag, extension_field, version, gmt_create, gmt_modified, is_deleted
     </sql>
 
+    <select id="findListByShopId" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from sun8min_product
+        where shop_id = #{shopId}
+    </select>
 </mapper>

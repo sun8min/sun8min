@@ -30,7 +30,7 @@ public class MpGenerator {
     // set @table_schema = "sun8min_product";
     // select group_concat(concat('"',table_name,'"')) from information_schema.tables where table_schema=@table_schema and table_name != "undo_log";
     // 表名
-    private String[] tableNames = {"sun8min_brand", "sun8min_category", "sun8min_category_category", "sun8min_inventory", "sun8min_product", "sun8min_product_image", "sun8min_product_product", "sun8min_product_schedule", "sun8min_property_key", "sun8min_property_value", "sun8min_shop", "sun8min_sku", "sun8min_sku_property", "sun8min_spu", "sun8min_spu_property"};
+    private String[] tableNames = {"sun8min_brand", "sun8min_category", "sun8min_category_category", "sun8min_inventory", "sun8min_product", "sun8min_product_image", "sun8min_product_product", "sun8min_product_schedule", "sun8min_product_snapshot", "sun8min_property_key", "sun8min_property_value", "sun8min_shop", "sun8min_sku", "sun8min_sku_property", "sun8min_spu", "sun8min_spu_property"};
     // 生成内容（默认全部生成，1：不生成controller)
     private int templateConfigFlag = 1;
     // 目录

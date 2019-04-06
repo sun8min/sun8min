@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -135,8 +135,7 @@ public class Category extends Model<Category> {
         FRONT(1, "后台类目"),
         BACK(2, "前台类目");
 
-        private int value;
-        private String desc;
+        private int code;
+        private String msg;
     }
-
 }
