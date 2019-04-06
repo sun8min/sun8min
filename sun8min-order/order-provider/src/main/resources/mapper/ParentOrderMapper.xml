@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sun8min.order.mapper.OrderLineMapper">
+<mapper namespace="com.sun8min.order.mapper.ParentOrderMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.sun8min.order.entity.OrderLine">
-        <id column="order_line_id" property="orderLineId" />
-        <result column="product_snapshot_id" property="productSnapshotId" />
-        <result column="product_quantity" property="productQuantity" />
-        <result column="trade_order_no" property="tradeOrderNo" />
+    <resultMap id="BaseResultMap" type="com.sun8min.order.entity.ParentOrder">
+        <id column="parent_order_id" property="parentOrderId" />
+        <result column="parent_order_no" property="parentOrderNo" />
+        <result column="from_user_id" property="fromUserId" />
         <result column="extension_field" property="extensionField" />
         <result column="version" property="version" />
         <result column="gmt_create" property="gmtCreate" />
@@ -17,7 +16,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        order_line_id, product_snapshot_id, product_quantity, trade_order_no, extension_field, version, gmt_create, gmt_modified, is_deleted
+        parent_order_id, parent_order_no, from_user_id, extension_field, version, gmt_create, gmt_modified, is_deleted
     </sql>
 
 </mapper>

@@ -1,7 +1,7 @@
 package com.sun8min.order.mapper;
 
-import com.sun8min.order.entity.Order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sun8min.order.entity.Order;
 
 /**
  * <p>
@@ -9,8 +9,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 public interface OrderMapper extends BaseMapper<Order> {
 
+    Order findByTradeOrderNo(String tradeOrderNo);
 }

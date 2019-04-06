@@ -21,7 +21,7 @@ import java.util.List;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -50,19 +50,37 @@ public class Order extends Model<Order> {
     private BigInteger toUserId;
 
     /**
-     * 账户交易金额合计（精确到分）
+     * 商店id
      */
-    @TableField("capital_trade_amount")
-    private BigDecimal capitalTradeAmount;
+    @TableField("shop_id")
+    private BigInteger shopId;
 
     /**
-     * 红包交易金额合计（精确到分）
+     * 交易金额合计（精确到分）
      */
-    @TableField("redpacket_trade_amount")
-    private BigDecimal redpacketTradeAmount;
+    @TableField("order_trade_amount")
+    private BigDecimal orderTradeAmount;
 
     /**
-     * 订单支付状态（0:初始化，1:支付中，2:支付成功，3:支付失败，4:取消支付）
+     * 订单支付渠道（1：账户，2：支付宝，3：微信）
+     */
+    @TableField("order_pay_channel")
+    private Integer orderPayChannel;
+
+    /**
+     * 渠道支付单号
+     */
+    @TableField("order_pay_no")
+    private String orderPayNo;
+
+    /**
+     * 支付时间
+     */
+    @TableField("order_pay_time")
+    private LocalDateTime orderPayTime;
+
+    /**
+     * 订单状态（0:初始化，1：等待支付，2:支付中，3:支付成功，4:支付失败，5:取消支付，6：支付超时被系统关闭）
      */
     @TableField("order_status")
     private Integer orderStatus;
@@ -72,6 +90,12 @@ public class Order extends Model<Order> {
      */
     @TableField("trade_order_no")
     private String tradeOrderNo;
+
+    /**
+     * 主订单号
+     */
+    @TableField("parent_order_no")
+    private BigInteger parentOrderNo;
 
     /**
      * 扩展字段（json格式）
@@ -112,19 +136,35 @@ public class Order extends Model<Order> {
     }
 
     /**
-     * 订单支付状态枚举类
+     * 订单支付渠道枚举类（1：账户，2：支付宝，3：微信）
+     */
+    @Getter
+    @AllArgsConstructor
+    public enum orderPayChannel {
+        ACCOUNT(1, "账户"),
+        AILPAY(2, "支付宝"),
+        WECHAT(3, "微信");
+
+        private int code;
+        private String msg;
+    }
+
+    /**
+     * 订单状态枚举类（0:初始化，1：等待支付，2:支付中，3:支付成功，4:支付失败，5:取消支付，6：支付超时被系统关闭）
      */
     @Getter
     @AllArgsConstructor
     public enum OrderStatus {
         DRAFT(0, "初始化"),
-        PAYING(1, "支付中"),
-        PAY_CONFIRM(2, "支付成功"),
-        PAY_FAILED(3, "支付失败"),
-        PAY_CANCEL(4, "取消支付");
+        WAIT_PAY(1, "初始化"),
+        PAYING(2, "支付中"),
+        PAY_CONFIRMED(3, "支付成功"),
+        PAY_FAILED(4, "支付失败"),
+        PAY_CANCELED(5, "取消支付"),
+        PAY_TIMEOUT_CLOSED_BY_SYSTEM(6, "支付超时被系统关闭");
 
-        private int value;
-        private String desc;
+        private int code;
+        private String msg;
     }
 
     private transient List<OrderLine> orderLines = new ArrayList<>();

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 订单商品项表
+ * 主订单表
  * </p>
  *
  * @author sun8min
@@ -21,34 +21,28 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sun8min_order_line")
-public class OrderLine extends Model<OrderLine> {
+@TableName("sun8min_parent_order")
+public class ParentOrder extends Model<ParentOrder> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 订单商品项id
+     * 主订单id
      */
-    @TableId(value = "order_line_id", type = IdType.AUTO)
-    private BigInteger orderLineId;
+    @TableId(value = "parent_order_id", type = IdType.AUTO)
+    private BigInteger parentOrderId;
 
     /**
-     * 商品快照id
+     * 主订单号
      */
-    @TableField("product_snapshot_id")
-    private BigInteger productSnapshotId;
+    @TableField("parent_order_no")
+    private BigInteger parentOrderNo;
 
     /**
-     * 商品数量
+     * 资金转出用户id
      */
-    @TableField("product_quantity")
-    private Long productQuantity;
-
-    /**
-     * 订单交易号
-     */
-    @TableField("trade_order_no")
-    private String tradeOrderNo;
+    @TableField("from_user_id")
+    private BigInteger fromUserId;
 
     /**
      * 扩展字段（json格式）
@@ -85,7 +79,7 @@ public class OrderLine extends Model<OrderLine> {
 
     @Override
     protected Serializable pkVal() {
-        return this.orderLineId;
+        return this.parentOrderId;
     }
 
 }

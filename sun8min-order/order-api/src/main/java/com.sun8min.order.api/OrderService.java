@@ -5,7 +5,7 @@ import com.sun8min.order.entity.Order;
 import com.sun8min.product.entity.Product;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -14,10 +14,9 @@ import java.util.List;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-04
+ * @since 2019-04-06
  */
 public interface OrderService extends IService<Order> {
-
     /**
      * 根据交易单号查找订单
      * @param tradeOrderNo
@@ -29,6 +28,6 @@ public interface OrderService extends IService<Order> {
      * 下单
      * @return
      */
-    Order placeOrder(Long fromUserId, Long toUserId, List<Pair<Product, Integer>> productQuantitiesList, BigDecimal redpacketPayAmount);
+    Order placeOrder(BigInteger fromUserId, BigInteger toUserId, List<Pair<Product, Long>> productQuantitiesList);
 
 }

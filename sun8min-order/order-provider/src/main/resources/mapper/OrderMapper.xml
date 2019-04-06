@@ -7,10 +7,14 @@
         <id column="order_id" property="orderId" />
         <result column="from_user_id" property="fromUserId" />
         <result column="to_user_id" property="toUserId" />
-        <result column="capital_trade_amount" property="capitalTradeAmount" />
-        <result column="redpacket_trade_amount" property="redpacketTradeAmount" />
+        <result column="shop_id" property="shopId" />
+        <result column="order_trade_amount" property="orderTradeAmount" />
+        <result column="order_pay_channel" property="orderPayChannel" />
+        <result column="order_pay_no" property="orderPayNo" />
+        <result column="order_pay_time" property="orderPayTime" />
         <result column="order_status" property="orderStatus" />
         <result column="trade_order_no" property="tradeOrderNo" />
+        <result column="parent_order_no" property="parentOrderNo" />
         <result column="extension_field" property="extensionField" />
         <result column="version" property="version" />
         <result column="gmt_create" property="gmtCreate" />
@@ -20,7 +24,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        order_id, from_user_id, to_user_id, capital_trade_amount, redpacket_trade_amount, order_status, trade_order_no, extension_field, version, gmt_create, gmt_modified, is_deleted
+        order_id, from_user_id, to_user_id, shop_id, order_trade_amount, order_pay_channel, order_pay_no, order_pay_time, order_status, trade_order_no, parent_order_no, extension_field, version, gmt_create, gmt_modified, is_deleted
     </sql>
 
     <select id="findByTradeOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
