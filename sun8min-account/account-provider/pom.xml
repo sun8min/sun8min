@@ -7,23 +7,23 @@
     <parent>
         <groupId>com.sun8min.account</groupId>
         <artifactId>account-parent</artifactId>
-        <version>1.2.0</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>com.sun8min.account</groupId>
     <artifactId>account-provider</artifactId>
-    <version>1.2.0</version>
+    <version>2.0.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>com.sun8min.account</groupId>
             <artifactId>account-api</artifactId>
-            <version>1.2.0</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.sun8min.base</groupId>
             <artifactId>base-provider</artifactId>
-            <version>1.2.0</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

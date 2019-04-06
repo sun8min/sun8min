@@ -6,7 +6,7 @@
 
     <groupId>com.sun8min</groupId>
     <artifactId>sun8min</artifactId>
-    <version>1.2.0</version>
+    <version>2.0.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -155,6 +155,7 @@
             4. 回滚 mvn versions:revert
             5. 提交 mvn versions:commit
         -->
+        <!-- SnapShot与release区别：snapshot版本即使版本号一样，也会去maven仓库查看是否有更新，而且这个频率可以设置，而release同版本号只会下载一次 -->
     </build>
 
 </project>
