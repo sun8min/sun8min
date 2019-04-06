@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
+
     <parent>
         <groupId>com.sun8min.base</groupId>
         <artifactId>base-parent</artifactId>
@@ -28,17 +28,30 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!-- mybatis -->
+        <!--
+            mybatis，spring与plus的选择
+            1. mybatis-plus-boot-starter（包含mybatis-plus），加上mybatis-plus-generator代码生成器
+            2. mybatis-spring-boot-starter，mybatis-plus，加上mybatis-plus-generator代码生成器
+            3. mybatis-spring-boot-starter，加上mybatis-generator代码生成器
+         -->
+
+        <!-- mybatis-spring-boot-starter -->
         <!--<dependency>-->
         <!--<groupId>org.mybatis.spring.boot</groupId>-->
         <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
         <!--</dependency>-->
 
-        <!-- mybatis-plus -->
+        <!-- mybatis-plus-boot-starter -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
+
+        <!-- mybatis-plus -->
+        <!--<dependency>-->
+        <!--<groupId>com.baomidou</groupId>-->
+        <!--<artifactId>mybatis-plus</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
 
 </project>
