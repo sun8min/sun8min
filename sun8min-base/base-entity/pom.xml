@@ -15,6 +15,14 @@
     <version>1.2.0</version>
 
     <dependencies>
+        <!-- base-common -->
+        <dependency>
+            <groupId>com.sun8min.base</groupId>
+            <artifactId>base-common</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
+        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
