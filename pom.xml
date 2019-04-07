@@ -15,7 +15,6 @@
 
     <developers>
         <developer>
-            <id>sun8min</id>
             <name>sun8min</name>
             <email>sun8min@gmail.com</email>
             <url>http://www.sun8min.com</url>
@@ -51,7 +50,7 @@
         <!-- springcloud -->
         <spring-cloud-build.version>2.1.3.RELEASE</spring-cloud-build.version>
         <spring-cloud-eureka.version>2.1.1.RELEASE</spring-cloud-eureka.version>
-        <!-- springboot-mybayis -->
+        <!-- springboot-mybatis -->
         <spring-boot-mybatis.version>2.0.0</spring-boot-mybatis.version>
         <!-- mybatis-plus -->
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
@@ -155,7 +154,7 @@
             4. 回滚 mvn versions:revert
             5. 提交 mvn versions:commit
         -->
-        <!-- SnapShot与release区别：snapshot版本即使版本号一样，也会去maven仓库查看是否有更新，而且这个频率可以设置，而release同版本号只会下载一次 -->
+        <!-- SnapShot与Release区别：snapshot版本即使版本号一样，也会去maven仓库查看是否有更新，而且这个频率可以设置，而release同版本号只会下载一次 -->
     </build>
 
 </project>

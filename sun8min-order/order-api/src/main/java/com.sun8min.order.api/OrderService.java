@@ -41,6 +41,7 @@ public interface OrderService extends IService<Order> {
      *
      * @return
      */
-    Pair<ParentOrder, List<Order>> placeOrder(BigInteger fromUserId, Map<Shop, List<Pair<Product, Long>>> shopProductQuantitiesList);
+    Pair<ParentOrder, List<Order>> placeOrder(BigInteger fromUserId,
+                                              Map<Shop, List<Pair<Product, Long>>> shopProductQuantitiesList);
 
 }

@@ -52,7 +52,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     }
 
     @Override
-    public Pair<ParentOrder, List<Order>> placeOrder(BigInteger fromUserId, Map<Shop, List<Pair<Product, Long>>> shopProductQuantitiesList) {
+    public Pair<ParentOrder, List<Order>> placeOrder(BigInteger fromUserId,
+                                                     Map<Shop, List<Pair<Product, Long>>> shopProductQuantitiesList) {
         System.out.println("全局事务id ：" + RootContext.getXID());
 
         // 主订单编号

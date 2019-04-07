@@ -31,8 +31,8 @@ public class PlaceOrderRepository {
     /**
      * 构建下单请求
      *
-     * @param userId                用户id
-     * @param productId             商品id
+     * @param userId    用户id
+     * @param productId 商品id
      * @return
      */
     public PlaceOrderRequestDTO buildQuestDTO(BigInteger userId, BigInteger productId) {
