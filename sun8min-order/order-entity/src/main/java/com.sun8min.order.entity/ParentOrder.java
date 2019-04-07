@@ -36,7 +36,7 @@ public class ParentOrder extends Model<ParentOrder> {
      * 主订单号
      */
     @TableField("parent_order_no")
-    private BigInteger parentOrderNo;
+    private String parentOrderNo;
 
     /**
      * 资金转出用户id

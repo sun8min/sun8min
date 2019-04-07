@@ -27,10 +27,17 @@
         order_id, from_user_id, to_user_id, shop_id, order_trade_amount, order_pay_channel, order_pay_no, order_pay_time, order_status, trade_order_no, parent_order_no, extension_field, version, gmt_create, gmt_modified, is_deleted
     </sql>
 
-    <select id="findByTradeOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="findByTradeOrderNo" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from sun8min_order
         where trade_order_no = #{tradeOrderNo}
+    </select>
+
+    <select id="findByParentOrderNo"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sun8min_order
+        where parent_order_no = #{parentOrderNo}
     </select>
 </mapper>

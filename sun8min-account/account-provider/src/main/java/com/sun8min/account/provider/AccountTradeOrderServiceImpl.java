@@ -8,7 +8,7 @@ import com.sun8min.account.entity.AccountTradeOrder;
 import com.sun8min.account.mapper.AccountMapper;
 import com.sun8min.account.mapper.AccountTradeOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.apache.dubbo.config.annotation.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -22,7 +22,7 @@ import java.math.BigInteger;
  * @author sun8min
  * @since 2019-04-06
  */
-@Service
+@Service(version = "${service.version}")
 public class AccountTradeOrderServiceImpl extends ServiceImpl<AccountTradeOrderMapper, AccountTradeOrder> implements AccountTradeOrderService {
 
     @Autowired
@@ -34,13 +34,13 @@ public class AccountTradeOrderServiceImpl extends ServiceImpl<AccountTradeOrderM
     @Override
     public Boolean trade(String tradeOrderNo, BigInteger fromUserId, BigInteger toUserId, BigDecimal accountTradeAmount) {
         System.out.println("全局事务id ：" + RootContext.getXID());
-        // 1. 交易记录转出
+        // 1. 交易转出记录
         accountTradeOrderMapper.insert(new AccountTradeOrder()
                 .setAccountTradeAmount(accountTradeAmount)
                 .setTradeOrderNo(tradeOrderNo)
                 .setUserId(fromUserId)
                 .setTradeType(AccountTradeOrder.TradeType.TRANSFER_OUT.getCode()));
-        // 2. 交易记录转入
+        // 2. 交易转入记录
         accountTradeOrderMapper.insert(new AccountTradeOrder()
                 .setAccountTradeAmount(accountTradeAmount)
                 .setTradeOrderNo(tradeOrderNo)

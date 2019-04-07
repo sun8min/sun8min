@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sun8min.product.api.CategoryCategoryService;
 import com.sun8min.product.entity.CategoryCategory;
 import com.sun8min.product.mapper.CategoryCategoryMapper;
-import org.springframework.stereotype.Service;
+import org.apache.dubbo.config.annotation.Service;
 
 /**
  * <p>
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author sun8min
  * @since 2019-04-06
  */
-@Service
+@Service(version = "${service.version}")
 public class CategoryCategoryServiceImpl extends ServiceImpl<CategoryCategoryMapper, CategoryCategory> implements CategoryCategoryService {
 
 }

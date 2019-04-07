@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sun8min.account.api.AccountService;
 import com.sun8min.account.entity.Account;
 import com.sun8min.account.mapper.AccountMapper;
-import org.springframework.stereotype.Service;
+import org.apache.dubbo.config.annotation.Service;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -17,7 +17,7 @@ import java.math.BigInteger;
  * @author sun8min
  * @since 2019-04-06
  */
-@Service
+@Service(version = "${service.version}")
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements AccountService {
 
     @Override

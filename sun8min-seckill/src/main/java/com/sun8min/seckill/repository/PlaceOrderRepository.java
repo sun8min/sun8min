@@ -3,6 +3,7 @@ package com.sun8min.seckill.repository;
 import com.sun8min.product.api.ProductService;
 import com.sun8min.product.api.ShopService;
 import com.sun8min.product.entity.Product;
+import com.sun8min.product.entity.Shop;
 import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Repository;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 下单服务
@@ -38,9 +42,22 @@ public class PlaceOrderRepository {
         productQuantitiesList.add(new ImmutablePair<>(product, 1L));
         // 付款人
         BigInteger fromUserId = userId;
-        // 收款人
-        BigInteger toUserId = shopService.getById(product.getShopId()).getUserId();
-        return new PlaceOrderRequestDTO(fromUserId, toUserId, productQuantitiesList);
+
+        // 对product根据商家进行拆分
+        Map<Shop, List<Pair<Product, Long>>> shopProductQuantitiesList = productQuantitiesList
+                .parallelStream()
+                .collect(
+                        Collectors.groupingBy(
+                                pair -> {
+                                    BigInteger shopId = Optional.ofNullable(pair)
+                                            .map(Pair::getLeft)
+                                            .map(Product::getShopId)
+                                            .orElseThrow(() -> new RuntimeException("商品拆分失败"));
+                                    return shopService.getById(shopId);
+                                }
+                        )
+                );
+        return new PlaceOrderRequestDTO(fromUserId, shopProductQuantitiesList);
     }
 
 }

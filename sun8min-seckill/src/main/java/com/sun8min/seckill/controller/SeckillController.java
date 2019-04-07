@@ -4,6 +4,7 @@ import com.sun8min.account.api.AccountService;
 import com.sun8min.base.util.EnumUtils;
 import com.sun8min.order.api.OrderService;
 import com.sun8min.order.entity.Order;
+import com.sun8min.order.entity.ParentOrder;
 import com.sun8min.product.api.ProductService;
 import com.sun8min.product.api.ShopService;
 import com.sun8min.product.entity.Product;
@@ -20,8 +21,10 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 秒杀
@@ -110,26 +113,38 @@ public class SeckillController {
         // TODO 暂时先定购买用户id为3，去购买其他两家的商品
         BigInteger userId = BigInteger.valueOf(3);
         PlaceOrderRequestDTO placeOrderRequestDTO = placeOrderRepository.buildQuestDTO(userId, productId);
-        Order order = seckillService.handleSeckill(placeOrderRequestDTO);
-        return new RedirectView("payresult/" + order.getTradeOrderNo());
+        ParentOrder parentOrder = seckillService.handleSeckill(placeOrderRequestDTO);
+        return new RedirectView("payresult/" + parentOrder.getParentOrderNo());
     }
 
     /**
      * 支付结果
      *
-     * @param tradeOrderNo
+     * @param parentOrderNo
      * @param map
      * @return
      */
-    @GetMapping("/payresult/{tradeOrderNo}")
-    public String payResult(@PathVariable String tradeOrderNo, ModelMap map) {
-        Order foundOrder = orderService.findByTradeOrderNo(tradeOrderNo);
+    @GetMapping("/payresult/{parentOrderNo}")
+    public String payResult(@PathVariable String parentOrderNo, ModelMap map) {
+        // TODO 暂时先定购买用户id为3，去购买其他两家的商品
+        BigInteger userId = BigInteger.valueOf(3);
 
-        // 订单支付结果，null则返回"Unknown"
-        String msg = EnumUtils.getEnumMsg(Order.OrderStatus.class, foundOrder.getOrderStatus());
-        String payResultTip = Optional.ofNullable(msg).orElse("Unknown");
+        List<Integer> statuss = Optional.ofNullable(orderService.findByParentOrderNo(parentOrderNo))
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .map(Order::getOrderStatus)
+                .distinct()
+                .collect(Collectors.toList());
+
+        // 订单支付结果，null或多个状态则返回"Unknown"
+        String payResultTip = "Unknown";
+        if (statuss.size() == 1) {
+            String msg = EnumUtils.getEnumMsg(Order.OrderStatus.class, statuss.get(0));
+            payResultTip = Optional.ofNullable(msg).orElse(payResultTip);
+        }
+
         // 账户余额
-        BigDecimal accountAmount = accountService.findAmountByUserId(foundOrder.getFromUserId());
+        BigDecimal accountAmount = accountService.findAmountByUserId(userId);
 
         map.addAttribute("payResultTip", payResultTip);
         map.addAttribute("accountAmount", accountAmount);

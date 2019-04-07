@@ -95,7 +95,7 @@ public class Order extends Model<Order> {
      * 主订单号
      */
     @TableField("parent_order_no")
-    private BigInteger parentOrderNo;
+    private String parentOrderNo;
 
     /**
      * 扩展字段（json格式）
