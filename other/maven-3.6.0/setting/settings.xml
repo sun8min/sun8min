@@ -24,8 +24,8 @@
             </properties>
         </profile>
         <!-- settings配置maven编译版本为1.8，默认1.5 -->
-        <!-- 否则需要在pom.xml文件配置maven.compiler.sourcet与target属性 -->
-        <!-- 或者在pom.xml文件配置maven-compiler-plugin插件的sourcet与target属性 -->
+        <!-- 否则需要在pom.xml文件配置maven.compiler.source与target属性 -->
+        <!-- 或者在pom.xml文件配置maven-compiler-plugin插件的source与target属性 -->
         <profile>
             <id>development</id>
             <activation>
