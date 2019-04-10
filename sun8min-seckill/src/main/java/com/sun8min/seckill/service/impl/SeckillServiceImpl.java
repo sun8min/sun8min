@@ -5,16 +5,10 @@ import com.alibaba.fescar.spring.annotation.GlobalTransactional;
 import com.sun8min.account.api.AccountTradeOrderService;
 import com.sun8min.order.api.OrderService;
 import com.sun8min.order.entity.Order;
-import com.sun8min.order.entity.ParentOrder;
 import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
 import com.sun8min.seckill.service.SeckillService;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SeckillServiceImpl implements SeckillService {
@@ -28,28 +22,33 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     @GlobalTransactional(timeoutMills = 300000, name = "seckill-gts-fescar-example")
-    public ParentOrder handleSeckill(PlaceOrderRequestDTO placeOrderRequestDTO) {
+    public Order handleSeckill(PlaceOrderRequestDTO placeOrderRequestDTO) {
         // 分布式事务
         System.out.println("开始全局事务，XID = " + RootContext.getXID());
         // 1.下单
-        Pair<ParentOrder, List<Order>> parentOrderListPair = orderService.placeOrder(
+        Order order = orderService.placeOrder(
                 placeOrderRequestDTO.getFromUserId(),
-                placeOrderRequestDTO.getShopProductQuantitiesList()
+                placeOrderRequestDTO.getShop(),
+                placeOrderRequestDTO.getProductQuantitiesList()
         );
-        // 2.账户交易
-        Optional.ofNullable(parentOrderListPair)
-                .map(Pair::getRight)
-                .orElseGet(Collections::emptyList)
-                .forEach(order -> accountTradeOrderService.trade(
-                        order.getTradeOrderNo(),
-                        order.getFromUserId(),
-                        order.getToUserId(),
-                        order.getOrderTradeAmount()));
+
+        // 2.交易支付方式：账户、支付宝、微信
+        // 账户
+//        Optional.ofNullable(order).ifPresent(
+//                item -> accountTradeOrderService.trade(
+//                        item.getTradeOrderNo(),
+//                        item.getFromUserId(),
+//                        item.getToUserId(),
+//                        item.getOrderTradeAmount()
+//                )
+//        );
+
+        // 支付宝
 
         //打开注释测试事务发生异常后，全局回滚功能
 //        if (!flag) {
 //            throw new RuntimeException("测试抛异常后，分布式事务回滚！");
 //        }
-        return Optional.ofNullable(parentOrderListPair).map(Pair::getLeft).orElse(null);
+        return order;
     }
 }

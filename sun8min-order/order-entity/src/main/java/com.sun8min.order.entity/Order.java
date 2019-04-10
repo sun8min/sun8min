@@ -92,12 +92,6 @@ public class Order extends Model<Order> {
     private String tradeOrderNo;
 
     /**
-     * 主订单号
-     */
-    @TableField("parent_order_no")
-    private String parentOrderNo;
-
-    /**
      * 扩展字段（json格式）
      */
     @TableField("extension_field")
@@ -140,7 +134,7 @@ public class Order extends Model<Order> {
      */
     @Getter
     @AllArgsConstructor
-    public enum orderPayChannel {
+    public enum OrderPayChannel {
         ACCOUNT(1, "账户"),
         AILPAY(2, "支付宝"),
         WECHAT(3, "微信");

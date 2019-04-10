@@ -7,12 +7,19 @@
 <body>
 <h1 th:text="${title}"></h1>
 <div>
-    <p>名称: <span th:text="${product.productName}" /></p>
-    <p>价格: <span th:text="${product.productPrice}" />元</p>
+    <p>名称: <span th:text="${product.productName}"/></p>
+    <p>价格: <span th:text="${product.productPrice}"/>元</p>
 
-    <p>账户余额: <span th:text="${accountAmount}" />元</p>
+    <p>账户余额: <span th:text="${accountAmount}"/>元</p>
 
     <form th:action="@{'/' + ${prefix} + '/placeOrder'}" method="post">
+        <p> 支付方式：
+            <input type="radio"
+                   th:each="payChannelCode,iterStat : ${payChannelCodes}"
+                   th:name="payChannelCode"
+                   th:value="${payChannelCode.code}" th:text="${payChannelCode.msg}"
+                   th:checked="${iterStat.index == 1}"/>
+        </p>
         <input type="hidden" name="productId" th:value="${product.productId}"/>
         <input type="submit" value="支付"/>
     </form>

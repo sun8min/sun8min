@@ -1,10 +1,11 @@
 package com.sun8min.seckill.controller;
 
+import com.alipay.api.AlipayObject;
 import com.sun8min.account.api.AccountService;
 import com.sun8min.base.util.EnumUtils;
 import com.sun8min.order.api.OrderService;
 import com.sun8min.order.entity.Order;
-import com.sun8min.order.entity.ParentOrder;
+import com.sun8min.pay.api.PayService;
 import com.sun8min.product.api.ProductService;
 import com.sun8min.product.api.ShopService;
 import com.sun8min.product.entity.Product;
@@ -16,15 +17,16 @@ import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * 秒杀
@@ -42,10 +44,14 @@ public class SeckillController {
     AccountService accountService;
     @Reference(version = "${service.version}")
     OrderService orderService;
+    @Reference(version = "${service.version}")
+    PayService payService;
     @Autowired
     PlaceOrderRepository placeOrderRepository;
     @Autowired
     SeckillService seckillService;
+    @Autowired
+    HttpServletRequest httpServletRequest;
 
     private static final String prefix = "seckill";
     private static final String prefixPath = prefix + "\\";
@@ -99,6 +105,7 @@ public class SeckillController {
         map.addAttribute("title", "确认下单");
         map.addAttribute("product", product);
         map.addAttribute("accountAmount", accountAmount);
+        map.addAttribute("payChannelCodes", Order.OrderPayChannel.values());
         return prefixPath + "confirmOrder";
     }
 
@@ -109,39 +116,56 @@ public class SeckillController {
      * @return 重定向地址
      */
     @PostMapping("/placeOrder")
-    public RedirectView placeOrder(@RequestParam BigInteger productId) {
+    public String placeOrder(BigInteger productId, Integer payChannelCode, ModelMap map) {
+        String view = null;
         // TODO 暂时先定购买用户id为3，去购买其他两家的商品
         BigInteger userId = BigInteger.valueOf(3);
+
+        // 构建下单请求
         PlaceOrderRequestDTO placeOrderRequestDTO = placeOrderRepository.buildQuestDTO(userId, productId);
-        ParentOrder parentOrder = seckillService.handleSeckill(placeOrderRequestDTO);
-        return new RedirectView("payresult/" + parentOrder.getParentOrderNo());
+        // 生成订单
+        Order order = seckillService.handleSeckill(placeOrderRequestDTO);
+
+        Order.OrderPayChannel payChannel = EnumUtils.getEnum(Order.OrderPayChannel.class, payChannelCode);
+        // 账户支付
+        if (payChannel == Order.OrderPayChannel.ACCOUNT) {
+            String redirectUrl = "payresult/" + order.getTradeOrderNo();
+            view = "redirect:" + redirectUrl;
+        }
+        // 支付宝支付
+        else if (payChannel == Order.OrderPayChannel.AILPAY) {
+            AlipayObject bizModel = placeOrderRepository.buildAlipayRequest(order);
+            // 回跳页面地址
+            String returnUrl = "";
+            // 支付结果异步通知地址
+            String notifyUrl = "";
+            map.addAttribute("msg", payService.tradePagePay(bizModel, returnUrl, notifyUrl));
+            map.addAttribute("title", "支付界面");
+            view = "pay";
+        }
+        // 微信支付
+        else {
+        }
+        return view;
     }
 
     /**
      * 支付结果
      *
-     * @param parentOrderNo
+     * @param tradeOrderNo
      * @param map
      * @return
      */
-    @GetMapping("/payresult/{parentOrderNo}")
-    public String payResult(@PathVariable String parentOrderNo, ModelMap map) {
+    @GetMapping("/payresult/{tradeOrderNo}")
+    public String payResult(@PathVariable String tradeOrderNo, ModelMap map) {
         // TODO 暂时先定购买用户id为3，去购买其他两家的商品
         BigInteger userId = BigInteger.valueOf(3);
 
-        List<Integer> statuss = Optional.ofNullable(orderService.findByParentOrderNo(parentOrderNo))
-                .orElseGet(Collections::emptyList)
-                .stream()
+        // 订单支付结果
+        String payResultTip = Optional.ofNullable(orderService.findByTradeOrderNo(tradeOrderNo))
                 .map(Order::getOrderStatus)
-                .distinct()
-                .collect(Collectors.toList());
-
-        // 订单支付结果，null或多个状态则返回"Unknown"
-        String payResultTip = "Unknown";
-        if (statuss.size() == 1) {
-            String msg = EnumUtils.getEnumMsg(Order.OrderStatus.class, statuss.get(0));
-            payResultTip = Optional.ofNullable(msg).orElse(payResultTip);
-        }
+                .map(status -> EnumUtils.getEnumMsg(Order.OrderStatus.class, status))
+                .orElse("Unknown");
 
         // 账户余额
         BigDecimal accountAmount = accountService.findAmountByUserId(userId);

@@ -30,7 +30,7 @@ public class MpGenerator {
     // set @table_schema = "sun8min_order";
     // select group_concat(concat('"',table_name,'"')) from information_schema.tables where table_schema=@table_schema and table_name != "undo_log";
     // 表名
-    private String[] tableNames = {"sun8min_order", "sun8min_order_line", "sun8min_parent_order"};
+    private String[] tableNames = {"sun8min_order", "sun8min_order_line"};
     // 生成内容（默认全部生成，1：不生成controller)
     private int templateConfigFlag = 1;
     // 目录

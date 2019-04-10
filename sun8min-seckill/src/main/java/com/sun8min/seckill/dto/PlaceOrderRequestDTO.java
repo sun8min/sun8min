@@ -9,7 +9,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 下单请求
@@ -19,5 +18,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class PlaceOrderRequestDTO {
     private BigInteger fromUserId;
-    private Map<Shop, List<Pair<Product, Long>>> shopProductQuantitiesList;
+    private Shop shop;
+    private List<Pair<Product, Long>> productQuantitiesList;
 }

@@ -109,24 +109,6 @@ create table `undo_log`
 drop database if exists sun8min_order;
 create database sun8min_order default charset utf8 collate utf8_unicode_ci;
 use sun8min_order;
--- -- 主订单表
-drop table if exists sun8min_parent_order;
-create table sun8min_parent_order
-(
-  parent_order_id bigint unsigned auto_increment comment '主订单id',
-  parent_order_no varchar(32)         not null comment '主订单号',
-  from_user_id    bigint unsigned     not null comment '资金转出用户id',
-  extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
-  version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
-  gmt_create      datetime            not null default current_timestamp comment '创建时间',
-  gmt_modified    datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
-  is_deleted      tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
-  primary key (parent_order_id),
-  unique key uk_parent_order_no (parent_order_no)
-) engine = innodb
-  default charset = utf8
-  collate = utf8_unicode_ci
-  auto_increment = 1 comment '主订单表';
 -- -- 订单表
 drop table if exists sun8min_order;
 create table sun8min_order
@@ -141,7 +123,6 @@ create table sun8min_order
   order_pay_time     datetime comment '支付时间',
   order_status       tinyint unsigned        not null comment '订单状态（0:初始化，1：等待支付，2:支付中，3:支付成功，4:支付失败，5:取消支付，6：支付超时被系统关闭）',
   trade_order_no     varchar(32)             not null comment '订单交易号',
-  parent_order_no    varchar(32)             not null comment '主订单号',
   extension_field    varchar(255)            not null default '' comment '扩展字段（json格式）',
   version            int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create         datetime                not null default current_timestamp comment '创建时间',
