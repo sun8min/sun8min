@@ -30,11 +30,16 @@ public class PayServiceImpl implements PayService {
     @Override
     public String tradePagePay(AlipayObject bizModel, String returnUrl, String notifyUrl) {
         AlipayRequest request;
+        // PC下单请求model
         if (bizModel instanceof AlipayTradePagePayModel) {
             request = new AlipayTradePagePayRequest();
-        } else if (bizModel instanceof AlipayTradeWapPayModel) {
+        }
+        // 手机下单请求model
+        else if (bizModel instanceof AlipayTradeWapPayModel) {
             request = new AlipayTradeWapPayRequest();
-        } else {
+        }
+        // 其他未知model
+        else {
             throw new RuntimeException("请求实体错误");
         }
         request.setBizModel(bizModel);
