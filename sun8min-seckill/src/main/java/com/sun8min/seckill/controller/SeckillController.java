@@ -144,7 +144,13 @@ public class SeckillController {
             view = "pay";
         }
         // 微信支付
+        else if (payChannel == Order.OrderPayChannel.WECHAT)  {
+            // 微信沙箱需要真实商户，暂搁
+        }
+        // 其他未知类型
         else {
+            // TODO 全局错误异常处理与页面
+            throw new RuntimeException("支付类型错误");
         }
         return view;
     }
