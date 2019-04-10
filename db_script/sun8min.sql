@@ -1,4 +1,4 @@
--- 默认字符集utfmb4，排序规则utf8mb4_unicode_ci，是为了兼容emoji表情
+-- 默认字符集utf8mb4，排序规则utf8mb4_unicode_ci，是为了兼容emoji表情
 -- is_(?!deleted).* ,正则使用零宽度断言(?!exp)查找以is_开头不含deleted的字段
 
 -- 用户库
