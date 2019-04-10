@@ -1,0 +1,39 @@
+## 基本配置
+server.port: 9700
+spring:
+  application:
+    name: sun8min-pay
+    version: @project.version@
+
+## Eureka 配置
+eureka.client.serviceUrl.defaultZone: http://localhost:8761/eureka/
+
+## zookeeper 配置
+zookeeper.port: 2181
+
+## dubbo 配置（-1表示随机端口）
+dubbo:
+  protocol.name: dubbo
+  protocol.port: -1
+  registry.address: zookeeper://127.0.0.1:${zookeeper.port}
+  scan.base-packages: com.sun8min.pay.provider
+  application.name: ${spring.application.name}
+
+## 服务版本号
+service.version: ${spring.application.version}
+
+# 移除已经被git追踪的文件file_xx，需要git rm --cache -f file_xx，并在.gitignore文件添加忽略文件file_xx
+# 如果文件在本地不需要保留，去掉--cache
+
+## 支付配置
+pay:
+  ## alipay支付配置（沙箱文档：https://alipay.open.taobao.com/doc2/detail.htm?treeId=200&articleId=105311&docType=1）
+  alipay:
+    ## APPID 即创建应用后生成
+    app_id: 201609260059XXXX
+    ## 开发者私钥，由开发者自己生成
+    app_private_key: 请复制第1步中生成的密钥中的商户应用私钥
+    ## 支付宝公钥，由支付宝生成
+    alipay_public_key: 沙箱环境RSA2支付宝公钥
+    ## 编码集，支持GBK/UTF-8
+    charset: UTF-8

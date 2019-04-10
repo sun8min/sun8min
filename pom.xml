@@ -29,6 +29,7 @@
         <module>sun8min-product</module>
         <module>sun8min-account</module>
         <module>sun8min-order</module>
+        <module>sun8min-pay</module>
     </modules>
 
     <properties>
@@ -63,6 +64,12 @@
         <guava.version>27.1-jre</guava.version>
         <!-- commons-lang3 -->
         <commons-lang3.version>3.8.1</commons-lang3.version>
+        <!-- alipay -->
+        <alipay-sdk.version>3.7.4.ALL</alipay-sdk.version>
+        <!-- fastjson -->
+        <fastjson.version>1.2.56</fastjson.version>
+        <!-- commons-beanutils -->
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
     </properties>
 
     <dependencyManagement>
