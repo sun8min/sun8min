@@ -46,7 +46,7 @@ public class AlipayService {
      * @param paramsMap
      * @return
      */
-    public Boolean AlipayTradePagePay(Map<String, String> paramsMap) {
+    public Boolean AlipaySignCheck(Map<String, String> paramsMap) {
         //调用SDK验证签名
         boolean signVerified = false;
         try {

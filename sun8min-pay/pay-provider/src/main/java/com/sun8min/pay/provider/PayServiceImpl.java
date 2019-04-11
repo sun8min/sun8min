@@ -76,6 +76,6 @@ public class PayServiceImpl implements PayService {
 
     @Override
     public Boolean alipaySignCheck(Map<String, String> paramsMap) {
-        return alipayService.AlipayTradePagePay(paramsMap);
+        return alipayService.AlipaySignCheck(paramsMap);
     }
 }
