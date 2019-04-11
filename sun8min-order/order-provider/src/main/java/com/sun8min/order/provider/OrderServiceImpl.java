@@ -9,12 +9,14 @@ import com.sun8min.order.mapper.OrderLineMapper;
 import com.sun8min.order.mapper.OrderMapper;
 import com.sun8min.product.entity.ProductSnapshot;
 import com.sun8min.product.entity.Shop;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.dubbo.config.annotation.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +29,7 @@ import java.util.UUID;
  * @since 2019-04-06
  */
 @Service(version = "${service.version}")
+@Slf4j
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
 
     @Resource
@@ -41,12 +44,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Override
     public Order placeOrder(BigInteger fromUserId, Shop shop, List<Pair<ProductSnapshot, Long>> productSnapshotQuantitiesList) {
-        System.out.println("全局事务id ：" + RootContext.getXID());
+        log.info("全局事务id ：" + RootContext.getXID());
 
         // 订单编号
         String tradeOrderNo = UUID.randomUUID().toString().replace("-", "");
         // 订单总金额
         BigDecimal payAmount = BigDecimal.ZERO;
+        List<OrderLine> orderLines = new ArrayList<>();
         // 订单商品项
         for (Pair<ProductSnapshot, Long> productSnapshotQuantities : productSnapshotQuantitiesList) {
             ProductSnapshot productSnapshot = productSnapshotQuantities.getLeft();
@@ -58,6 +62,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             payAmount = payAmount.add(productSnapshot.getProductPrice().multiply(new BigDecimal(quantities)));
             orderLine.setTradeOrderNo(tradeOrderNo);
             orderLineMapper.insert(orderLine);
+            orderLines.add(orderLine);
         }
         // 订单交易记录
         Order order = new Order()
@@ -70,12 +75,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 .setTradeOrderNo(tradeOrderNo);
         orderMapper.insert(order);
         // 根据order_id查找order，否则version为null
-        return orderMapper.selectById(order.getOrderId());
+        Order foundOrder = orderMapper.selectById(order.getOrderId()).setOrderLines(orderLines);
+        return foundOrder;
     }
 
     @Override
     public void paySuccess(String tradeOrderNo, Long version) {
-        System.out.println("全局事务id ：" + RootContext.getXID());
+        log.info("全局事务id ：" + RootContext.getXID());
         Integer updateRows = orderMapper.paySuccess(tradeOrderNo, version, Order.OrderStatus.PAY_CONFIRMED.getCode());
         if (updateRows < 1) throw new RuntimeException("订单状态修改失败");
     }

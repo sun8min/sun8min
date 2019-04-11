@@ -15,6 +15,7 @@ import com.sun8min.product.entity.Shop;
 import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
 import com.sun8min.web.util.HttpUtils;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.dubbo.config.annotation.Reference;
@@ -27,7 +28,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 下单服务
@@ -59,17 +59,14 @@ public class SeckillOrderRepository {
         // 付款人
         BigInteger fromUserId = userId;
         // 购买的商店
-        AtomicReference<Shop> shopAtomic = new AtomicReference<>();
-        Optional.ofNullable(productSnapshot)
+        Shop shop = Optional.ofNullable(productSnapshot)
                 .map(ProductSnapshot::getProductId)
-                .ifPresent(
-                        productId -> Optional.ofNullable(productService.getById(productId))
-                                .map(Product::getShopId)
-                                .ifPresent(
-                                        shopId -> shopAtomic.set(shopService.getById(shopId))
-                                )
-                );
-        return new PlaceOrderRequestDTO(fromUserId, shopAtomic.get(), productSnapshotQuantitiesList);
+                .map(productId -> Optional.ofNullable(productService.getById(productId))
+                        .map(Product::getShopId)
+                        .map(shopId -> shopService.getById(shopId))
+                        .orElse(null)
+                ).orElse(null);
+        return new PlaceOrderRequestDTO(fromUserId, shop, productSnapshotQuantitiesList);
     }
 
     /**
@@ -90,12 +87,18 @@ public class SeckillOrderRepository {
         // 订单总金额
         paramsMap.put("totalAmount", order.getOrderTradeAmount());
         // 订单标题
-        String subject = "jiji";
+        String subject = "";
         List<OrderLine> orderLines = order.getOrderLines();
-        for (OrderLine orderLine : orderLines) {
-            subject += " " + orderLine.getProductSnapshotId();
+        for (int i = 0; i < orderLines.size(); i++) {
+            String productName = Optional.ofNullable(productSnapshotService.getById(orderLines.get(i).getProductSnapshotId()))
+                    .map(ProductSnapshot::getProductId)
+                    .map(productId -> Optional.ofNullable(productService.getById(productId))
+                            .map(Product::getProductName)
+                            .orElse("")
+                    ).orElse("");
+            subject += productName + (i == orderLines.size() - 1 ? "" : " ");
         }
-        paramsMap.put("subject", subject);
+        paramsMap.put("subject", StringUtils.isNotBlank(subject) ? subject : "Unknown");
         //销售产品码
         String productCode = HttpUtils.isPC(httpServletRequest) ? "FAST_INSTANT_TRADE_PAY" : "QUICK_WAP_WAY";
         paramsMap.put("productCode", productCode);

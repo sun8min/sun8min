@@ -7,6 +7,7 @@ import com.sun8min.account.entity.Account;
 import com.sun8min.account.entity.AccountTradeOrder;
 import com.sun8min.account.mapper.AccountMapper;
 import com.sun8min.account.mapper.AccountTradeOrderMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.math.BigInteger;
  * @since 2019-04-06
  */
 @Service(version = "${service.version}")
+@Slf4j
 public class AccountTradeOrderServiceImpl extends ServiceImpl<AccountTradeOrderMapper, AccountTradeOrder> implements AccountTradeOrderService {
 
     @Autowired
@@ -36,7 +38,7 @@ public class AccountTradeOrderServiceImpl extends ServiceImpl<AccountTradeOrderM
                          BigInteger fromUserId,
                          BigInteger toUserId,
                          BigDecimal accountTradeAmount) {
-        System.out.println("全局事务id ：" + RootContext.getXID());
+        log.info("全局事务id ：" + RootContext.getXID());
         // 1. 交易转出记录
         accountTradeOrderMapper.insert(new AccountTradeOrder()
                 .setAccountTradeAmount(accountTradeAmount)

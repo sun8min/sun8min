@@ -17,6 +17,7 @@ import com.sun8min.product.entity.Shop;
 import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
 import com.sun8min.seckill.repository.SeckillOrderRepository;
 import com.sun8min.seckill.service.SeckillService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,7 @@ import java.util.Optional;
 // consumer://172.20.10.5/com.sun8min.user.api.gege.userService2?application=consumer&category=consumers&check=false&dubbo=2.5.3&interface=com.sun8min.user.api.gege.userService2&methods=selectAll&pid=2385&revision=1.0.0&side=consumer&timestamp=1553422997200&version=1.0.0
 @Controller
 @RequestMapping("/seckill")
+@Slf4j
 public class SeckillController {
 
     @Reference(version = "${service.version}")
@@ -206,7 +208,7 @@ public class SeckillController {
     @PostMapping("/alipayBack/{tradeOrderNo}")
     public String alipayBack(@PathVariable String tradeOrderNo){
         Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
-        //将异步通知中收到的所有参数都存放到map中
+        // 将异步通知中收到的所有参数都存放到map中
         Map<String, String> paramsMap = new HashMap<>();
         parameterMap.entrySet().forEach(entry -> {
             String[] values = entry.getValue();
@@ -214,15 +216,9 @@ public class SeckillController {
             for (int i = 0; i < values.length; i++) {
                 valueStr += values[i] + (i == values.length - 1 ? "" : ",");
             }
-            //乱码解决，这段代码在出现乱码时使用
-            try {
-                valueStr = new String(valueStr.getBytes("ISO-8859-1"), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-                throw new RuntimeException("异步通知参数编码转换异常");
-            }
             paramsMap.put(entry.getKey(), valueStr);
         });
+        log.info("paramsMap: {}" + JSON.toJSONString(parameterMap));
 
         Boolean signVerified = payService.alipaySignCheck(paramsMap);
         if (signVerified) {
@@ -239,6 +235,8 @@ public class SeckillController {
         } else {
             // TODO 验签失败则记录异常日志，并在response中返回failure.
         }
-        return signVerified ? "success" : "failure";
+        String signCheck = signVerified ? "success" : "failure";
+        log.info("signCheck: {}" + signCheck);
+        return signCheck;
     }
 }
