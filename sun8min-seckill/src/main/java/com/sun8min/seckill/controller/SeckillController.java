@@ -1,7 +1,6 @@
 package com.sun8min.seckill.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayObject;
 import com.sun8min.account.api.AccountService;
 import com.sun8min.base.util.EnumUtils;
@@ -17,6 +16,7 @@ import com.sun8min.product.entity.Shop;
 import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
 import com.sun8min.seckill.repository.SeckillOrderRepository;
 import com.sun8min.seckill.service.SeckillService;
+import com.sun8min.web.util.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -224,14 +224,14 @@ public class SeckillController {
         if (signVerified) {
             // TODO 验签成功后，按照支付结果异步通知中的描述，对支付结果中的业务内容进行二次校验，校验成功后在response中返回success并继续商户自身业务处理，校验失败返回failure
             // 获取额外参数对象
-            JSONObject passbackParams;
+            Map<String, String> passbackParams;
             try {
-                passbackParams = JSON.parseObject(URLDecoder.decode(paramsMap.get("passback_params"), "UTF-8"));
+                passbackParams = HttpUtils.urlToMap(URLDecoder.decode(paramsMap.get("passback_params"), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
                 throw new RuntimeException("额外参数使用URL编码异常");
             }
-            seckillService.paySuccess(tradeOrderNo, passbackParams.getLong("version"));
+            seckillService.paySuccess(tradeOrderNo, Long.valueOf(passbackParams.get("version")));
         } else {
             // TODO 验签失败则记录异常日志，并在response中返回failure.
         }

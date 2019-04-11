@@ -1,6 +1,5 @@
 package com.sun8min.seckill.repository;
 
-import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayObject;
 import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.domain.AlipayTradeWapPayModel;
@@ -14,6 +13,7 @@ import com.sun8min.product.entity.ProductSnapshot;
 import com.sun8min.product.entity.Shop;
 import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
 import com.sun8min.web.util.HttpUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -33,6 +33,7 @@ import java.util.*;
  * 下单服务
  */
 @Repository
+@Slf4j
 public class SeckillOrderRepository {
 
     @Reference(version = "${service.version}")
@@ -102,17 +103,20 @@ public class SeckillOrderRepository {
         //销售产品码
         String productCode = HttpUtils.isPC(httpServletRequest) ? "FAST_INSTANT_TRADE_PAY" : "QUICK_WAP_WAY";
         paramsMap.put("productCode", productCode);
-        // 额外参数
+        // 额外参数，需要UrlEncode编码转换以一下，可以使用&符号连接
+        // ps: 不能转为json字符串，因其含引号，手机端在跳转支付宝网页时会出现系统繁忙错误
         Map<String, Object> passbackParamsMap = new HashMap<>();
         passbackParamsMap.put("version", order.getVersion());
         String passbackParams;
         try {
-            passbackParams = URLEncoder.encode(JSON.toJSONString(passbackParamsMap), "UTF-8");
+            passbackParams = URLEncoder.encode(HttpUtils.mapToUrl(passbackParamsMap), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             throw new RuntimeException("额外参数使用URL编码异常");
         }
         paramsMap.put("passbackParams", passbackParams);
+
+        log.info("paramsMap: {}" + paramsMap);
 
         // 实体转换
         try {

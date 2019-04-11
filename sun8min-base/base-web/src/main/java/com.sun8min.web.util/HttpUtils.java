@@ -1,10 +1,13 @@
 package com.sun8min.web.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,10 +55,14 @@ public class HttpUtils {
     /**
      * 将url转换成map
      *
+     * <pre>
+     * HttpUtils.urlToMap(array=123,456&kv=kv&list=aaa,bbb)  =  {list=aaa,bbb, array=123,456, kv=kv}
+     * </pre>
+     *
      * @param param
      * @return
      */
-    public static Map<String, String> getUrlParams(String param) {
+    public static Map<String, String> urlToMap(String param) {
         Map<String, String> map = new HashMap<>(0);
         if (StringUtils.isBlank(param)) {
             return map;
@@ -73,18 +80,36 @@ public class HttpUtils {
     /**
      * 将map转换成url
      *
+     * <pre>
+     * // 给map设值
+     * Map<String,Object> map = new HashedMap();
+     * map.put("list", Arrays.asList("aaa", "bbb"));
+     * map.put("array", new String[]{"123","456"});
+     * map.put("kv", "kv");
+     * // 此时map状态
+     * map : {list=[aaa, bbb], kv=kv, array=[Ljava.lang.String;@6f79caec}
+     * // 转换
+     * HttpUtils.mapToUrl(map)    =    array=123,456&kv=kv&list=aaa,bbb
+     * </pre>
+     *
      * @param map
      * @return
      */
-    public static String getUrlParamsByMap(Map<String, String> map) {
-        if (map == null) {
-            return "";
-        }
+    public static String mapToUrl(Map map) {
+        // 使用fastjson先处理一下获取数据，比如数组之类的，否则需要自己处理
+        JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(map));
         StringBuffer sb = new StringBuffer();
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            sb.append(entry.getKey() + "=" + entry.getValue());
+        jsonObject.entrySet().forEach(entry -> {
+            // []、"处理
+            String value = Optional.ofNullable(entry.getValue())
+                    .map(o -> o.toString()
+                            .replace("[", "")
+                            .replace("]", "")
+                            .replace("\"", ""))
+                    .orElse("");
+            sb.append(entry.getKey() + "=" + value);
             sb.append("&");
-        }
+        });
         String s = sb.toString();
         if (s.endsWith("&")) {
             s = StringUtils.substringBeforeLast(s, "&");
