@@ -29,6 +29,8 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URLDecoder;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,14 +133,16 @@ public class SeckillController {
         String view = null;
         // TODO 暂时先定购买用户id为3，去购买其他两家的商品
         BigInteger userId = BigInteger.valueOf(3);
+        // 交易支付方式：账户、支付宝、微信
+        Order.OrderPayChannel payChannel = EnumUtils.getEnum(Order.OrderPayChannel.class, payChannelCode);
+        if (payChannel == null) throw new RuntimeException("支付类型错误");
 
         // 1.1 构建下单请求
         PlaceOrderRequestDTO placeOrderRequestDTO = seckillOrderRepository.buildQuestDTO(userId, productSnapshotId);
         // 1.2 生成订单
-        Order order = seckillService.placeOrder(placeOrderRequestDTO);
+        Order order = seckillService.placeOrder(placeOrderRequestDTO, payChannel.getCode());
 
-        // 2 交易支付方式：账户、支付宝、微信
-        Order.OrderPayChannel payChannel = EnumUtils.getEnum(Order.OrderPayChannel.class, payChannelCode);
+        // 2. 交易支付
         // 支付结果跳转界面
         String redirectUrl = "payResult/" + order.getTradeOrderNo();
         // 账户支付
@@ -161,11 +165,6 @@ public class SeckillController {
         // 微信支付
         else if (payChannel == Order.OrderPayChannel.WECHAT) {
             // 微信沙箱需要真实商户，暂搁
-        }
-        // 其他未知类型
-        else {
-            // TODO 全局错误异常处理与页面
-            throw new RuntimeException("支付类型错误");
         }
         return view;
     }
@@ -206,7 +205,11 @@ public class SeckillController {
      */
     @ResponseBody
     @PostMapping("/alipayBack/{tradeOrderNo}")
-    public String alipayBack(@PathVariable String tradeOrderNo){
+    public String alipayBack(@PathVariable String tradeOrderNo) {
+        // 返回描述 值
+        final String SUCCESS = "success";
+        final String FAILURE = "failure";
+
         Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
         // 将异步通知中收到的所有参数都存放到map中
         Map<String, String> paramsMap = new HashMap<>();
@@ -220,23 +223,30 @@ public class SeckillController {
         });
         log.info("paramsMap: {}" + JSON.toJSONString(parameterMap));
 
+        // 支付宝验签
         Boolean signVerified = payService.alipaySignCheck(paramsMap);
-        if (signVerified) {
-            // TODO 验签成功后，按照支付结果异步通知中的描述，对支付结果中的业务内容进行二次校验，校验成功后在response中返回success并继续商户自身业务处理，校验失败返回failure
-            // 获取额外参数对象
-            Map<String, String> passbackParams;
-            try {
-                passbackParams = HttpUtils.urlToMap(URLDecoder.decode(paramsMap.get("passback_params"), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-                throw new RuntimeException("额外参数使用URL编码异常");
-            }
-            seckillService.paySuccess(tradeOrderNo, Long.valueOf(passbackParams.get("version")));
-        } else {
-            // TODO 验签失败则记录异常日志，并在response中返回failure.
+        if (!signVerified) return FAILURE;
+        log.info("signVerified: {}" + signVerified);
+        // 二次校验, 校验内容：订单号、订单金额是否一致、交易状态是否成功
+        boolean secondVerfied = seckillOrderRepository.secondVerfied(tradeOrderNo, paramsMap);
+        log.info("secondVerfied: {}" + secondVerfied);
+        if (!secondVerfied) return FAILURE;
+
+        // 获取额外参数对象
+        Map<String, String> passbackParams;
+        try {
+            passbackParams = HttpUtils.urlToMap(URLDecoder.decode(paramsMap.get("passback_params"), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            throw new RuntimeException("额外参数使用URL编码异常");
         }
-        String signCheck = signVerified ? "success" : "failure";
-        log.info("signCheck: {}" + signCheck);
-        return signCheck;
+        // 渠道支付单号(即支付宝交易号)
+        String orderPayNo = paramsMap.get("trade_no");
+        // 渠道支付时间(即交易付款时间yyy-MM-dd HH:mm:ss)
+        LocalDateTime orderPayTime = LocalDateTime.parse(paramsMap.get("gmt_payment"), DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss"));
+        seckillService.paySuccess(tradeOrderNo, orderPayNo, orderPayTime, Long.valueOf(passbackParams.get("version")));
+        return SUCCESS;
     }
+
+
 }

@@ -16,6 +16,7 @@ import org.apache.dubbo.config.annotation.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -43,7 +44,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     }
 
     @Override
-    public Order placeOrder(BigInteger fromUserId, Shop shop, List<Pair<ProductSnapshot, Long>> productSnapshotQuantitiesList) {
+    public void paySuccess(String tradeOrderNo, String orderPayNo, LocalDateTime orderPayTime, Long version) {
+        log.info("全局事务id ：" + RootContext.getXID());
+        Integer updateRows = orderMapper.paySuccess(tradeOrderNo, orderPayNo, orderPayTime, version, Order.OrderStatus.PAY_CONFIRMED.getCode());
+        if (updateRows < 1) throw new RuntimeException("订单状态修改失败");
+    }
+
+    @Override
+    public Order placeOrder(BigInteger fromUserId, Shop shop, List<Pair<ProductSnapshot, Long>> productSnapshotQuantitiesList, Integer payChannel) {
         log.info("全局事务id ：" + RootContext.getXID());
 
         // 订单编号
@@ -72,17 +80,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 .setOrderPayChannel(Order.OrderPayChannel.ACCOUNT.getCode())
                 .setOrderTradeAmount(payAmount)
                 .setOrderStatus(Order.OrderStatus.WAIT_PAY.getCode())
-                .setTradeOrderNo(tradeOrderNo);
+                .setTradeOrderNo(tradeOrderNo)
+                .setOrderPayChannel(payChannel);
         orderMapper.insert(order);
         // 根据order_id查找order，否则version为null
         Order foundOrder = orderMapper.selectById(order.getOrderId()).setOrderLines(orderLines);
         return foundOrder;
-    }
-
-    @Override
-    public void paySuccess(String tradeOrderNo, Long version) {
-        log.info("全局事务id ：" + RootContext.getXID());
-        Integer updateRows = orderMapper.paySuccess(tradeOrderNo, version, Order.OrderStatus.PAY_CONFIRMED.getCode());
-        if (updateRows < 1) throw new RuntimeException("订单状态修改失败");
     }
 }

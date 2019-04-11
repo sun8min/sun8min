@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sun8min.order.entity.Order;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 订单表 Mapper 接口
@@ -16,5 +18,9 @@ public interface OrderMapper extends BaseMapper<Order> {
 
     Order findByTradeOrderNo(String tradeOrderNo);
 
-    Integer paySuccess(@Param("tradeOrderNo") String tradeOrderNo, @Param("version") Long version, @Param("orderStatus") Integer orderStatus);
+    Integer paySuccess(@Param("tradeOrderNo") String tradeOrderNo,
+                       @Param("orderPayNo") String orderPayNo,
+                       @Param("orderPayTime") LocalDateTime orderPayTime,
+                       @Param("version") Long version,
+                       @Param("orderStatus") Integer orderStatus);
 }

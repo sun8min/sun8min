@@ -71,17 +71,19 @@ drop table if exists sun8min_account_trade_order;
 create table sun8min_account_trade_order
 (
   account_trade_order_id bigint unsigned auto_increment comment '账户交易id',
-  user_id                bigint unsigned         not null comment '用户id',
+  account_trade_order_no varchar(32)             not null comment '账户订单交易号',
+  from_user_id           bigint unsigned         not null comment '资金转出用户id',
+  to_user_id             bigint unsigned         not null comment '资金转入用户id',
   account_trade_amount   decimal(10, 2) unsigned not null comment '交易金额合计（精确到分）',
   trade_order_no         varchar(32)             not null comment '订单交易号',
-  trade_type             tinyint unsigned        not null comment '交易类型（1：转出，2：转入）',
   extension_field        varchar(255)            not null default '' comment '扩展字段（json格式）',
   version                int unsigned            not null default 0 comment '版本号（用于乐观锁）',
   gmt_create             datetime                not null default current_timestamp comment '创建时间',
   gmt_modified           datetime                not null default current_timestamp on update current_timestamp comment '修改时间',
   is_deleted             tinyint(1) unsigned     not null default 0 comment '是否删除（0：否，1：是）',
   primary key (account_trade_order_id),
-  unique key uk_user_id_trade_order_no_trade_type (user_id, trade_order_no, trade_type)
+  unique key uk_account_trade_order_no (account_trade_order_no),
+  unique key uk_trade_order_no (trade_order_no)
 ) engine = innodb
   default charset = utf8
   collate = utf8_unicode_ci

@@ -22,9 +22,9 @@ public interface AccountTradeOrderService extends IService<AccountTradeOrder> {
      * @param fromUserId 转出账户
      * @param toUserId 转入账户
      * @param accountTradeAmount 账户交易额
-     * @return 交易结果
+     * @return 账户交易对象
      */
-    Boolean trade(String tradeOrderNo, BigInteger fromUserId, BigInteger toUserId, BigDecimal accountTradeAmount);
+    AccountTradeOrder trade(String tradeOrderNo, BigInteger fromUserId, BigInteger toUserId, BigDecimal accountTradeAmount);
 
 
 }

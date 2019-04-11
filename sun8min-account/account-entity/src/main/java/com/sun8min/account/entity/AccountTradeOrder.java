@@ -2,10 +2,8 @@ package com.sun8min.account.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -19,7 +17,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author sun8min
- * @since 2019-04-06
+ * @since 2019-04-12
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -36,10 +34,22 @@ public class AccountTradeOrder extends Model<AccountTradeOrder> {
     private BigInteger accountTradeOrderId;
 
     /**
-     * 用户id
+     * 账户订单交易号
      */
-    @TableField("user_id")
-    private BigInteger userId;
+    @TableField("account_trade_order_no")
+    private String accountTradeOrderNo;
+
+    /**
+     * 资金转出用户id
+     */
+    @TableField("from_user_id")
+    private BigInteger fromUserId;
+
+    /**
+     * 资金转入用户id
+     */
+    @TableField("to_user_id")
+    private BigInteger toUserId;
 
     /**
      * 交易金额合计（精确到分）
@@ -52,12 +62,6 @@ public class AccountTradeOrder extends Model<AccountTradeOrder> {
      */
     @TableField("trade_order_no")
     private String tradeOrderNo;
-
-    /**
-     * 交易类型（1：转出，2：转入）
-     */
-    @TableField("trade_type")
-    private Integer tradeType;
 
     /**
      * 扩展字段（json格式）
@@ -97,16 +101,4 @@ public class AccountTradeOrder extends Model<AccountTradeOrder> {
         return this.accountTradeOrderId;
     }
 
-    /**
-     * 交易类型枚举类（1：转出，2：转入）
-     */
-    @Getter
-    @AllArgsConstructor
-    public enum TradeType {
-        TRANSFER_OUT(1, "转出"),
-        TRANSFER_IN(2, "转入");
-
-        private int code;
-        private String msg;
-    }
 }

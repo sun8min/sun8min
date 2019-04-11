@@ -3,6 +3,7 @@ package com.sun8min.seckill.repository;
 import com.alipay.api.AlipayObject;
 import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.domain.AlipayTradeWapPayModel;
+import com.sun8min.order.api.OrderService;
 import com.sun8min.order.entity.Order;
 import com.sun8min.order.entity.OrderLine;
 import com.sun8min.product.api.ProductService;
@@ -21,10 +22,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.util.*;
@@ -42,6 +45,8 @@ public class SeckillOrderRepository {
     ProductService productService;
     @Reference(version = "${service.version}")
     ProductSnapshotService productSnapshotService;
+    @Reference(version = "${service.version}")
+    OrderService orderService;
     @Autowired
     HttpServletRequest httpServletRequest;
 
@@ -126,6 +131,31 @@ public class SeckillOrderRepository {
             throw new RuntimeException("实体转换异常");
         }
         return bizmodel;
+    }
+
+    /**
+     * 二次校验
+     * 校验内容：订单号、订单金额是否一致、交易状态是否成功
+     *
+     * @param tradeOrderNo
+     * @param paramsMap
+     * @return
+     */
+    public boolean secondVerfied(@PathVariable String tradeOrderNo, Map<String, String> paramsMap) {
+        // 订单号
+        boolean equalTradeNo = tradeOrderNo.equals(paramsMap.get("out_trade_no"));
+        if (!equalTradeNo) return false;
+        // 订单金额
+        boolean equalTradeAmount = Optional.ofNullable(orderService.findByTradeOrderNo(tradeOrderNo))
+                .map(Order::getOrderTradeAmount)
+                .map(tradeAmount -> tradeAmount.compareTo(new BigDecimal(paramsMap.get("total_amount"))))
+                .map(result -> result == 0)
+                .orElse(false);
+        if (!equalTradeAmount) return false;
+        // 交易状态
+        boolean tradeSuccess = "TRADE_SUCCESS".equals(paramsMap.get("trade_status"));
+        if (!tradeSuccess) return false;
+        return true;
     }
 
 }

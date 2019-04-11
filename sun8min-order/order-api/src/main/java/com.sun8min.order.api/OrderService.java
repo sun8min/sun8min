@@ -7,6 +7,7 @@ import com.sun8min.product.entity.Shop;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -32,16 +33,19 @@ public interface OrderService extends IService<Order> {
      * @param fromUserId                    付费用户
      * @param shop                          购买的商店
      * @param productSnapshotQuantitiesList 商品快照列表
+     * @param payChannel                    支付渠道
      * @return 订单
      */
-    Order placeOrder(BigInteger fromUserId, Shop shop, List<Pair<ProductSnapshot, Long>> productSnapshotQuantitiesList);
+    Order placeOrder(BigInteger fromUserId, Shop shop, List<Pair<ProductSnapshot, Long>> productSnapshotQuantitiesList, Integer payChannel);
 
     /**
      * 账单支付成功
      *
      * @param tradeOrderNo 订单号
+     * @param orderPayNo   渠道支付单号
+     * @param orderPayTime 渠道支付时间
      * @param version      版本号
      */
-    void paySuccess(String tradeOrderNo, Long version);
+    void paySuccess(String tradeOrderNo, String orderPayNo, LocalDateTime orderPayTime, Long version);
 
 }
