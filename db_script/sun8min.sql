@@ -571,6 +571,18 @@ values ('a1', 1, 1),
        ('b3', 100, 2),
        ('b4', 1000, 2),
        ('b5', 10000, 2);
+-- -- 商品快照表
+insert into sun8min_product_snapshot(product_id, product_price)
+values (1, 1),
+       (2, 10),
+       (3, 100),
+       (4, 1000),
+       (5, 10000),
+       (6, 1),
+       (7, 10),
+       (8, 100),
+       (9, 1000),
+       (10, 10000);
 
 -- 云存储域名库
 use sun8min_cloud_domain;

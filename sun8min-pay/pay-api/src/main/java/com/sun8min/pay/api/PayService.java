@@ -3,6 +3,7 @@ package com.sun8min.pay.api;
 import com.alipay.api.AlipayObject;
 
 import java.util.Date;
+import java.util.Map;
 
 public interface PayService {
 
@@ -59,4 +60,10 @@ public interface PayService {
      */
     String billDownload(Date billDate);
 
+    /**
+     * 支付宝验签
+     * @param paramsMap
+     * @return
+     */
+    Boolean alipaySignCheck(Map<String, String> paramsMap);
 }

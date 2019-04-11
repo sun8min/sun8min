@@ -32,4 +32,10 @@
         from sun8min_order
         where trade_order_no = #{tradeOrderNo}
     </select>
+
+    <update id="paySuccess">
+        update sun8min_order
+        set order_status = #{orderStatus}, version = version + 1
+        where trade_order_no = #{tradeOrderNo} and version = #{version}
+    </update>
 </mapper>

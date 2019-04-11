@@ -3,6 +3,8 @@ package com.sun8min.product.mapper;
 import com.sun8min.product.entity.ProductSnapshot;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.math.BigInteger;
+
 /**
  * <p>
  * 商品快照表（记录价格、活动、上下架、删除变动） Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface ProductSnapshotMapper extends BaseMapper<ProductSnapshot> {
 
+    ProductSnapshot findByProductId(BigInteger productId);
 }

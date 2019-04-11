@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 主控制层
@@ -38,7 +39,7 @@ public class MainController {
      * @return
      */
     @PostMapping("/login")
-    public String login(String username, String password) {
+    public String login(@RequestParam String username, @RequestParam String password) {
         // TODO 用户登陆，用于购买商品等操作
 //        userService.
         return null;

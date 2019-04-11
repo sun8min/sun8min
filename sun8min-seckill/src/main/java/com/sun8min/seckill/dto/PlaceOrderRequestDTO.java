@@ -1,6 +1,6 @@
 package com.sun8min.seckill.dto;
 
-import com.sun8min.product.entity.Product;
+import com.sun8min.product.entity.ProductSnapshot;
 import com.sun8min.product.entity.Shop;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +19,5 @@ import java.util.List;
 public class PlaceOrderRequestDTO {
     private BigInteger fromUserId;
     private Shop shop;
-    private List<Pair<Product, Long>> productQuantitiesList;
+    private List<Pair<ProductSnapshot, Long>> productSnapshotQuantitiesList;
 }

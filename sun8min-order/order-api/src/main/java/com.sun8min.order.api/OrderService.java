@@ -2,7 +2,7 @@ package com.sun8min.order.api;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sun8min.order.entity.Order;
-import com.sun8min.product.entity.Product;
+import com.sun8min.product.entity.ProductSnapshot;
 import com.sun8min.product.entity.Shop;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -29,11 +29,19 @@ public interface OrderService extends IService<Order> {
     /**
      * 下单
      *
-     * @param fromUserId            付费用户
-     * @param shop                  购买的商店
-     * @param productQuantitiesList 商品列表
+     * @param fromUserId                    付费用户
+     * @param shop                          购买的商店
+     * @param productSnapshotQuantitiesList 商品快照列表
      * @return 订单
      */
-    Order placeOrder(BigInteger fromUserId, Shop shop, List<Pair<Product, Long>> productQuantitiesList);
+    Order placeOrder(BigInteger fromUserId, Shop shop, List<Pair<ProductSnapshot, Long>> productSnapshotQuantitiesList);
+
+    /**
+     * 账单支付成功
+     *
+     * @param tradeOrderNo 订单号
+     * @param version      版本号
+     */
+    void paySuccess(String tradeOrderNo, Long version);
 
 }

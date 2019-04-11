@@ -10,6 +10,8 @@ import com.sun8min.seckill.service.SeckillService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SeckillServiceImpl implements SeckillService {
 
@@ -22,33 +24,49 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     @GlobalTransactional(timeoutMills = 300000, name = "seckill-gts-fescar-example")
-    public Order handleSeckill(PlaceOrderRequestDTO placeOrderRequestDTO) {
+    public Order placeOrder(PlaceOrderRequestDTO placeOrderRequestDTO) {
         // 分布式事务
         System.out.println("开始全局事务，XID = " + RootContext.getXID());
         // 1.下单
         Order order = orderService.placeOrder(
                 placeOrderRequestDTO.getFromUserId(),
                 placeOrderRequestDTO.getShop(),
-                placeOrderRequestDTO.getProductQuantitiesList()
+                placeOrderRequestDTO.getProductSnapshotQuantitiesList()
         );
-
-        // 2.交易支付方式：账户、支付宝、微信
-        // 账户
-//        Optional.ofNullable(order).ifPresent(
-//                item -> accountTradeOrderService.trade(
-//                        item.getTradeOrderNo(),
-//                        item.getFromUserId(),
-//                        item.getToUserId(),
-//                        item.getOrderTradeAmount()
-//                )
-//        );
-
-        // 支付宝
+        // TODO 2.减库存
 
         //打开注释测试事务发生异常后，全局回滚功能
 //        if (!flag) {
 //            throw new RuntimeException("测试抛异常后，分布式事务回滚！");
 //        }
         return order;
+    }
+
+    @Override
+    @GlobalTransactional(timeoutMills = 300000, name = "seckill-gts-fescar-example")
+    public void payOrder(Order order) {
+        Optional.ofNullable(order).ifPresent(
+                orderDO -> {
+                    // 账户转账
+                    accountTradeOrderService.trade(
+                            orderDO.getTradeOrderNo(),
+                            orderDO.getFromUserId(),
+                            orderDO.getToUserId(),
+                            orderDO.getOrderTradeAmount()
+                    );
+                    // 账单状态修改支付成功
+                    orderService.paySuccess(orderDO.getTradeOrderNo(), orderDO.getVersion());
+                }
+        );
+        //打开注释测试事务发生异常后，全局回滚功能
+//        if (!flag) {
+//            throw new RuntimeException("测试抛异常后，分布式事务回滚！");
+//        }
+    }
+
+    @Override
+    public void paySuccess(String tradeOrderNo, Long version) {
+        // 账单状态修改支付成功
+        orderService.paySuccess(tradeOrderNo, version);
     }
 }

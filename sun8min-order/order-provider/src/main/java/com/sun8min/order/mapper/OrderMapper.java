@@ -2,6 +2,7 @@ package com.sun8min.order.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sun8min.order.entity.Order;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,4 +15,6 @@ import com.sun8min.order.entity.Order;
 public interface OrderMapper extends BaseMapper<Order> {
 
     Order findByTradeOrderNo(String tradeOrderNo);
+
+    Integer paySuccess(@Param("tradeOrderNo") String tradeOrderNo, @Param("version") Long version, @Param("orderStatus") Integer orderStatus);
 }

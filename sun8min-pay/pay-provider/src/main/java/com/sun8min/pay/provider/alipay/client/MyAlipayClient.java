@@ -36,15 +36,15 @@ public class MyAlipayClient {
     /**
      * 支付宝网关（固定）
      */
-    private static final String SERVER_URL = "https://openapi.alipaydev.com/gateway.do";
+    private final String SERVER_URL = "https://openapi.alipaydev.com/gateway.do";
     /**
      * 参数返回格式，只支持json
      */
-    public static final String FORMAT = "json";
+    public final String FORMAT = "json";
     /**
      * 商户生成签名字符串所使用的签名算法类型，目前支持RSA2和RSA，推荐使用RSA2
      */
-    private static final String SIGN_TYPE = "RSA2";
+    private final String SIGN_TYPE = "RSA2";
 
     /**
      * 获取实例
@@ -53,5 +53,17 @@ public class MyAlipayClient {
      */
     public AlipayClient instance() {
         return new DefaultAlipayClient(SERVER_URL, APP_ID, APP_PRIVATE_KEY, FORMAT, CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
+    }
+
+    public String getAlipayPublicKey() {
+        return ALIPAY_PUBLIC_KEY;
+    }
+
+    public String getCharset() {
+        return CHARSET;
+    }
+
+    public String getSignType() {
+        return SIGN_TYPE;
     }
 }

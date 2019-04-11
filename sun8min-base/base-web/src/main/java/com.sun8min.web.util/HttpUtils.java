@@ -1,6 +1,10 @@
 package com.sun8min.web.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,5 +47,48 @@ public class HttpUtils {
      */
     public static boolean isPC(HttpServletRequest request) {
         return !isMobile(request);
+    }
+
+    /**
+     * 将url转换成map
+     *
+     * @param param
+     * @return
+     */
+    public static Map<String, String> getUrlParams(String param) {
+        Map<String, String> map = new HashMap<>(0);
+        if (StringUtils.isBlank(param)) {
+            return map;
+        }
+        String[] params = param.split("&");
+        for (int i = 0; i < params.length; i++) {
+            String[] p = params[i].split("=");
+            if (p.length == 2) {
+                map.put(p[0], p[1]);
+            }
+        }
+        return map;
+    }
+
+    /**
+     * 将map转换成url
+     *
+     * @param map
+     * @return
+     */
+    public static String getUrlParamsByMap(Map<String, String> map) {
+        if (map == null) {
+            return "";
+        }
+        StringBuffer sb = new StringBuffer();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            sb.append(entry.getKey() + "=" + entry.getValue());
+            sb.append("&");
+        }
+        String s = sb.toString();
+        if (s.endsWith("&")) {
+            s = StringUtils.substringBeforeLast(s, "&");
+        }
+        return s;
     }
 }

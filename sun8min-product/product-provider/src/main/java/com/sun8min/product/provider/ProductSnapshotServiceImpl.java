@@ -6,6 +6,8 @@ import com.sun8min.product.api.ProductSnapshotService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.dubbo.config.annotation.Service;
 
+import java.math.BigInteger;
+
 /**
  * <p>
  * 商品快照表（记录价格、活动、上下架、删除变动） 服务实现类
@@ -17,4 +19,8 @@ import org.apache.dubbo.config.annotation.Service;
 @Service(version = "${service.version}")
 public class ProductSnapshotServiceImpl extends ServiceImpl<ProductSnapshotMapper, ProductSnapshot> implements ProductSnapshotService {
 
+    @Override
+    public ProductSnapshot findByProductId(BigInteger productId) {
+        return baseMapper.findByProductId(productId);
+    }
 }

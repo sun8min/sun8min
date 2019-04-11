@@ -12,6 +12,7 @@ import org.apache.dubbo.config.annotation.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * <p>
@@ -71,5 +72,10 @@ public class PayServiceImpl implements PayService {
     @Override
     public String billDownload(Date billDate) {
         return null;
+    }
+
+    @Override
+    public Boolean alipaySignCheck(Map<String, String> paramsMap) {
+        return alipayService.AlipayTradePagePay(paramsMap);
     }
 }

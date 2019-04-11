@@ -26,4 +26,13 @@
         product_snapshot_id, product_id, product_price, product_discount_type, product_discount_price, product_discount_percent, is_up_shelves, is_visible, product_activity_flag, product_is_deleted, extension_field, version, gmt_create, gmt_modified, is_deleted
     </sql>
 
+    <select id="findByProductId" resultType="com.sun8min.product.entity.ProductSnapshot">
+        select
+        <include refid="Base_Column_List"/>
+        from sun8min_product_snapshot
+        where product_id = #{productId}
+        order by product_snapshot_id desc
+        limit 1
+    </select>
+
 </mapper>
