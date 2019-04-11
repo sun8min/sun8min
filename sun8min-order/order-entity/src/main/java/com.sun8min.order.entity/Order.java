@@ -161,6 +161,10 @@ public class Order extends Model<Order> {
         private String msg;
     }
 
-    private transient List<OrderLine> orderLines = new ArrayList<>();
+    /**
+     * 订单项（非数据库字段，使用注解@TableField，如果使用transient关键字，不会被序列化，即null）
+     */
+    @TableField(exist = false)
+    private List<OrderLine> orderLines = new ArrayList<>();
 
 }
