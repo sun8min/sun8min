@@ -16,7 +16,6 @@ import com.sun8min.product.entity.Shop;
 import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
 import com.sun8min.seckill.repository.SeckillOrderRepository;
 import com.sun8min.seckill.service.SeckillService;
-import com.sun8min.web.util.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -233,9 +232,9 @@ public class SeckillController {
         if (!secondVerfied) return FAILURE;
 
         // 获取额外参数对象
-        Map<String, String> passbackParams;
+        Map<String, Object> passbackParams;
         try {
-            passbackParams = HttpUtils.urlToMap(URLDecoder.decode(paramsMap.get("passback_params"), "UTF-8"));
+            passbackParams = JSON.parseObject(URLDecoder.decode(URLDecoder.decode(paramsMap.get("passback_params"), "UTF-8"), "UTF-8")).getInnerMap();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             throw new RuntimeException("额外参数使用URL编码异常");
@@ -244,7 +243,7 @@ public class SeckillController {
         String orderPayNo = paramsMap.get("trade_no");
         // 渠道支付时间(即交易付款时间yyy-MM-dd HH:mm:ss)
         LocalDateTime orderPayTime = LocalDateTime.parse(paramsMap.get("gmt_payment"), DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss"));
-        seckillService.paySuccess(tradeOrderNo, orderPayNo, orderPayTime, Long.valueOf(passbackParams.get("version")));
+        seckillService.paySuccess(tradeOrderNo, orderPayNo, orderPayTime, Long.valueOf(passbackParams.get("version") + ""));
         return SUCCESS;
     }
 

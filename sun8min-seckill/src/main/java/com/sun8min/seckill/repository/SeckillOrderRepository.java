@@ -1,5 +1,6 @@
 package com.sun8min.seckill.repository;
 
+import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayObject;
 import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.domain.AlipayTradeWapPayModel;
@@ -114,7 +115,7 @@ public class SeckillOrderRepository {
         passbackParamsMap.put("version", order.getVersion());
         String passbackParams;
         try {
-            passbackParams = URLEncoder.encode(HttpUtils.mapToUrl(passbackParamsMap), "UTF-8");
+            passbackParams = URLEncoder.encode(URLEncoder.encode(JSON.toJSONString(passbackParamsMap), "UTF-8"), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             throw new RuntimeException("额外参数使用URL编码异常");
