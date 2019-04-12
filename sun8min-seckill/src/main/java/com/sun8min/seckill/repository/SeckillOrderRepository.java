@@ -141,7 +141,7 @@ public class SeckillOrderRepository {
      * @param paramsMap
      * @return
      */
-    public boolean secondVerfied(@PathVariable String tradeOrderNo, Map<String, String> paramsMap) {
+    public boolean secondVerified(@PathVariable String tradeOrderNo, Map<String, String> paramsMap) {
         // 订单号
         boolean equalTradeNo = tradeOrderNo.equals(paramsMap.get("out_trade_no"));
         if (!equalTradeNo) return false;

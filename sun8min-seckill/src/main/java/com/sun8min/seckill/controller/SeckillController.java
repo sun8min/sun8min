@@ -224,12 +224,12 @@ public class SeckillController {
 
         // 支付宝验签
         Boolean signVerified = payService.alipaySignCheck(paramsMap);
-        if (!signVerified) return FAILURE;
         log.info("signVerified: {}" + signVerified);
+        if (!signVerified) return FAILURE;
         // 二次校验, 校验内容：订单号、订单金额是否一致、交易状态是否成功
-        boolean secondVerfied = seckillOrderRepository.secondVerfied(tradeOrderNo, paramsMap);
-        log.info("secondVerfied: {}" + secondVerfied);
-        if (!secondVerfied) return FAILURE;
+        boolean secondVerified = seckillOrderRepository.secondVerified(tradeOrderNo, paramsMap);
+        log.info("secondVerified: {}" + secondVerified);
+        if (!secondVerified) return FAILURE;
 
         // 获取额外参数对象
         Map<String, Object> passbackParams;
