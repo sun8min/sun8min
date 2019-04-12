@@ -12,6 +12,7 @@ import com.sun8min.product.entity.Shop;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.dubbo.config.annotation.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -50,6 +51,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         if (updateRows < 1) throw new RuntimeException("订单状态修改失败");
     }
 
+    @Transactional
     @Override
     public Order placeOrder(BigInteger fromUserId, Shop shop, List<Pair<ProductSnapshot, Long>> productSnapshotQuantitiesList, Integer payChannel) {
         log.info("全局事务id ：" + RootContext.getXID());

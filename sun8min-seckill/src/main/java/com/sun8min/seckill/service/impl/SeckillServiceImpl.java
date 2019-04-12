@@ -37,7 +37,7 @@ public class SeckillServiceImpl implements SeckillService {
                 placeOrderRequestDTO.getProductSnapshotQuantitiesList(),
                 payChannel
         );
-        // TODO 2.减库存
+        // TODO 2. 减库存
 
         //打开注释测试事务发生异常后，全局回滚功能
 //        if (!flag) {
