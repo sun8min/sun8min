@@ -30,9 +30,9 @@
 
         <!--
             mybatis，spring与plus的选择
-            1. mybatis-plus-boot-starter（包含mybatis-plus），加上mybatis-plus-generator代码生成器
-            2. mybatis-spring-boot-starter，mybatis-plus，加上mybatis-plus-generator代码生成器
-            3. mybatis-spring-boot-starter，加上mybatis-generator代码生成器
+            1. mybatis-plus-boot-starter（包含mybatis-plus（包含mybatis）），加上mybatis-plus-generator代码生成器
+            2. mybatis-spring-boot-starter（包含mybatis），mybatis-plus，加上mybatis-plus-generator代码生成器
+            3. mybatis-spring-boot-starter（包含mybatis），加上mybatis-generator代码生成器
          -->
 
         <!-- mybatis-spring-boot-starter -->

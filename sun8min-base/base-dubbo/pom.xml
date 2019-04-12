@@ -15,19 +15,19 @@
     <version>2.0.0-RELEASE</version>
 
     <dependencies>
-        <!-- Dubbo Spring Boot Starter -->
+        <!-- apache-dubbo-spring-boot-starter -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- Dubbo -->
+        <!-- apache-dubbo -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo</artifactId>
         </dependency>
 
-        <!-- Zookeeper -->
+        <!-- zookeeper -->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>

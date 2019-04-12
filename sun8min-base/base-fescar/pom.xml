@@ -27,7 +27,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--dependency for Apache Dubbo-->
+        <!-- fescar-dubbo -->
         <dependency>
             <groupId>com.alibaba.fescar</groupId>
             <artifactId>fescar-dubbo</artifactId>

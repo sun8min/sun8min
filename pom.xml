@@ -74,7 +74,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Spring Boot(pom) -->
+            <!-- springboot(pom) -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -83,7 +83,7 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- Aapche Dubbo(pom)  -->
+            <!-- apache-dubbo(pom)  -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-dependencies-bom</artifactId>
@@ -101,14 +101,14 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- springboot dubbo -->
+            <!-- apache-dubbo-spring-boot-starter -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${dubbo.version}</version>
             </dependency>
 
-            <!-- dubbo -->
+            <!-- apache-dubbo -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo</artifactId>
@@ -129,14 +129,14 @@
                 </exclusions>
             </dependency>
 
-            <!-- SpringCloud Eureka Client -->
+            <!-- springcloud-eureka-client -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
                 <version>${spring-cloud-eureka.version}</version>
             </dependency>
 
-            <!-- SpringCloud Eureka Server -->
+            <!-- springcloud-eureka-server -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>

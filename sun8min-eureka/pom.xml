@@ -17,6 +17,7 @@
     <description>sun8min-eureka</description>
 
     <dependencies>
+        <!-- springcloud-eureka-server -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
