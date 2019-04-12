@@ -16,6 +16,7 @@ ps: 本应为CSS，但因为与网页设计CSS样式（Cascading Style Sheets）
     </head>
 <body>
 <div>
+    <!-- 假设这里是其他用户输入的内容 -->
     <script>alert("XSS!")</script>
     <script>alert(document.cookie)</script>
 </div>
@@ -34,6 +35,6 @@ ps: 本应为CSS，但因为与网页设计CSS样式（Cascading Style Sheets）
    攻击的效果。
 
 #### 主要解决办法：
-1. 将用户所提供的内容进行过滤,Java的xssprotect (Open Source Library)。
+1. 将用户所提供的内容进行过滤，例如Java的xssprotect (Open Source Library)。
 2. 针对cookie：可以设置cookie的HttpOnly属性，指示浏览器只能在http/https
    请求下使用cookie，js无法获取操作cookie
