@@ -109,8 +109,8 @@ public class SeckillOrderRepository {
         //销售产品码
         String productCode = HttpUtils.isPC(httpServletRequest) ? "FAST_INSTANT_TRADE_PAY" : "QUICK_WAP_WAY";
         paramsMap.put("productCode", productCode);
-        // 额外参数，需要UrlEncode编码转换以一下，可以使用&符号连接
-        // ps: 不能转为json字符串，因其含引号，手机端在跳转支付宝网页时会出现系统繁忙错误
+        // 额外参数，因为这里传的是json字符串，带引号，需要UrlEncode编码转换2次
+        // 否则可以用url参数的方式，不带引号，UrlEncode编码转换1次即可
         Map<String, Object> passbackParamsMap = new HashMap<>();
         passbackParamsMap.put("version", order.getVersion());
         String passbackParams;
@@ -121,7 +121,6 @@ public class SeckillOrderRepository {
             throw new RuntimeException("额外参数使用URL编码异常");
         }
         paramsMap.put("passbackParams", passbackParams);
-
         log.info("paramsMap: {}" + paramsMap);
 
         // 实体转换
