@@ -29,7 +29,7 @@ public class AlipayService {
     /**
      * 下单并支付页面
      */
-    public String AlipayTradePagePay(AlipayRequest request) {
+    public String alipayTradePagePay(AlipayRequest request) {
         AlipayClient alipayClient = myAlipayClient.instance();
         String form = "";
         try {
@@ -46,7 +46,7 @@ public class AlipayService {
      * @param paramsMap
      * @return
      */
-    public Boolean AlipaySignCheck(Map<String, String> paramsMap) {
+    public Boolean alipaySignCheck(Map<String, String> paramsMap) {
         //调用SDK验证签名
         boolean signVerified = false;
         try {

@@ -46,7 +46,7 @@ public class PayServiceImpl implements PayService {
         request.setBizModel(bizModel);
         request.setReturnUrl(returnUrl);
         request.setNotifyUrl(notifyUrl);
-        return alipayService.AlipayTradePagePay(request);
+        return alipayService.alipayTradePagePay(request);
     }
 
     @Override
@@ -76,6 +76,6 @@ public class PayServiceImpl implements PayService {
 
     @Override
     public Boolean alipaySignCheck(Map<String, String> paramsMap) {
-        return alipayService.AlipaySignCheck(paramsMap);
+        return alipayService.alipaySignCheck(paramsMap);
     }
 }
