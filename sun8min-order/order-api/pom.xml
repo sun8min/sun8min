@@ -7,23 +7,23 @@
     <parent>
         <groupId>com.sun8min.order</groupId>
         <artifactId>order-parent</artifactId>
-        <version>2.0.0-RELEASE</version>
+        <version>${revision}</version>
     </parent>
 
     <groupId>com.sun8min.order</groupId>
     <artifactId>order-api</artifactId>
-    <version>2.0.0-RELEASE</version>
+    <version>${revision}</version>
 
     <dependencies>
         <dependency>
             <groupId>com.sun8min.order</groupId>
             <artifactId>order-entity</artifactId>
-            <version>2.0.0-RELEASE</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.sun8min.product</groupId>
             <artifactId>product-entity</artifactId>
-            <version>2.0.0-RELEASE</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 

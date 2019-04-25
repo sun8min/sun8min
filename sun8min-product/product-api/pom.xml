@@ -7,18 +7,18 @@
     <parent>
         <groupId>com.sun8min.product</groupId>
         <artifactId>product-parent</artifactId>
-        <version>2.0.0-RELEASE</version>
+        <version>${revision}</version>
     </parent>
 
     <groupId>com.sun8min.product</groupId>
     <artifactId>product-api</artifactId>
-    <version>2.0.0-RELEASE</version>
+    <version>${revision}</version>
 
     <dependencies>
         <dependency>
             <groupId>com.sun8min.product</groupId>
             <artifactId>product-entity</artifactId>
-            <version>2.0.0-RELEASE</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 

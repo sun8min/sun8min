@@ -7,18 +7,18 @@
     <parent>
         <groupId>com.sun8min.account</groupId>
         <artifactId>account-parent</artifactId>
-        <version>2.0.0-RELEASE</version>
+        <version>${revision}</version>
     </parent>
 
     <groupId>com.sun8min.account</groupId>
     <artifactId>account-api</artifactId>
-    <version>2.0.0-RELEASE</version>
+    <version>${revision}</version>
 
     <dependencies>
         <dependency>
             <groupId>com.sun8min.account</groupId>
             <artifactId>account-entity</artifactId>
-            <version>2.0.0-RELEASE</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 

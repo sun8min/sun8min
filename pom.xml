@@ -6,7 +6,7 @@
 
     <groupId>com.sun8min</groupId>
     <artifactId>sun8min</artifactId>
-    <version>2.0.0-RELEASE</version>
+    <version>${revision}</version>
 
     <packaging>pom</packaging>
 
@@ -17,7 +17,7 @@
         <developer>
             <name>sun8min</name>
             <email>sun8min@gmail.com</email>
-            <url>http://www.sun8min.com</url>
+            <url>https://www.sun8min.com</url>
         </developer>
     </developers>
 
@@ -33,6 +33,7 @@
     </modules>
 
     <properties>
+        <revision>2.0.0-RELEASE</revision>
         <!-- java版本 -->
         <java.version>1.8</java.version>
         <java.source.version>${java.version}</java.source.version>
@@ -154,13 +155,6 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <!-- 多模块版本号修改
-            1. 参数-DprocessAllModules=true表示处理所有的子模块，即该模块下的子模块及依赖其的版本号都改成1.0.0
-            2. 参数-DallowSnapshots=true,表示允许快照版本，即允许release版修改为snapshot版。
-            3. 执行命令 mvn versions:set -DoldVersion=* -DnewVersion=1.0.0 -DprocessAllModules=true -DallowSnapshots=true
-            4. 回滚 mvn versions:revert
-            5. 提交 mvn versions:commit
-        -->
         <!-- SnapShot与Release区别：snapshot版本即使版本号一样，也会去maven仓库查看是否有更新，而且这个频率可以设置，而release同版本号只会下载一次 -->
     </build>
 

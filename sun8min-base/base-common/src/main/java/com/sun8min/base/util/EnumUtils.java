@@ -9,6 +9,7 @@ public class EnumUtils {
      * 默认获取code方法
      */
     private static String DEFAULT_GET_CODE_METHOD_NAME = "getCode";
+
     /**
      * 默认获取msg方法
      */
@@ -17,10 +18,10 @@ public class EnumUtils {
     /**
      * 使用默认方法名获取具体枚举
      *
-     * @param clazz
-     * @param code
-     * @param <T>
-     * @return
+     * @param clazz 枚举类Class
+     * @param code  枚举类的code
+     * @param <T>   泛型
+     * @return 具体枚举
      */
     public static <T extends Enum<T>> T getEnum(Class<T> clazz, Integer code) {
         return getEnumByMethodName(clazz, DEFAULT_GET_CODE_METHOD_NAME, code);
@@ -29,10 +30,10 @@ public class EnumUtils {
     /**
      * 使用默认方法名获取具体枚举的msg
      *
-     * @param clazz
-     * @param code
-     * @param <T>
-     * @return
+     * @param clazz 枚举类Class
+     * @param code  枚举类的code
+     * @param <T>   泛型
+     * @return 具体枚举的msg
      */
     public static <T extends Enum<T>> String getEnumMsg(Class<T> clazz, Integer code) {
         return getEnumMsgByMethodName(clazz, DEFAULT_GET_CODE_METHOD_NAME, DEFAULT_GET_MSG_METHOD_NAME, code);

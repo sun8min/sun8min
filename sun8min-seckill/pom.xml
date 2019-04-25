@@ -6,50 +6,50 @@
 	<parent>
 		<groupId>com.sun8min</groupId>
 		<artifactId>sun8min</artifactId>
-		<version>2.0.0-RELEASE</version>
+		<version>${revision}</version>
 	</parent>
 
 	<groupId>com.sun8min.seckill</groupId>
 	<artifactId>sun8min-seckill</artifactId>
-	<version>2.0.0-RELEASE</version>
+	<version>${revision}</version>
 
 	<dependencies>
 		<!-- user-api -->
 		<dependency>
 			<groupId>com.sun8min.user</groupId>
 			<artifactId>user-api</artifactId>
-			<version>2.0.0-RELEASE</version>
+			<version>${revision}</version>
 		</dependency>
 		<!-- product-api -->
 		<dependency>
 			<groupId>com.sun8min.product</groupId>
 			<artifactId>product-api</artifactId>
-			<version>2.0.0-RELEASE</version>
+			<version>${revision}</version>
 		</dependency>
 		<!-- account-api -->
 		<dependency>
 			<groupId>com.sun8min.account</groupId>
 			<artifactId>account-api</artifactId>
-			<version>2.0.0-RELEASE</version>
+			<version>${revision}</version>
 		</dependency>
 		<!-- order-api -->
 		<dependency>
 			<groupId>com.sun8min.order</groupId>
 			<artifactId>order-api</artifactId>
-			<version>2.0.0-RELEASE</version>
+			<version>${revision}</version>
 		</dependency>
 		<!-- pay-api -->
 		<dependency>
 			<groupId>com.sun8min.pay</groupId>
 			<artifactId>pay-api</artifactId>
-			<version>2.0.0-RELEASE</version>
+			<version>${revision}</version>
 		</dependency>
 
 		<!-- base-web -->
 		<dependency>
 			<groupId>com.sun8min.base</groupId>
 			<artifactId>base-web</artifactId>
-			<version>2.0.0-RELEASE</version>
+			<version>${revision}</version>
 		</dependency>
 
 		<!-- thymeleaf -->
@@ -72,7 +72,7 @@
 		<dependency>
 			<groupId>com.sun8min.base</groupId>
 			<artifactId>base-fescar</artifactId>
-			<version>2.0.0-RELEASE</version>
+			<version>${revision}</version>
 		</dependency>
 	</dependencies>
 

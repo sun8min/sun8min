@@ -7,19 +7,19 @@
     <parent>
         <groupId>com.sun8min.base</groupId>
         <artifactId>base-parent</artifactId>
-        <version>2.0.0-RELEASE</version>
+        <version>${revision}</version>
     </parent>
 
     <groupId>com.sun8min.base</groupId>
     <artifactId>base-entity</artifactId>
-    <version>2.0.0-RELEASE</version>
+    <version>${revision}</version>
 
     <dependencies>
         <!-- base-common -->
         <dependency>
             <groupId>com.sun8min.base</groupId>
             <artifactId>base-common</artifactId>
-            <version>2.0.0-RELEASE</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- lombok -->
