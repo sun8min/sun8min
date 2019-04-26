@@ -74,6 +74,12 @@
 			<artifactId>base-fescar</artifactId>
 			<version>${revision}</version>
 		</dependency>
+
+		<!-- cas -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-cas</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

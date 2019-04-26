@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <groupId>com.sun8min</groupId>
+    <groupId>com.sun8min.eureka</groupId>
     <artifactId>sun8min-eureka</artifactId>
     <version>${revision}</version>
 
