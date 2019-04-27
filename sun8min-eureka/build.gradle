@@ -1,0 +1,5 @@
+dependencies {
+    compile "org.springframework.cloud:spring-cloud-starter-netflix-eureka-server:$springCloudEurekaVersion"
+}
+
+group = "com.sun8min.eureka"

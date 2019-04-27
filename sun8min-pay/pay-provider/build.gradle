@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":pay-parent:pay-api")
+    compile project(":base-parent:base-provider")
+}
+
+group = "com.sun8min.pay"

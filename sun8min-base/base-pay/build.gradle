@@ -1,0 +1,5 @@
+dependencies {
+    compile "com.alipay.sdk:alipay-sdk-java:$alipaySdkVersion"
+}
+
+group = "com.sun8min.base"

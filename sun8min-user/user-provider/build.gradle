@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":user-parent:user-api")
+    compile project(":base-parent:base-provider")
+}
+
+group = "com.sun8min.user"

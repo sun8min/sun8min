@@ -1,0 +1,8 @@
+dependencies {
+    compile "com.google.guava:guava:$guavaVersion"
+    compile "org.apache.commons:commons-lang3:$commonsLang3Version"
+    compile "commons-beanutils:commons-beanutils:$commonsBeanutilsVersion"
+    compile "com.alibaba:fastjson:$fastjsonVersion"
+}
+
+group = "com.sun8min.base"

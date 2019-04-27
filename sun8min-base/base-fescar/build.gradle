@@ -1,0 +1,6 @@
+dependencies {
+    compile "com.alibaba.fescar:fescar-spring:$fescarVersion"
+    compile "com.alibaba.fescar:fescar-dubbo:$fescarVersion"
+}
+
+group = "com.sun8min.base"

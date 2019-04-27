@@ -1,0 +1,5 @@
+dependencies {
+    compile project(":product-parent:product-entity")
+}
+
+group = "com.sun8min.product"

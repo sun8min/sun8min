@@ -4,9 +4,10 @@
 **/.idea
 **/*.iml
 
-### mvn versions bak ###
-**/pom.xml.versionBackup
+### gradle ###
+.gradle
+**/build/
+**/out/
 
-#### 私密文件 ####
 ### pay config ###
 sun8min-pay/pay-provider/src/main/resources/application.yml

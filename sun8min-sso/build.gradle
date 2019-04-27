@@ -1,0 +1,10 @@
+dependencies {
+    compile project(":base-parent:base-web")
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion"
+    compile "org.springframework.security:spring-security-cas:5.1.4.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
+    compile "javax.inject:javax.inject:1"
+    compile project(":user-parent:user-api")
+}
+
+group = "com.sun8min.sso"

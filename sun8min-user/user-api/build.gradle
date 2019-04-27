@@ -1,0 +1,5 @@
+dependencies {
+    compile project(":user-parent:user-entity")
+}
+
+group = "com.sun8min.user"
