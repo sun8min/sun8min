@@ -2,9 +2,9 @@ dependencies {
     compile project(":sun8min-base:base-web")
     compile project(":sun8min-user:user-api")
 
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
     compile "org.springframework.security:spring-security-cas:$springSecurityCasVersion"
-    compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-security"
     compile "javax.inject:javax.inject:$javaInjectVersion"
 }
 

@@ -7,9 +7,9 @@ dependencies {
     compile project(":sun8min-base:base-web")
     compile project(":sun8min-base:base-fescar")
     
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
     
-    runtime "org.springframework.boot:spring-boot-devtools:$springBootVersion"
+    runtime "org.springframework.boot:spring-boot-devtools"
 }
 
 group = "com.sun8min.seckill"
