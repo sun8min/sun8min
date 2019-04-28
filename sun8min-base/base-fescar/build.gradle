@@ -1,5 +1,7 @@
 dependencies {
-    compile "com.alibaba.fescar:fescar-spring:$fescarVersion"
+    compile ("com.alibaba.fescar:fescar-spring:$fescarVersion"){
+        exclude group: 'log4j'
+    }
     compile "com.alibaba.fescar:fescar-dubbo:$fescarVersion"
 }
 

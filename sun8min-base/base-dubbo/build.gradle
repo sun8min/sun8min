@@ -1,15 +1,15 @@
 dependencies {
     compile "org.apache.dubbo:dubbo-spring-boot-starter:$dubboVersion"
     compile ("org.apache.dubbo:dubbo:$dubboVersion"){
-        exclude group: 'org.springframework.spring'
-        exclude group: 'javax.servlet.servlet-api'
-        exclude group: 'log4j.log4j'
+        exclude group: 'org.springframework'
+        exclude group: 'javax.servlet'
+        exclude group: 'log4j'
     }
 
     compile ("org.apache.zookeeper:zookeeper:$zookeeperVersion"){
         // 解决与springboot默认logback日志冲突
-        exclude group: 'slf4j-log4j12.org.slf4j'
-        exclude group: 'log4j.log4j'
+        exclude group: 'org.slf4j'
+        exclude group: 'log4j'
     }
     compile "org.apache.curator:curator-framework:$curatorVersion"
     compile "org.apache.curator:curator-recipes:$curatorVersion"
