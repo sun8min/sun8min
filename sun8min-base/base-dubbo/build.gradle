@@ -1,6 +1,11 @@
 dependencies {
     compile "org.apache.dubbo:dubbo-spring-boot-starter:$dubboVersion"
-    compile "org.apache.dubbo:dubbo:$dubboVersion"
+    compile ("org.apache.dubbo:dubbo:$dubboVersion"){
+        exclude group: 'org.springframework:spring'
+        exclude group: 'javax.servlet:servlet-api'
+        exclude group: 'log4j:log4j'
+    }
+
     compile "org.apache.zookeeper:zookeeper:$zookeeperVersion"
     compile "org.apache.curator:curator-framework:$curatorVersion"
     compile "org.apache.curator:curator-recipes:$curatorVersion"
