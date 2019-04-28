@@ -2,8 +2,8 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
-    compile project(":base-parent:base-dubbo")
-    compile project(":base-parent:base-common")
+    compile project(":sun8min-base:base-dubbo")
+    compile project(":sun8min-base:base-common")
 }
 
 group = "com.sun8min.base"

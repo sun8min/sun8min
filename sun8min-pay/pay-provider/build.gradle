@@ -1,6 +1,6 @@
 dependencies {
-    compile project(":pay-parent:pay-api")
-    compile project(":base-parent:base-provider")
+    compile project(":sun8min-pay:pay-api")
+    compile project(":sun8min-base:base-provider")
 }
 
 group = "com.sun8min.pay"

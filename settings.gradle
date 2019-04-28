@@ -1,58 +1,29 @@
 rootProject.name = "sun8min"
-include(":base-parent:base-entity")
-include(":base-parent:base-provider")
-include(":base-parent:base-web")
-include(":base-parent:base-dubbo")
-include(":base-parent:base-common")
-include(":base-parent:base-fescar")
-include(":base-parent:base-pay")
-include(":base-parent")
-include(":sun8min-eureka")
-include(":sun8min-seckill")
-include(":user-parent:user-api")
-include(":user-parent:user-entity")
-include(":user-parent:user-provider")
-include(":user-parent")
-include(":product-parent:product-api")
-include(":product-parent:product-entity")
-include(":product-parent:product-provider")
-include(":product-parent")
-include(":account-parent:account-api")
-include(":account-parent:account-entity")
-include(":account-parent:account-provider")
-include(":account-parent")
-include(":order-parent:order-api")
-include(":order-parent:order-entity")
-include(":order-parent:order-provider")
-include(":order-parent")
-include(":pay-parent:pay-api")
-include(":pay-parent:pay-provider")
-include(":pay-parent")
-include(":sun8min-sso")
-project(":base-parent:base-entity").projectDir = file("sun8min-base/base-entity")
-project(":base-parent:base-provider").projectDir = file("sun8min-base/base-provider")
-project(":base-parent:base-web").projectDir = file("sun8min-base/base-web")
-project(":base-parent:base-dubbo").projectDir = file("sun8min-base/base-dubbo")
-project(":base-parent:base-common").projectDir = file("sun8min-base/base-common")
-project(":base-parent:base-fescar").projectDir = file("sun8min-base/base-fescar")
-project(":base-parent:base-pay").projectDir = file("sun8min-base/base-pay")
-project(":base-parent").projectDir = file("sun8min-base")
-project(":user-parent:user-api").projectDir = file("sun8min-user/user-api")
-project(":user-parent:user-entity").projectDir = file("sun8min-user/user-entity")
-project(":user-parent:user-provider").projectDir = file("sun8min-user/user-provider")
-project(":user-parent").projectDir = file("sun8min-user")
-project(":product-parent:product-api").projectDir = file("sun8min-product/product-api")
-project(":product-parent:product-entity").projectDir = file("sun8min-product/product-entity")
-project(":product-parent:product-provider").projectDir = file("sun8min-product/product-provider")
-project(":product-parent").projectDir = file("sun8min-product")
-project(":account-parent:account-api").projectDir = file("sun8min-account/account-api")
-project(":account-parent:account-entity").projectDir = file("sun8min-account/account-entity")
-project(":account-parent:account-provider").projectDir = file("sun8min-account/account-provider")
-project(":account-parent").projectDir = file("sun8min-account")
-project(":order-parent:order-api").projectDir = file("sun8min-order/order-api")
-project(":order-parent:order-entity").projectDir = file("sun8min-order/order-entity")
-project(":order-parent:order-provider").projectDir = file("sun8min-order/order-provider")
-project(":order-parent").projectDir = file("sun8min-order")
-project(":pay-parent:pay-api").projectDir = file("sun8min-pay/pay-api")
-project(":pay-parent:pay-provider").projectDir = file("sun8min-pay/pay-provider")
-project(":pay-parent").projectDir = file("sun8min-pay")
+
+FileTree buildFiles = fileTree(rootDir) {
+    List excludes = gradle.startParameter.projectProperties.get("excludeProjects")?.split(",")
+    include '**/*.gradle'
+    exclude 'build', '**/gradle', 'settings.gradle', 'buildSrc', '/build.gradle', '.*', 'out'
+    if(excludes) {
+        exclude excludes
+    }
+}
+
+String rootDirPath = rootDir.absolutePath + File.separator
+buildFiles.each { File buildFile ->
+
+    boolean isDefaultName = 'build.gradle'.equals(buildFile.name)
+    if(isDefaultName) {
+        String buildFilePath = buildFile.parentFile.absolutePath
+        String projectPath = buildFilePath.replace(rootDirPath, '').replace(File.separator, ':')
+        include projectPath
+    } else {
+        String projectName = buildFile.name.replace('.gradle', '')
+        String projectPath = ':' + projectName
+        include projectPath
+        def project = findProject("${projectPath}")
+        project.name = projectName
+        project.projectDir = buildFile.parentFile
+        project.buildFileName = buildFile.name
+    }
+}

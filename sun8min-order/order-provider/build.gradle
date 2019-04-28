@@ -1,6 +1,6 @@
 dependencies {
-    compile project(":order-parent:order-api")
-    compile project(":base-parent:base-provider")
+    compile project(":sun8min-order:order-api")
+    compile project(":sun8min-base:base-provider")
 }
 
 group = "com.sun8min.order"

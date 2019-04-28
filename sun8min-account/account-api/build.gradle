@@ -1,5 +1,5 @@
 dependencies {
-    compile project(":account-parent:account-entity")
+    compile project(":sun8min-account:account-entity")
 }
 
 group = "com.sun8min.account"

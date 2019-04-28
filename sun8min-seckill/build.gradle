@@ -1,12 +1,12 @@
 dependencies {
-    compile project(":user-parent:user-api")
-    compile project(":product-parent:product-api")
-    compile project(":account-parent:account-api")
-    compile project(":order-parent:order-api")
-    compile project(":pay-parent:pay-api")
-    compile project(":base-parent:base-web")
+    compile project(":sun8min-user:user-api")
+    compile project(":sun8min-product:product-api")
+    compile project(":sun8min-account:account-api")
+    compile project(":sun8min-order:order-api")
+    compile project(":sun8min-pay:pay-api")
+    compile project(":sun8min-base:base-web")
     compile "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion"
-    compile project(":base-parent:base-fescar")
+    compile project(":sun8min-base:base-fescar")
     compile "org.springframework.security:spring-security-cas:5.1.4.RELEASE"
     runtime "org.springframework.boot:spring-boot-devtools:$springBootVersion"
 }
