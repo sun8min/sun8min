@@ -3,7 +3,7 @@ server.port: 9700
 spring:
   application:
     name: sun8min-sso
-    version: 1
+    version: ${project.version}
 
   ## thymeleaf\u914D\u7F6E
   thymeleaf.cache: false
