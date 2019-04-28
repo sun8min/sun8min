@@ -3,7 +3,7 @@ server.port: 9600
 spring:
   application:
     name: sun8min-seckill
-    version: @project.version@
+    version: 1
 
   ## thymeleaf配置
   thymeleaf.cache: false
