@@ -3,7 +3,7 @@ server.port: 9700
 spring:
   application:
     name: sun8min-pay
-    version: ${project.version}
+    version: 2.0.1
 
 ## Eureka 配置
 eureka.client.serviceUrl.defaultZone: http://localhost:8761/eureka/

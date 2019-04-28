@@ -3,7 +3,7 @@ server.port: 9500
 spring:
   application:
     name: sun8min-user
-    version: ${project.version}
+    version: 2.0.1
 
   ## 数据源配置
   datasource:
