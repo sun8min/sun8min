@@ -1,18 +1,15 @@
 dependencies {
     compile "org.apache.dubbo:dubbo-spring-boot-starter:$dubboVersion"
-    compile ("org.apache.dubbo:dubbo:$dubboVersion"){
-        exclude group: 'org.springframework'
-        exclude group: 'javax.servlet'
-        exclude group: 'log4j'
-    }
+    compile "org.apache.dubbo:dubbo:$dubboVersion"
 
-    compile ("org.apache.zookeeper:zookeeper:$zookeeperVersion"){
+    compile("org.apache.zookeeper:zookeeper:$zookeeperVersion") {
         // 解决与springboot默认logback日志冲突
         exclude group: 'org.slf4j'
-        exclude group: 'log4j'
     }
-    compile "org.apache.curator:curator-framework:$curatorVersion"
-    compile "org.apache.curator:curator-recipes:$curatorVersion"
+    compile("org.apache.curator:curator-recipes:$curatorVersion") {
+        // 解决 Curator-4.0 默认依赖 ZooKeeper-3.5.x 的冲突
+        exclude group: 'org.apache.zookeeper'
+    }
 }
 
 group = "com.sun8min.base"
