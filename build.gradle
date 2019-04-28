@@ -9,24 +9,12 @@ buildscript {
     }
 }
 
-allprojects {
-    group = "com.sun8min"
-    version = "2.0.0-RELEASE"
-}
+group = "com.sun8min"
 
 subprojects {
     apply plugin: "java"
-    apply plugin: "maven-publish"
 
     sourceCompatibility = "1.8"
-
-    publishing {
-        publications {
-            maven(MavenPublication) {
-                from(components.java)
-            }
-        }
-    }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"

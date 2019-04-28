@@ -1,10 +1,11 @@
 dependencies {
+    compile project(":sun8min-base:base-dubbo")
+    compile project(":sun8min-base:base-fescar")
+    
     compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     compile "mysql:mysql-connector-java:$mysqlVersion"
-    compile project(":sun8min-base:base-dubbo")
     compile "org.springframework:spring-tx:$springTxVersion"
-    compile project(":sun8min-base:base-fescar")
     compile "com.baomidou:mybatis-plus-generator:$mybatisPlusVersion"
     compile "org.apache.velocity:velocity-engine-core:$velocityVersion"
 }

@@ -5,9 +5,10 @@ dependencies {
     compile project(":sun8min-order:order-api")
     compile project(":sun8min-pay:pay-api")
     compile project(":sun8min-base:base-web")
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion"
     compile project(":sun8min-base:base-fescar")
-    compile "org.springframework.security:spring-security-cas:5.1.4.RELEASE"
+    
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion"
+    
     runtime "org.springframework.boot:spring-boot-devtools:$springBootVersion"
 }
 
