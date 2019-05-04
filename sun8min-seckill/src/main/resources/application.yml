@@ -23,3 +23,20 @@ dubbo:
 
 ## 服务版本号
 service.version: ${spring.application.version}
+
+## sso配置
+server:
+  host:
+    # CAS服务地址
+    url: http://cas.server.com:8080/cas
+    # CAS服务登录地址
+    login_url: ${server.host.url}/login
+    # CAS服务登出地址
+    logout_url: ${server.host.url}/logout?service=${app.server.host.url}
+app:
+  # 应用访问地址
+  server.host.url: http://www.app1.com:${server.port}
+  # 应用登录地址
+  login.url: /login
+  # 应用登出地址
+  logout.url: /logout
