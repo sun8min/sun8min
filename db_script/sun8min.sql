@@ -14,7 +14,7 @@ create table sun8min_user
   user_real_name  varchar(16)         not null default '' comment '用户真实名',
   user_phone      varchar(32)         not null default '' comment '用户手机号',
   user_sex        tinyint             not null default 0 comment '用户性别（0:未知，1:男，2:女）',
-  user_password   varchar(64)         not null comment '用户密码',
+  user_password   varchar(140)         not null comment '用户密码',
   extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
   version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
   gmt_create      datetime            not null default current_timestamp comment '创建时间',
@@ -545,9 +545,9 @@ create table sun8min_cloud_domain
 use sun8min_user;
 -- -- 用户表
 insert into sun8min_user(user_nick_name, user_password)
-values ('aaa', '123123'),
-       ('bbb', '123123'),
-       ('ccc', '123213');
+values ('aaa', '$2a$08$jvlM7HkGKeec1lkS7JoQW.q8zfROC5DZtBk7ix/AZP687RTN5pGhO'),
+       ('bbb', '$2a$10$ZGg3HuuVbdSKzjklW2XsxuWdmDFR0WB7MjjxaIwNWc.tkLEjJdn1m'),
+       ('ccc', '$2a$10$d19vFkjCz.ChXbOHDFrsIe/nkfARjwOvvBf1d0ILmqSpzeqCz1P5e');
 
 -- 账户库
 use sun8min_account;
