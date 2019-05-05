@@ -12,7 +12,6 @@ dependencies {
     compile 'org.springframework.security:spring-security-cas'
 
     runtime "org.springframework.boot:spring-boot-devtools"
-
 }
 
 group = "com.sun8min.seckill"
