@@ -17,4 +17,8 @@ import org.apache.dubbo.config.annotation.Service;
 @Service(version = "${service.version}")
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    @Override
+    public User findByNickName(String nickName) {
+        return baseMapper.findByNickName(nickName);
+    }
 }

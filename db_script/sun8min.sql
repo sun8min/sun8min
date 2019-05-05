@@ -14,12 +14,14 @@ create table sun8min_user
   user_real_name  varchar(16)         not null default '' comment '用户真实名',
   user_phone      varchar(32)         not null default '' comment '用户手机号',
   user_sex        tinyint             not null default 0 comment '用户性别（0:未知，1:男，2:女）',
+  user_password   varchar(64)         not null comment '用户密码',
   extension_field varchar(255)        not null default '' comment '扩展字段（json格式）',
   version         int unsigned        not null default 0 comment '版本号（用于乐观锁）',
   gmt_create      datetime            not null default current_timestamp comment '创建时间',
   gmt_modified    datetime            not null default current_timestamp on update current_timestamp comment '修改时间',
   is_deleted      tinyint(1) unsigned not null default 0 comment '是否删除（0：否，1：是）',
-  primary key (user_id)
+  primary key (user_id),
+  unique key uk_user_nick_name(user_nick_name)
 ) engine = innodb
   default charset = utf8mb4
   collate = utf8mb4_unicode_ci
@@ -542,10 +544,10 @@ create table sun8min_cloud_domain
 -- 用户库
 use sun8min_user;
 -- -- 用户表
-insert into sun8min_user(user_nick_name)
-values ('aaa'),
-       ('bbb'),
-       ('ccc');
+insert into sun8min_user(user_nick_name, user_password)
+values ('aaa', '123123'),
+       ('bbb', '123123'),
+       ('ccc', '123213');
 
 -- 账户库
 use sun8min_account;

@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("sun8min_user")
 public class User extends Model<User> {
-
     private static final long serialVersionUID = 1L;
 
     /**
@@ -57,6 +56,12 @@ public class User extends Model<User> {
      */
     @TableField("user_sex")
     private Integer userSex;
+
+    /**
+     * 用户密码
+     */
+    @TableField("user_password")
+    private String userPassword;
 
     /**
      * 扩展字段（json格式）

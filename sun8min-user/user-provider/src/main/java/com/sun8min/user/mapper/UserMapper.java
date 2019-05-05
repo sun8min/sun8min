@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface UserMapper extends BaseMapper<User> {
 
+    /**
+     * 根据用户名查找用户
+     * @param nickName 用户名
+     * @return 用户
+     */
+    User findByNickName(String nickName);
 }

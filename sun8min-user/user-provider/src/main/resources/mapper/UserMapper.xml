@@ -9,6 +9,7 @@
         <result column="user_real_name" property="userRealName" />
         <result column="user_phone" property="userPhone" />
         <result column="user_sex" property="userSex" />
+        <result column="user_password" property="userPassword" />
         <result column="extension_field" property="extensionField" />
         <result column="version" property="version" />
         <result column="gmt_create" property="gmtCreate" />
@@ -18,7 +19,13 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id, user_nick_name, user_real_name, user_phone, user_sex, extension_field, version, gmt_create, gmt_modified, is_deleted
+        user_id, user_nick_name, user_real_name, user_phone, user_sex, user_password, extension_field, version, gmt_create, gmt_modified, is_deleted
     </sql>
+
+    <select id="findByNickName" resultType="com.sun8min.user.entity.User">
+      select
+       <include refid="Base_Column_List"/>
+       from sun8min_user where user_nick_name = #{nickName}
+    </select>
 
 </mapper>
