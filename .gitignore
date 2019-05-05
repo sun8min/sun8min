@@ -4,6 +4,9 @@
 **/.idea
 **/*.iml
 
+### mac OS ###
+.DS_Store
+
 ### gradle ###
 .gradle
 **/build/
