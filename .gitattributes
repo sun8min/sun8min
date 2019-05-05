@@ -1,0 +1,2 @@
+// 忽略overlay目录文件,调整语言占比
+sun8min-sso/overlays/* linguist-vendored=true
