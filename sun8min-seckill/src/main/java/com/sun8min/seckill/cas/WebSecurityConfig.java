@@ -1,4 +1,4 @@
-package com.sun8min.seckill.controller.cas;
+package com.sun8min.seckill.cas;
 
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
@@ -33,15 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()//配置安全策略
+        http
+            .csrf().disable() // 关闭csrf
+            .authorizeRequests()//配置安全策略
                 .anyRequest().authenticated()//其余的所有请求都需要验证
                 .and()
-                .csrf().disable()
-                .logout()
+            .logout()
                 .permitAll()
-                .and().headers().frameOptions().disable()  //定义logout不需要验证
                 .and()
-                .formLogin();//使用form表单登录
+            .formLogin();//使用form表单登录
 
         http.exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint())
                 .and()
@@ -68,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 指定service相关信息
      * 设置客户端service的属性
      * 主要设置请求cas服务端后的回调路径,一般为主页地址，不可为登录地址
+     *
      * @return
      */
     @Bean
@@ -82,7 +83,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return serviceProperties;
     }
 
-    /**CAS认证过滤器*/
+    /**
+     * CAS认证过滤器
+     */
     @Bean
     public CasAuthenticationFilter casAuthenticationFilter() throws Exception {
         CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
@@ -96,6 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 创建CAS校验类
      * Notes:TicketValidator、AuthenticationUserDetailService属性必须设置;
      * serviceProperties属性主要应用于ticketValidator用于去cas服务端检验ticket
+     *
      * @return
      */
     @Bean
@@ -108,14 +112,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return casAuthenticationProvider;
     }
 
-    /**用户自定义的AuthenticationUserDetailsService*/
+    /**
+     * 用户自定义的AuthenticationUserDetailsService
+     */
     @Bean
-    public AuthenticationUserDetailsService<CasAssertionAuthenticationToken> customUserDetailsService(){
-        return new CustomUserDetailsService();
+    public AuthenticationUserDetailsService<CasAssertionAuthenticationToken> customUserDetailsService() {
+        return new UserDetailsService();
     }
 
     /**
      * 配置Ticket校验器
+     *
      * @return
      */
     @Bean
@@ -126,8 +133,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 单点注销，接受cas服务端发出的注销session请求
-     * @see SingleLogout(SLO) Front or Back Channel
+     *
      * @return
+     * @see SingleLogout(SLO) Front or Back Channel
      */
     @Bean
     public SingleSignOutFilter singleSignOutFilter() {

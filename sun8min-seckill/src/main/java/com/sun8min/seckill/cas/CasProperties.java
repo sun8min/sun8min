@@ -1,4 +1,4 @@
-package com.sun8min.seckill.controller.cas;
+package com.sun8min.seckill.cas;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

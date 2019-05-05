@@ -19,6 +19,8 @@ import com.sun8min.seckill.service.SeckillService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.cas.authentication.CasAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -75,6 +77,11 @@ public class SeckillController {
     @GetMapping("/shops")
     public String findShops(ModelMap map) {
         List<Shop> shops = shopService.list();
+        CasAuthenticationToken token = (CasAuthenticationToken)httpServletRequest.getUserPrincipal();
+        UserDetails userDetails = token.getUserDetails();
+        System.out.println(token.getName());
+        System.out.println(userDetails.getUsername());
+        System.out.println(userDetails.getPassword());
         map.addAttribute("prefix", prefix);
         map.addAttribute("title", "商家列表");
         map.addAttribute("shops", shops);
