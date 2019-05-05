@@ -15,7 +15,8 @@ Sun8min的个人项目，在线实例 [sun8min.com]，详见博客 [Blog]
 - 启动 注册中心：[zookeeper-3.4.13]
 - 启动 分布式事务支持：[fescar-server-0.4.0]
 - 启动 nosql：[redis-5.0.4]
-- 启动 cas 服务端: [cas-server-5.3.9]
+- 启动 cas 服务端: sso模块执行`./build.sh package`，
+  将/target下的cas.war用tomcat部署
 - 启动 pay, account, order, product, user 微服务模块
 - 启动 seckill 微服务模块
 
