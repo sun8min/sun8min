@@ -227,7 +227,6 @@ var loggingDashboard = (function () {
     };
 
     var toggleSwitch = function (data, type, full) {
-        // Todo: Add additional colors for the other options
         //console.log('toggleSwitch data',data);
         //console.log('type',type);
         //console.log('full',full);
