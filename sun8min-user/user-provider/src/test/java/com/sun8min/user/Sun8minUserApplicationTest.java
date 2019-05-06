@@ -61,9 +61,9 @@ public class Sun8minUserApplicationTest {
         String appName = props.getProperty("spring.application.name");
         String appVersion = props.getProperty("spring.application.version");
         String serviceVersion = props.getProperty("service.version");
-        log.info("appName : " + appName);
-        log.info("appVersion : " + appVersion);
-        log.info("serviceVersion : " + serviceVersion);
+        log.info("appName: {}" + appName);
+        log.info("appVersion: {}" + appVersion);
+        log.info("serviceVersion: {}" + serviceVersion);
     }
 
 }

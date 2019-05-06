@@ -19,10 +19,10 @@ public class ApplicationTests {
 	public void test() {
 		Object a = "1";
 		if (a instanceof Integer) {
-			log.info("integer" + " " + a);
+			log.info("integer: {}" + a);
 		}
 		if (a instanceof String) {
-			log.info("String" + " " + a);
+			log.info("String: {}" + a);
 		}
 
 	}
