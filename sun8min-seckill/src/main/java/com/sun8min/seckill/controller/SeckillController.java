@@ -16,11 +16,11 @@ import com.sun8min.product.entity.Shop;
 import com.sun8min.seckill.dto.PlaceOrderRequestDTO;
 import com.sun8min.seckill.repository.SeckillOrderRepository;
 import com.sun8min.seckill.service.SeckillService;
+import com.sun8min.user.api.UserService;
+import com.sun8min.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.cas.authentication.CasAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URLDecoder;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -58,6 +59,8 @@ public class SeckillController {
     OrderService orderService;
     @Reference(version = "${service.version}")
     PayService payService;
+    @Reference(version = "${service.version}")
+    UserService userService;
     @Autowired
     SeckillOrderRepository seckillOrderRepository;
     @Autowired
@@ -69,6 +72,18 @@ public class SeckillController {
     private static final String prefixPath = prefix + "/";
 
     /**
+     * 获取当前登录用户
+     *
+     * @return 用户
+     */
+    private User getLoginUser() throws Exception {
+        return Optional.ofNullable(httpServletRequest.getUserPrincipal())
+                .map(Principal::getName)
+                .map(name -> userService.findByNickName(name))
+                .orElseThrow(() -> new Exception("用户获取异常"));
+    }
+
+    /**
      * 商家列表
      *
      * @param map
@@ -77,11 +92,6 @@ public class SeckillController {
     @GetMapping("/shops")
     public String findShops(ModelMap map) {
         List<Shop> shops = shopService.list();
-        CasAuthenticationToken token = (CasAuthenticationToken)httpServletRequest.getUserPrincipal();
-        UserDetails userDetails = token.getUserDetails();
-        System.out.println(token.getName());
-        System.out.println(userDetails.getUsername());
-        System.out.println(userDetails.getPassword());
         map.addAttribute("prefix", prefix);
         map.addAttribute("title", "商家列表");
         map.addAttribute("shops", shops);
@@ -112,9 +122,8 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/product/{productId}/confirm")
-    public String confirm(@PathVariable BigInteger productId, ModelMap map) {
-        // TODO 暂时先定购买用户id为3，去购买其他两家的商品
-        BigInteger userId = BigInteger.valueOf(3);
+    public String confirm(@PathVariable BigInteger productId, ModelMap map) throws Exception {
+        BigInteger userId = getLoginUser().getUserId();
         BigDecimal accountAmount = accountService.findAmountByUserId(userId);
         ProductSnapshot productSnapshot = productSnapshotService.findByProductId(productId);
 
@@ -135,10 +144,9 @@ public class SeckillController {
     @PostMapping("/placeOrder")
     public String placeOrder(@RequestParam BigInteger productSnapshotId,
                              @RequestParam Integer payChannelCode,
-                             ModelMap map) {
+                             ModelMap map) throws Exception {
         String view = null;
-        // TODO 暂时先定购买用户id为3，去购买其他两家的商品
-        BigInteger userId = BigInteger.valueOf(3);
+        BigInteger userId = getLoginUser().getUserId();
         // 交易支付方式：账户、支付宝、微信
         Order.OrderPayChannel payChannel = EnumUtils.getEnum(Order.OrderPayChannel.class, payChannelCode);
         if (payChannel == null) throw new RuntimeException("支付类型错误");
@@ -183,10 +191,8 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/payResult/{tradeOrderNo}")
-    public String payResult(@PathVariable String tradeOrderNo, ModelMap map) {
-        // TODO 暂时先定购买用户id为3，去购买其他两家的商品
-        BigInteger userId = BigInteger.valueOf(3);
-
+    public String payResult(@PathVariable String tradeOrderNo, ModelMap map) throws Exception {
+        BigInteger userId = getLoginUser().getUserId();
         // 订单支付结果
         String payResultTip = Optional.ofNullable(orderService.findByTradeOrderNo(tradeOrderNo))
                 .map(Order::getOrderStatus)
