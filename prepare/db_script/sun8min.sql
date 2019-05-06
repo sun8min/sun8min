@@ -545,7 +545,7 @@ create table sun8min_cloud_domain
 use sun8min_user;
 -- -- 用户表
 insert into sun8min_user(user_nick_name, user_password)
-values ('aaa', '$2a$08$jvlM7HkGKeec1lkS7JoQW.q8zfROC5DZtBk7ix/AZP687RTN5pGhO'),
+values ('aaa', '$2a$10$MN0ixnUyRwVoX3PsBw4cuOZoxkoyIqnS0vx705Debz27SRXJkhXJ.'),
        ('bbb', '$2a$10$ZGg3HuuVbdSKzjklW2XsxuWdmDFR0WB7MjjxaIwNWc.tkLEjJdn1m'),
        ('ccc', '$2a$10$d19vFkjCz.ChXbOHDFrsIe/nkfARjwOvvBf1d0ILmqSpzeqCz1P5e');
 
