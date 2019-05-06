@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayObject;
 import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.domain.AlipayTradeWapPayModel;
+import com.sun8min.base.exception.MyException;
 import com.sun8min.order.api.OrderService;
 import com.sun8min.order.entity.Order;
 import com.sun8min.order.entity.OrderLine;
@@ -118,7 +119,7 @@ public class SeckillOrderRepository {
             passbackParams = URLEncoder.encode(URLEncoder.encode(JSON.toJSONString(passbackParamsMap), "UTF-8"), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            throw new RuntimeException("额外参数使用URL编码异常");
+            throw new MyException("额外参数使用URL编码异常");
         }
         paramsMap.put("passbackParams", passbackParams);
         log.info("paramsMap: {}" + paramsMap);
@@ -128,7 +129,7 @@ public class SeckillOrderRepository {
             BeanUtils.populate(bizmodel, paramsMap);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("实体转换异常");
+            throw new MyException("实体转换异常");
         }
         return bizmodel;
     }

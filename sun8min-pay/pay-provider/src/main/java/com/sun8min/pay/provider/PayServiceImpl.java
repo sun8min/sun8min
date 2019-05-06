@@ -6,6 +6,7 @@ import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.domain.AlipayTradeWapPayModel;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
+import com.sun8min.base.exception.MyException;
 import com.sun8min.pay.api.PayService;
 import com.sun8min.pay.provider.alipay.AlipayService;
 import org.apache.dubbo.config.annotation.Service;
@@ -41,7 +42,7 @@ public class PayServiceImpl implements PayService {
         }
         // 其他未知model
         else {
-            throw new RuntimeException("请求实体错误");
+            throw new MyException("请求实体错误");
         }
         request.setBizModel(bizModel);
         request.setReturnUrl(returnUrl);

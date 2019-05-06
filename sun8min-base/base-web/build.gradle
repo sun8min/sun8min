@@ -1,7 +1,6 @@
 dependencies {
     compile project(":sun8min-base:base-dubbo")
-    compile project(":sun8min-base:base-common")
-    
+
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-test"

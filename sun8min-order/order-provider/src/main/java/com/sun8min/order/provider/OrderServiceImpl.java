@@ -2,6 +2,7 @@ package com.sun8min.order.provider;
 
 import com.alibaba.fescar.core.context.RootContext;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sun8min.base.exception.MyException;
 import com.sun8min.order.api.OrderService;
 import com.sun8min.order.entity.Order;
 import com.sun8min.order.entity.OrderLine;
@@ -48,7 +49,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public void paySuccess(String tradeOrderNo, String orderPayNo, LocalDateTime orderPayTime, Long version) {
         log.info("全局事务id ：" + RootContext.getXID());
         Integer updateRows = orderMapper.paySuccess(tradeOrderNo, orderPayNo, orderPayTime, version, Order.OrderStatus.PAY_CONFIRMED.getCode());
-        if (updateRows < 1) throw new RuntimeException("订单状态修改失败");
+        if (updateRows < 1) throw new MyException("订单状态修改失败");
     }
 
     @Transactional

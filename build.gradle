@@ -32,5 +32,7 @@ subprojects {
         compileOnly "org.projectlombok:lombok"
         testAnnotationProcessor "org.projectlombok:lombok"
         testCompileOnly "org.projectlombok:lombok"
+
+        compile project(":sun8min-base:base-common")
     }
 }

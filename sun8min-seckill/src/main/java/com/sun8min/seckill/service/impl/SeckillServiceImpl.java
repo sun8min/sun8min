@@ -41,7 +41,7 @@ public class SeckillServiceImpl implements SeckillService {
 
         //打开注释测试事务发生异常后，全局回滚功能
 //        if (!flag) {
-//            throw new RuntimeException("测试抛异常后，分布式事务回滚！");
+//            throw new MyException("测试抛异常后，分布式事务回滚！");
 //        }
         return order;
     }
@@ -61,7 +61,7 @@ public class SeckillServiceImpl implements SeckillService {
         orderService.paySuccess(order.getTradeOrderNo(), accountTradeOrder.getAccountTradeOrderNo(), accountTradeOrder.getGmtCreate(), order.getVersion());
         //打开注释测试事务发生异常后，全局回滚功能
 //        if (!flag) {
-//            throw new RuntimeException("测试抛异常后，分布式事务回滚！");
+//            throw new MyException("测试抛异常后，分布式事务回滚！");
 //        }
     }
 

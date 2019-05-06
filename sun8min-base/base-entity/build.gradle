@@ -1,5 +1,4 @@
 dependencies {
-    compile project(":sun8min-base:base-common")
     compile "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusVersion"
 }
 

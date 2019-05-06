@@ -3,6 +3,7 @@ package com.sun8min.seckill.controller;
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayObject;
 import com.sun8min.account.api.AccountService;
+import com.sun8min.base.exception.MyException;
 import com.sun8min.base.util.EnumUtils;
 import com.sun8min.order.api.OrderService;
 import com.sun8min.order.entity.Order;
@@ -76,11 +77,11 @@ public class SeckillController {
      *
      * @return 用户
      */
-    private User getLoginUser() throws Exception {
+    private User getLoginUser() {
         return Optional.ofNullable(httpServletRequest.getUserPrincipal())
                 .map(Principal::getName)
                 .map(name -> userService.findByNickName(name))
-                .orElseThrow(() -> new Exception("用户获取异常"));
+                .orElseThrow(() -> new MyException("用户获取异常"));
     }
 
     /**
@@ -122,7 +123,7 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/product/{productId}/confirm")
-    public String confirm(@PathVariable BigInteger productId, ModelMap map) throws Exception {
+    public String confirm(@PathVariable BigInteger productId, ModelMap map) {
         BigInteger userId = getLoginUser().getUserId();
         BigDecimal accountAmount = accountService.findAmountByUserId(userId);
         ProductSnapshot productSnapshot = productSnapshotService.findByProductId(productId);
@@ -144,12 +145,12 @@ public class SeckillController {
     @PostMapping("/placeOrder")
     public String placeOrder(@RequestParam BigInteger productSnapshotId,
                              @RequestParam Integer payChannelCode,
-                             ModelMap map) throws Exception {
+                             ModelMap map) {
         String view = null;
         BigInteger userId = getLoginUser().getUserId();
         // 交易支付方式：账户、支付宝、微信
         Order.OrderPayChannel payChannel = EnumUtils.getEnum(Order.OrderPayChannel.class, payChannelCode);
-        if (payChannel == null) throw new RuntimeException("支付类型错误");
+        if (payChannel == null) throw new MyException("支付类型错误");
 
         // 1.1 构建下单请求
         PlaceOrderRequestDTO placeOrderRequestDTO = seckillOrderRepository.buildQuestDTO(userId, productSnapshotId);
@@ -191,7 +192,7 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/payResult/{tradeOrderNo}")
-    public String payResult(@PathVariable String tradeOrderNo, ModelMap map) throws Exception {
+    public String payResult(@PathVariable String tradeOrderNo, ModelMap map) {
         BigInteger userId = getLoginUser().getUserId();
         // 订单支付结果
         String payResultTip = Optional.ofNullable(orderService.findByTradeOrderNo(tradeOrderNo))
@@ -250,7 +251,7 @@ public class SeckillController {
             passbackParams = JSON.parseObject(URLDecoder.decode(URLDecoder.decode(paramsMap.get("passback_params"), "UTF-8"), "UTF-8")).getInnerMap();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            throw new RuntimeException("额外参数使用URL编码异常");
+            throw new MyException("额外参数使用URL编码异常");
         }
         // 渠道支付单号(即支付宝交易号)
         String orderPayNo = paramsMap.get("trade_no");
