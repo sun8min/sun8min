@@ -53,6 +53,25 @@ public class HttpUtils {
     }
 
     /**
+     * 检测是否为ajax请求
+     */
+    public static boolean isAjax(HttpServletRequest request) {
+        String contentTypeHeader = request.getHeader("Content-Type");
+        String acceptHeader = request.getHeader("Accept");
+        String xRequestedWith = request.getHeader("X-Requested-With");
+        return ((contentTypeHeader != null && contentTypeHeader.contains("application/json"))
+                || (acceptHeader != null && acceptHeader.contains("application/json"))
+                || "XMLHttpRequest".equalsIgnoreCase(xRequestedWith));
+    }
+
+    /**
+     * 检测是否不为ajax请求
+     */
+    public static boolean isNotAjax(HttpServletRequest request) {
+        return !isAjax(request);
+    }
+
+    /**
      * 将url转换成map
      *
      * <pre>

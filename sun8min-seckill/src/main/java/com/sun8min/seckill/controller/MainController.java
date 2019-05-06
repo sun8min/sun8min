@@ -1,7 +1,5 @@
 package com.sun8min.seckill.controller;
 
-import com.sun8min.user.api.UserService;
-import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,8 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-    @Reference(version = "${service.version}")
-    UserService userService;
+    /**
+     * ajax请求
+     *
+     * @return
+     */
+    @GetMapping("/ajax")
+    public String ajax() {
+        return "ajax";
+    }
 
     /**
      * 主界面
