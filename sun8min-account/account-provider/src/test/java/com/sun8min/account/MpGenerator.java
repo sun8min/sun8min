@@ -20,7 +20,7 @@ import java.util.Properties;
  * mybatis-plus-generator
  * <p>
  * mysql官方，数据库与java类型对应
- * https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-type-conversions.html
+ * https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-type-conversions.html
  */
 public class MpGenerator {
 
