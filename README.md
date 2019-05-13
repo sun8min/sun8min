@@ -1,6 +1,6 @@
 # Sun8min
 
-Sun8min的个人项目，在线实例 [sun8min.com]，详见博客 [Blog]
+Sun8min的个人项目，博客 [Blog]
 
 ---
 ## 功能简介
@@ -40,7 +40,6 @@ http://www.app1.com:9600
 
 8minofsun@gmail.com
 
-[sun8min.com]: https://www.sun8min.com
 [Blog]: https://sun8min.com
 [zookeeper-3.4.13]: https://github.com/apache/zookeeper/releases/tag/release-3.4.13
 [fescar-server-0.4.0]: https://github.com/seata/seata/releases/tag/v0.4.0
