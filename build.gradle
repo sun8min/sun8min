@@ -9,30 +9,40 @@ buildscript {
     }
 }
 
-group = "com.sun8min"
+// 所有模块/项目的通用配置
+allprojects {
+    group "com.sun8min"
+    version "$version"
+}
 
+// 子模块/项目的统一配置
 subprojects {
     apply plugin: "java"
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
+    // 指定JDK版本
     sourceCompatibility = "1.8"
     targetCompatibility = "1.8"
 
+    // 指定编码格式
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
 
     configurations {
+        // 排除依赖 log4j
         all*.exclude group: 'log4j'
     }
 
+    // 依赖
     dependencies {
         annotationProcessor "org.projectlombok:lombok"
         compileOnly "org.projectlombok:lombok"
         testAnnotationProcessor "org.projectlombok:lombok"
         testCompileOnly "org.projectlombok:lombok"
 
+        compile project(':sun8min-base')
         compile project(":sun8min-base:base-common")
     }
 }
