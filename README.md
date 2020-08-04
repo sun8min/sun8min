@@ -40,7 +40,7 @@ http://www.app1.com:9600
 
 8minofsun@gmail.com
 
-[Blog]: https://sun8min.com
+[Blog]: https://sun8min.github.io
 [zookeeper-3.4.13]: https://github.com/apache/zookeeper/releases/tag/release-3.4.13
 [fescar-server-0.4.0]: https://github.com/seata/seata/releases/tag/v0.4.0
 [redis-5.0.4]: https://github.com/antirez/redis/releases/tag/5.0.4
